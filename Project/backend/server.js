@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyparser = require("body-parser");
 require("dotenv").config();
-const postRouter = require("./routes/post");
-const userRouter = require("./routes/user");
 
 //Creating an express app
 const app = express();
@@ -20,17 +18,12 @@ app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 
   mongoose.set("strictQuery", false);
-  mongoose.connect(URI, (err) => {
-    console.log("Connection to mongo db successsful");
-
-    if (err) console.log(err.message);
-  });
+  mongoose
+    .connect(URI)
+    .then(() => {
+      console.log("Connection to mongo db successsful");
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 });
-
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
-
-app.use("/api/user", userRouter);
-app.use("/api/posts", postRouter);
