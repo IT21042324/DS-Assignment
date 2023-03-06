@@ -77,13 +77,13 @@ const modifyReview = async (req, res) => {
   const { review, itemID, userID, rating } = req.body; //_id is userID
 
   try {
-    const updateReview = async (callback) => {
+    const removeReview = async (callback) => {
       const item = await itemModel.findOne({ _id: itemID });
       console.log(item);
       if (item) await callBack(item.reviews); //item.reviews is an array
     };
 
-    updateReview();
+    removeReview();
   } catch (err) {
     console.log(err.message);
     res.json(err.message);
@@ -108,4 +108,42 @@ const modifyReview = async (req, res) => {
   }
 };
 
-module.exports = { postItem, addReview, getAllItems, modifyReview };
+const deleteReview = (req, res) => {
+  //to this data is just passed as normal text. all of them
+  const { itemID, userID } = req.body; //_id is userID
+
+  try {
+    const removeReview = async (callback) => {
+      const item = await itemModel.findOne({ _id: itemID });
+      if (item) await callBack(item.reviews); //item.reviews is an array
+    };
+
+    removeReview();
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+
+  async function callBack(descArr) {
+    // item review array is passed in the parameter
+
+    descArr = descArr.filter((obj) => {
+      return obj.userID != userID;
+    });
+
+    const data = await itemModel.findOneAndUpdate(
+      { _id: itemID },
+      { reviews: descArr }
+    );
+    console.log(data);
+    res.json({ updatedInfo: data });
+  }
+};
+
+module.exports = {
+  postItem,
+  addReview,
+  getAllItems,
+  modifyReview,
+  deleteReview,
+};
