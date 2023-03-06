@@ -22,6 +22,9 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
 });
 
 //Creating User schema functions
