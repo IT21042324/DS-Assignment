@@ -4,6 +4,10 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 require("dotenv").config();
 
+const userRouter = require("./routes/user");
+const reviewRouter = require("./routes/review");
+const itemRouter = require("./routes/item");
+
 //Creating an express app
 const app = express();
 app.use(express.json());
@@ -27,4 +31,7 @@ app.listen(PORT, () => {
       console.log(err.message);
     });
 });
-//testing github
+
+app.use("/api/user", userRouter);
+app.use("/api/user/review", reviewRouter);
+app.use("/api/user/item", itemRouter);
