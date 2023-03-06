@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyparser = require("body-parser");
 require("dotenv").config();
-//Ds
+
+const userRouter = require("./routes/user");
+const reviewRouter = require("./routes/review");
+const itemRouter = require("./routes/item");
+
 //Creating an express app
 const app = express();
 app.use(express.json());
@@ -27,3 +31,7 @@ app.listen(PORT, () => {
       console.log(err.message);
     });
 });
+
+app.use("/api/user", userRouter);
+app.use("/api/user/review", reviewRouter);
+app.use("/api/user/item", itemRouter);

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const validator = require("validator");
 
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema({
   userName: {
@@ -55,7 +55,7 @@ userSchema.statics.login = async function (userName, password) {
   if (!userName || !password) throw Error("Please fill all fields");
 
   const user = await this.findOne({ userName });
-  if (!user) throw Error("Incorrect userName");
+  if (!user) throw Error("User Name doesn't exist");
 
   const match = await bcrypt.compare(password, user.password); //returns true or false
 
