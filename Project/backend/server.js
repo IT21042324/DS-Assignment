@@ -34,4 +34,4 @@ app.listen(PORT, () => {
 
 app.use("/api/user", userRouter);
 app.use("/api/user/review", reviewRouter);
-app.use("/api/user/item", itemRouter);
+app.use("/api/item", itemRouter);
