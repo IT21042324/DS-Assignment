@@ -24,12 +24,8 @@ app.listen(PORT, () => {
   mongoose.set("strictQuery", false);
   mongoose
     .connect(URI)
-    .then(() => {
-      console.log("Connection to mongo db successsful");
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+    .then(() => console.log("Connection to mongo db successsful"))
+    .catch((err) => console.log(err));
 });
 
 app.use("/api/user", userRouter);
