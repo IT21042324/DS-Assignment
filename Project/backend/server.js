@@ -17,17 +17,19 @@ const PORT = process.env.PORT || 8070;
 const URI = process.env.URI;
 
 //Server and Database connection
-mongoose
-  .connect(URI, { useUnifiedTopology: true })
-  .then(() => {
-    console.log("Connection to MongoDB successful");
-    app.listen(PORT, () => {
-      console.log(`Server is running on ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on ${PORT}`);
+
+  mongoose.set("strictQuery", false);
+  mongoose
+    .connect(URI)
+    .then(() => {
+      console.log("Connection to mongo db successsful");
+    })
+    .catch((err) => {
+      console.log(err.message);
     });
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+});
 
 app.use("/api/user", userRouter);
 app.use("/api/user/review", reviewRouter);

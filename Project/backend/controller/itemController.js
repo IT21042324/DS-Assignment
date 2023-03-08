@@ -74,6 +74,19 @@ const updateItem = async (req, res) => {
   }
 };
 
+const deleteItem = async (req, res) => {
+  const { itemID } = req.body;
+
+  try {
+    const deletedRecord = await itemModel.findByIdAndDelete(itemID);
+    console.log(deletedRecord);
+    res.json(deletedRecord);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+};
+
 const addReview = async (req, res) => {
   //to this data is just passed as normal text. all of them
   const { review, itemID, userID, rating } = req.body; //_id is userID
@@ -178,6 +191,7 @@ module.exports = {
   addReview,
   getAllItems,
   getOneItem,
+  deleteItem,
   modifyReview,
   deleteReview,
   updateItem,
