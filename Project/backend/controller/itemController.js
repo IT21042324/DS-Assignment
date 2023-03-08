@@ -12,15 +12,10 @@ const getAllItems = async (req, res) => {
 };
 
 const postItem = async (req, res) => {
-  const {
-    itemName,
-    description,
-    category,
-    price,
-    quantity,
-    discount,
-    totalPrice,
-  } = req.body;
+  const { itemName, description, category, price, quantity, discount } =
+    req.body;
+
+  const totalPrice = price - (price * discount) / 100;
 
   try {
     const ItemModel = new itemModel({
@@ -35,6 +30,44 @@ const postItem = async (req, res) => {
 
     const data = await ItemModel.save();
     res.json(data);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+};
+
+const getOneItem = async (req, res) => {
+  const { itemID } = req.body;
+
+  try {
+    const fetchedItem = itemModel.findOne({ _id: itemID });
+
+    console.log(fetchedItem);
+    res.json(fetchedItem);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+};
+
+const updateItem = async (req, res) => {
+  const { itemID, itemName, description, category, price, quantity, discount } =
+    req.body;
+
+  let totalPrice;
+
+  if (price && discount) totalPrice = price - (price * discount) / 100;
+
+  try {
+    // const itemToBeUpdated = await itemModel.findOne({ _id: itemID });
+
+    const updatedInfo = itemModel.findOneAndUpdate(
+      { _id: itemID },
+      { itemID, itemName, description, category, price, quantity, discount }
+    );
+
+    console.log(updatedInfo);
+    res.json(updatedInfo);
   } catch (err) {
     console.log(err.message);
     res.json(err.message);
@@ -144,6 +177,8 @@ module.exports = {
   postItem,
   addReview,
   getAllItems,
+  getOneItem,
   modifyReview,
   deleteReview,
+  updateItem,
 };
