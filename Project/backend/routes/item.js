@@ -16,5 +16,8 @@ router.patch("/modifyReview", modifyReview);
 router.patch("/deleteReview", deleteReview);
 router.delete("/deleteItem", deleteItem);
 router.get("/", getAllItems);
+router.get("/findOne", getOneItem);
+router.patch("/updateItem", updateItem);
+// router.get("/updateItem", updateItem);
 
 module.exports = router;
