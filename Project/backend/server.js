@@ -7,6 +7,7 @@ require("dotenv").config();
 const userRouter = require("./routes/user");
 const reviewRouter = require("./routes/review");
 const itemRouter = require("./routes/item");
+const merchantRouter = require("./routes/merchant");
 
 //Creating an express app
 const app = express();
@@ -31,3 +32,4 @@ app.listen(PORT, () => {
 app.use("/api/user", userRouter);
 app.use("/api/user/review", reviewRouter);
 app.use("/api/item", itemRouter);
+app.use("/api/merchant", merchantRouter);
