@@ -15,7 +15,12 @@ const userLogin = async (req, res) => {
 
     res
       .status(200)
-      .json({ userName: user.userName, password: user.password, token });
+      .json({
+        userName: user.userName,
+        password: user.password,
+        type: user.type,
+        token,
+      });
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ err: err.message });
@@ -23,13 +28,21 @@ const userLogin = async (req, res) => {
 };
 
 const userSignUp = async function (req, res) {
-  const { userName, password, contact, address } = req.body;
+  const { userName, password, contact, address, type } = req.body;
 
   try {
-    const user = await userModel.signup(userName, password, contact, address);
+    const user = await userModel.signup(
+      userName,
+      password,
+      contact,
+      address,
+      type
+    );
     const token = createToken(user._id);
 
-    res.status(200).json({ userName, password, contact, address, token });
+    res
+      .status(200)
+      .json({ userName, password, contact, address, token, token });
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ err: err.message });

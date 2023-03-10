@@ -25,6 +25,10 @@ const userSchema = new Schema({
   image: {
     type: String,
   },
+  type: {
+    type: String,
+    required: true,
+  },
 });
 
 //Creating User schema functions
@@ -32,7 +36,8 @@ userSchema.statics.signup = async function (
   userName,
   password,
   contact,
-  address
+  address,
+  type
 ) {
   const exist = await this.findOne({ userName });
 
@@ -49,6 +54,7 @@ userSchema.statics.signup = async function (
     password: hash,
     contact,
     address,
+    type,
   });
 
   return singedUser; //To return a signedup new user object
