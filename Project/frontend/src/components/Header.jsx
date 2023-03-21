@@ -1,20 +1,12 @@
-import { /*faMagnifyingGlass,*/ faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import NavBar from "./Navbar";
 
 function Header () {
     return (
         <header>
             <h1>RB&NS</h1>
-            <nav>
-                <div className="active">Home</div>
-                <div>About</div>
-                <div>Contact</div>
-                {/* <div>
-                    <button type="submit">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button>
-                </div> */}
-            </nav>
+            <NavBar />
             <div className="navbar-icons">
                 <div className="user">
                     <FontAwesomeIcon icon={faUser} />
