@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const {
     createPayment,
-    getPayment,
+    //getPayment,
     deletePayment,
     updatePayment,
 } = require("../controller/paymentController");
@@ -11,7 +11,7 @@ const {
 router.post("/add", createPayment);
 
 //get all payments
-router.get("/", getPayment);
+//router.get("/", getPayment);
 
 //update all payments
 router.put("/update/:id", updatePayment);
