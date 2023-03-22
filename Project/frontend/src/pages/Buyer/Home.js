@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import HomeBanner from "../../components/HomeBanner";
 import MiniBanner from "../../components/MiniBanner";
 import SmallBanner from "../../components/SmallBanner";
+import { ItemMapper } from "./ItemMapper";
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
       <HomeBanner />
       <Features />
       <ActionBanner />
-      <SmallBanner />
-      <MiniBanner />
+      <ItemMapper />
+
       <Footer />
     </div>
   );
