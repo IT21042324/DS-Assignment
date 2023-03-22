@@ -1,7 +1,7 @@
 import Item from "../../components/Item";
 import { UseItemContext } from "../../context/useItemContext";
 
-export const ItemMapper = () => {
+export const ItemMapperHome = () => {
   const { items } = UseItemContext();
 
   return (
@@ -14,6 +14,7 @@ export const ItemMapper = () => {
     >
       {items
         .sort(() => 0.5 - Math.random())
+        .slice(0, Math.min(items.length, 3))
         .map((dat) => (
           <div
             key={dat._id}

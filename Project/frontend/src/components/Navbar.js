@@ -1,18 +1,39 @@
-import /*faMagnifyingGlass,*/ "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 function NavBar() {
+  const [selection, setSelection] = useState("Home");
+
+  const onNavLinkClick = (link) => {
+    setSelection(link);
+  };
+
+  useEffect(() => {
+    const path = window.location.pathname;
+
+    if (path === "/") {
+      setSelection("Home");
+    } else if (path === "/product") {
+      setSelection("Products");
+    }
+  }, []);
+
   return (
     <nav>
-      <div className="active">Home</div>
-      <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
-        <div>Product</div>
+      <Link
+        to="/"
+        style={{ textDecoration: "none", color: "black" }}
+        onClick={() => onNavLinkClick("Home")}
+      >
+        <div className={selection === "Home" ? "active" : ""}>Home</div>
       </Link>
-      <div>Contact</div>
-      {/* <div>
-                <button type="submit">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-            </div> */}
+      <Link
+        to="/product"
+        style={{ textDecoration: "none", color: "black" }}
+        onClick={() => onNavLinkClick("Products")}
+      >
+        <div className={selection === "Products" ? "active" : ""}>Products</div>
+      </Link>
     </nav>
   );
 }

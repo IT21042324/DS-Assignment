@@ -217,7 +217,7 @@ header nav div.active {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  
+ 
 }
 
 #sm-banner .banner-box {
@@ -227,7 +227,7 @@ header nav div.active {
   align-items:center;
   background-image: url("./assets/orange.jpeg");
   min-width: 30%;
-  height: 75vh;
+  height: 95vh;
   background-size: cover;
   background-position: center;
   

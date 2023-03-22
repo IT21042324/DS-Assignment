@@ -7,7 +7,7 @@ function ActionBanner() {
       <h2>
         Up to <span>70% Off</span> - All t-Shirts & Accessories
       </h2>
-      <Link to="/products">
+      <Link to="/product">
         <button>Explore More</button>
       </Link>
     </section>

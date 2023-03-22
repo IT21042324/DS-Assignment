@@ -3,7 +3,7 @@ import Features from "../../components/Features";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import HomeBanner from "../../components/HomeBanner";
-import { ItemMapper } from "./ItemMapper";
+import { ItemMapperHome } from "./ItemMapperHome";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       <HomeBanner />
       <Features />
       <ActionBanner />
-      <ItemMapper />
+      <ItemMapperHome />
       <Footer />
     </div>
   );
