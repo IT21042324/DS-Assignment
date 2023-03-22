@@ -1,9 +1,10 @@
-import { useEffect, useContext } from "react";
-import { ItemContext } from "../../context/itemContext";
-import axios from "axios";
-import Header from "../../components/Header";
-import Item from "../../components/Item";
+import ActionBanner from "../../components/ActionBanner";
+import Features from "../../components/Features";
 import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import HomeBanner from "../../components/HomeBanner";
+import MiniBanner from "../../components/MiniBanner";
+import SmallBanner from "../../components/SmallBanner";
 
 export default function Home() {
   const itemContext = useContext(ItemContext);
@@ -27,9 +28,11 @@ export default function Home() {
   return (
     <div>
       <Header />
-      {items.map((dat) => (
-        <Item key={dat._id} details={dat} />
-      ))}
+      <HomeBanner />
+      <Features />
+      <ActionBanner />
+      <SmallBanner />
+      <MiniBanner />
       <Footer />
     </div>
   );
