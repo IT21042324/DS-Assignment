@@ -17,7 +17,7 @@ const createMerchant = async (req, res) => {
   await newMerchant
     .save()
     .then(() => {
-      res.json("Student Added");
+      res.json("Merchant Added");
     })
     .catch((err) => {
       console.log(err);

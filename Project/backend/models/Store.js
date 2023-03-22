@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const merchantsSchema = new Schema({
+const storesSchema = new Schema({
   merchantid: {
     type: String,
     required: true,
   },
-  merchantname: {
+  storename: {
     type: String,
     required: true,
   },
-  contactno: {
-    type: Number,
-    required: true,
-  },
-  address: {
+  location: {
     type: String,
     required: true,
   },
-  storeid: {
+  category: {
+    type: String,
+    required: true,
+  },
+  storeitem: {
     type: Array,
     required: true,
   },
 });
 
-module.exports = mongoose.model("Merchant", merchantsSchema);
+module.exports = mongoose.model("Store", storesSchema);

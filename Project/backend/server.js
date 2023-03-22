@@ -7,7 +7,7 @@ const userRouter = require("./routes/user");
 const reviewRouter = require("./routes/review");
 const itemRouter = require("./routes/item");
 const merchantRouter = require("./routes/merchant");
-
+const storeRouter = require("./routes/merchant");
 //Creating an express app
 const app = express();
 app.use(express.json());
@@ -34,3 +34,4 @@ app.use("/api/user", userRouter);
 app.use("/api/user/review", reviewRouter);
 app.use("/api/item", itemRouter);
 app.use("/api/merchant", merchantRouter);
+app.use("/api/store", storeRouter);
