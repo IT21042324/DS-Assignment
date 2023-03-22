@@ -1,4 +1,5 @@
-import image from "../assets/hero4.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExpand, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 export default function Item(props) {
   return (
@@ -14,7 +15,20 @@ export default function Item(props) {
         <h2>{props.details.storename}</h2>
         <span>Rs. {props.details.price}</span>
         <span>{props.details.quantity} Available</span>
-        <button>Add To Cart</button>
+        {/* <button style={{ marginBottom: "18px" }}>View Item</button> */}
+        <div style={{ display: "flex" }}>
+          <button title="View Item">
+            <FontAwesomeIcon icon={faExpand} style={{ color: "#ffffff" }} />
+          </button>
+
+          <button title="Add To Cart">
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              style={{ color: "#ffffff" }}
+            />{" "}
+          </button>
+        </div>
+        {/* <button>Add To Cart</button> */}
       </div>
     </section>
   );
