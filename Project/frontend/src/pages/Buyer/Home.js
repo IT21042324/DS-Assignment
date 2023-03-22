@@ -3,8 +3,6 @@ import Features from "../../components/Features";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import HomeBanner from "../../components/HomeBanner";
-import MiniBanner from "../../components/MiniBanner";
-import SmallBanner from "../../components/SmallBanner";
 import { ItemMapper } from "./ItemMapper";
 
 export default function Home() {
@@ -15,7 +13,6 @@ export default function Home() {
       <Features />
       <ActionBanner />
       <ItemMapper />
-
       <Footer />
     </div>
   );
