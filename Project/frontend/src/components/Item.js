@@ -1,22 +1,21 @@
-import classes from "../pages/Buyer/home.module.css";
+import image from "../assets/hero4.png";
 
 export default function Item(props) {
   return (
-    <div className={classes.postDetails} style={{ textAlign: "center" }}>
-      <p>
-        <img
-          src={props.details.image}
-          alt={`${props.details.title} image`}
-          style={{
-            width: "200px",
-            height: "200px",
-          }}
-        ></img>
-      </p>
-      <h4>{props.details.name}</h4>
-      <p>{props.details.rating}</p>
-
-      <p>{props.details.price}</p>
-    </div>
+    <section id="sm-banner" className="section-p1">
+      <div className="banner-box">
+        <div>
+          <img
+            src={props.details.image}
+            style={{ height: "200px", width: "200px" }}
+          />
+        </div>
+        <h4>{props.details.itemName}</h4>
+        <h2>{props.details.storename}</h2>
+        <span>Rs. {props.details.price}</span>
+        <span>{props.details.quantity} Available</span>
+        <button>Add To Cart</button>
+      </div>
+    </section>
   );
 }

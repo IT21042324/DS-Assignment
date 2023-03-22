@@ -217,23 +217,22 @@ header nav div.active {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  
 }
 
 #sm-banner .banner-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  background-image: url("./assets/b17.jpg");
-  min-width: 48%;
-  height: 50vh;
+  align-items:center;
+  background-image: url("./assets/orange.jpeg");
+  min-width: 30%;
+  height: 75vh;
   background-size: cover;
   background-position: center;
-  padding: 30px;
-}
+  
 
-#sm-banner .banner-box2 {
-  background-image: url("./assets/b17.jpg");
+  padding: 30px;
 }
 
 #sm-banner h4 {

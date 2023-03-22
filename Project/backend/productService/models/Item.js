@@ -33,7 +33,7 @@ const itemsSchema = new Schema({
   reviews: {
     type: Array,
     default: [],
-  },
+  }, //retings are taken as an overall rating from each reviewer
 });
 
 module.exports = mongoose.model("Items", itemsSchema);
