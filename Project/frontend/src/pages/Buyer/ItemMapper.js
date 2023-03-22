@@ -4,18 +4,15 @@ import { UseItemContext } from "../../context/useItemContext";
 export const ItemMapper = () => {
   const { items } = UseItemContext();
 
-  //To get only the 1st three items from the item Array
-  const data = items.slice(0, 3);
-
   return (
     <div
       style={{
         display: "flex",
         flexWrap: "wrap",
-        marginLeft: 3,
+        marginLeft: "3px",
       }}
     >
-      {data.map((dat) => (
+      {items.slice(0, 3).map((dat) => (
         <div key={dat._id} style={{ flexBasis: "33.33%" }}>
           <Item details={dat} />
         </div>
