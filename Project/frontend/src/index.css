@@ -167,13 +167,199 @@ header nav div.active {
   background-color: #fddde4;
 }
 
-footer {
+#action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  bottom: 0;
+  background-image: url("./assets/b2.jpg");
   width: 100%;
-  height: 2.5rem;
+  height: 40vh;
+  background-size: cover;
+  background-position: center;
+}
+
+#action h4 {
+  color: white;
+  font-size: 16px;
+}
+
+#action h2 {
+  color: white;
+  font-size: 30px;
+  padding: 10px 0;
+}
+
+#action h2 span{
+  color: #ef3636;
+}
+
+#action button {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 15px 30px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+}
+
+#action button:hover {
+  background: #088178;
+  color: white;
+}
+
+#sm-banner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#sm-banner .banner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-image: url("./assets/b17.jpg");
+  min-width: 48%;
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  padding: 30px;
+}
+
+#sm-banner .banner-box2 {
+  background-image: url("./assets/b17.jpg");
+}
+
+#sm-banner h4 {
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+#sm-banner h2 {
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+#sm-banner span {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 15px;
+}
+
+#sm-banner button {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid white;
+  outline: none;
+  transition: 0.2s;
+}
+
+#sm-banner button:hover {
+  background: #088178;
+  border: 1px solid #088178;
+}
+
+#mn-banner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 80px;
+}
+
+#mn-banner .banner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-image: url("./assets/b17.jpg");
+  min-width: 30%;
+  height: 30vh;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#mn-banner .banner-box2 {
+  background-image: url("./assets/b17.jpg");
+}
+
+#mn-banner .banner-box3 {
+  background-image: url("./assets/b17.jpg");
+}
+
+#mn-banner h2 {
+  color: white;
+  font-weight: 900;
+  font-size: 22px;
+}
+
+#mn-banner h3 {
+  color: #ec544e;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+footer h1 {
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
+footer a {
+  font-size: 13px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: #222;
 }
 
 footer p {
-  color: #ccc;
+  font-size: 13px;
+  margin: 0 0 8px 0;
+}
+
+footer .follow {
+  margin-bottom: 20px;
+}
+
+footer .follow .icon {
+  display: flex;
+  gap: 10px;
+  color: #465b52;
+  padding-right: 4px;
+  cursor: pointer;
+}
+
+footer .copyright {
+  width: 100%;
+  text-align: center;
 }
