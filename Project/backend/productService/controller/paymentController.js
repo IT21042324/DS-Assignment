@@ -17,14 +17,15 @@ const createPayment = async (req, res) => {
 
 };
 
-const getPayments = async (req,res) => {
-
-    await Payment.find().then((payment) => {
+const getAllPayment = async (req, res) => {
+    await Payment.find()
+    .then((payment) => {
         res.json(payment);
     }).catch(err => {
         console.log(err);
-    })
-};
+    });
+}
+
 
 const updatePayment = async (req, res) => {
     let Id = req.params.id;
@@ -58,7 +59,7 @@ const deletePayment = async (req, res) => {
 
 module.exports = {
     createPayment,
-    getPayments,
+    getAllPayment,
     updatePayment,
     deletePayment,
 };
