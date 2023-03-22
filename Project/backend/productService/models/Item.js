@@ -10,7 +10,11 @@ const itemsSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
+  image: {
+    type: String,
+    required: true,
+  },
+  storename: {
     type: String,
     required: true,
   },
@@ -23,10 +27,6 @@ const itemsSchema = new Schema({
     required: true,
   },
   discount: {
-    type: Number,
-    required: true,
-  },
-  totalPrice: {
     type: Number,
     required: true,
   },
