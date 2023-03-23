@@ -58,7 +58,7 @@ const updateStore = async (req, res) => {
 };
 
 const deleteStore = async (req, res) => {
-  let sid = req.params.merchantid;
+  let sid = req.params.storeid;
   await Store.findById(sid)
     .then(() => {
       res.status(200).send({ status: "user deleted" });
@@ -81,7 +81,7 @@ const getOneStore = async (req, res) => {
       console.log(err.message);
       res
         .status(500)
-        .send({ status: "Error with delete merchant", error: err.message });
+        .send({ status: "Error with delete Store", error: err.message });
     });
 };
 

@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const storeRouter = require("./routes/store");
+const orderRouter = require("./routes/order");
 
 //Creating an express app
 const app = express();
@@ -26,4 +27,6 @@ mongoose
   .catch((err) => {
     console.log(err.message);
   });
+
 app.use("/api/store", storeRouter);
+app.use("/api/order", orderRouter);

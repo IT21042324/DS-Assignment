@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import React from 'react';
 
 export default function Item(props) {
   return (

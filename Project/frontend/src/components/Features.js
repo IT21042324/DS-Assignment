@@ -3,6 +3,7 @@ import pic2 from "../assets/f2.png";
 import pic3 from "../assets/f3.png";
 import pic4 from "../assets/f4.png";
 import pic6 from "../assets/f6.png";
+import React from 'react';
 
 function Features() {
     return(

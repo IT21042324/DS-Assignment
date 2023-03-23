@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const storesSchema = new Schema({
+  storeid: {
+    type: String,
+    required: true,
+  },
   merchantid: {
     type: String,
     required: true,
