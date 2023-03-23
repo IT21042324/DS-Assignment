@@ -28,29 +28,27 @@ export default function Item(props) {
   }, [props.details.reviews]);
 
   return (
-    <section id="sm-banner" className="section-p1">
-      <div className="banner-box">
-        <div>
-          <img
-            src={props.details.image}
-            style={{ height: "200px", width: "200px" }}
-          />
-        </div>
-        <h4>{props.details.itemName}</h4>
-        <h2>{props.details.storename}</h2>
-        <span>Rs. {props.details.price}</span>
-        <span>{props.details.quantity} Available</span>
-        <div style={{ display: "flex" }}>
-          <button title="View Item" onClick={handleViewItemClick}>
-            <FontAwesomeIcon icon={faExpand} style={{ color: "#ffffff" }} />
-          </button>
-
-          <button title="Add To Cart">
-            <FontAwesomeIcon
-              icon={faCartShopping}
-              style={{ color: "#ffffff" }}
+    <section id="productCard" className="section-p1">
+      <div className="pro-container">
+        <div className="pro">
+          <div>
+            <img
+              src={props.details.image}
+              style={{ height: "200px", width: "200px" }}
             />
-          </button>
+          </div>
+          <h5>{props.details.itemName}</h5>
+          <span>{props.details.storename}</span>
+          <h4>Rs. {props.details.price}</h4>
+          <span>{props.details.quantity} Available</span>
+          <div>
+            <button title="View Item" onClick={handleViewItemClick}>
+              <FontAwesomeIcon icon={faExpand} />
+            </button>
+            <button title="Add To Cart">
+              <FontAwesomeIcon icon={faCartShopping} />
+            </button>
+          </div>
         </div>
       </div>
       {showPopup && (
