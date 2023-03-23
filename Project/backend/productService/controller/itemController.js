@@ -2,8 +2,9 @@ const itemModel = require("../models/Item");
 
 const getAllItems = async (req, res) => {
   try {
-    const data = await itemModel.find(); //for latest date(newset ones on top)
+    const data = await itemModel.find();
     // find({reps:20}) will give all documents of reps:20
+
     res.json(data);
     console.log(data);
   } catch (err) {
@@ -12,8 +13,17 @@ const getAllItems = async (req, res) => {
 };
 
 const postItem = async (req, res) => {
-  const { itemName, description, category, price, quantity, discount } =
-    req.body;
+  //pass storeName through Parameter
+  const {
+    itemName,
+    image,
+    storename,
+    description,
+    category,
+    price,
+    quantity,
+    discount,
+  } = req.body;
 
   const totalPrice = price - (price * discount) / 100;
 
@@ -21,11 +31,13 @@ const postItem = async (req, res) => {
     const ItemModel = new itemModel({
       itemName,
       description,
+      image,
       category,
       price,
       quantity,
       discount,
       totalPrice,
+      storename,
     });
 
     const data = await ItemModel.save();
@@ -51,8 +63,16 @@ const getOneItem = async (req, res) => {
 };
 
 const updateItem = async (req, res) => {
-  const { itemID, itemName, description, category, price, quantity, discount } =
-    req.body;
+  const {
+    itemID,
+    itemName,
+    description,
+    category,
+    image,
+    price,
+    quantity,
+    discount,
+  } = req.body;
 
   let totalPrice;
 
@@ -63,7 +83,16 @@ const updateItem = async (req, res) => {
 
     const updatedInfo = itemModel.findOneAndUpdate(
       { _id: itemID },
-      { itemID, itemName, description, category, price, quantity, discount }
+      {
+        itemID,
+        itemName,
+        description,
+        image,
+        category,
+        price,
+        quantity,
+        discount,
+      }
     );
 
     console.log(updatedInfo);
@@ -88,39 +117,40 @@ const deleteItem = async (req, res) => {
 };
 
 const addReview = async (req, res) => {
-  //to this data is just passed as normal text. all of them
-  const { review, itemID, userID, rating } = req.body; //_id is userID
+  //to this data is just passed through the body (all of them)
+  const { review, itemID, userID, userName, rating } = req.body; //_id is userID
 
   try {
     const insertReview = async (callback) => {
       const item = await itemModel.findOne({ _id: itemID });
       console.log(item);
-      if (item) await callBack(item.reviews); //item.reviews is an array
+      if (item) await callback(item.reviews); //item.reviews is an array
     };
 
-    insertReview();
+    await insertReview(callBack);
+
+    async function callBack(descArr) {
+      //an array is passed in the parameter
+
+      descArr.push({ userID, userName, rating, review });
+      console.log(descArr);
+
+      const data = await itemModel.findOneAndUpdate(
+        { _id: itemID },
+        { reviews: descArr }
+      );
+      // console.log(data);
+      res.json({ updatedInfo: data });
+    }
   } catch (err) {
     console.log(err.message);
     res.json(err.message);
-  }
-
-  async function callBack(descArr) {
-    //an array is passed in the parameter
-    descArr.push({ userID, rating, review });
-    console.log(descArr);
-
-    const data = await itemModel.findOneAndUpdate(
-      { _id: itemID },
-      { reviews: descArr }
-    );
-    console.log(data);
-    res.json({ updatedInfo: data });
   }
 };
 
 const modifyReview = async (req, res) => {
   //to this data is just passed as normal text. all of them
-  const { review, itemID, userID, rating } = req.body; //_id is userID
+  const { review, itemID, userID, userName, rating } = req.body; //_id is userID
 
   try {
     const removeReview = async (callback) => {
@@ -142,7 +172,7 @@ const modifyReview = async (req, res) => {
       return obj.userID != userID;
     });
 
-    descArr.push({ userID, rating, review });
+    descArr.push({ userID, userName, rating, review });
     console.log(descArr);
 
     const data = await itemModel.findOneAndUpdate(

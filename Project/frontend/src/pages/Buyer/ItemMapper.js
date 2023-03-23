@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Item from "../../components/Item";
 import { UseItemContext } from "../../context/useItemContext";
-import React from 'react';
+import React from "react";
 
 export const ItemMapper = () => {
   const { items } = UseItemContext();
@@ -42,7 +42,7 @@ export const ItemMapper = () => {
               dat.storename.toLowerCase().includes(search.toLowerCase())
             );
           })
-          .sort(() => 0.5 - Math.random())
+
           .map((dat) => (
             <div
               key={dat._id}
@@ -50,7 +50,8 @@ export const ItemMapper = () => {
             >
               <Item details={dat} />
             </div>
-          ))}
+          ))
+          .sort(() => 0.5 - Math.random())}
       </div>
     </div>
   );
