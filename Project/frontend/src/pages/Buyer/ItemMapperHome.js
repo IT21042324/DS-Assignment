@@ -1,6 +1,6 @@
 import Item from "../../components/Item";
 import { UseItemContext } from "../../context/useItemContext";
-import React from 'react';
+import React from "react";
 
 export const ItemMapperHome = () => {
   const { items } = UseItemContext();

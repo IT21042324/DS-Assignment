@@ -72,7 +72,7 @@ export default function Item(props) {
 
             <button
               style={{
-                margin: "0",
+                marginBottom: "10px",
                 color: "white",
                 backgroundColor: "black",
               }}
