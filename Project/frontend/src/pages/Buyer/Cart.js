@@ -15,7 +15,6 @@ export default function Cart() {
                 <CartItem />
                 <CartItem />
                 <CartItem />
-                <CartItem />
                 
             </div>
     
