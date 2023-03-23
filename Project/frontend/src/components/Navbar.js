@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import React from "react";
 
 function NavBar() {
   const [selection, setSelection] = useState("Home");
@@ -33,6 +34,16 @@ function NavBar() {
         onClick={() => onNavLinkClick("Products")}
       >
         <div className={selection === "Products" ? "active" : ""}>Products</div>
+      </Link>
+
+      <Link
+        to="/merchant"
+        style={{ textDecoration: "none", color: "black" }}
+        onClick={() => onNavLinkClick("Merchant")}
+      >
+        <div className={selection === "Merchant" ? "active" : ""}>
+          Become A Seller
+        </div>
       </Link>
     </nav>
   );
