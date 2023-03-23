@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import "./CartItem.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import item from "../assets/iherb.jpg";
+// import item from "../assets/iherb.jpg";
+import React from 'react';
 
 const CartItem = () =>{
     return (

@@ -1,7 +1,8 @@
-import "./Cart.css";
-import CartItem from "../components/CartItem";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import "../Cart.css";
+import CartItem from "../../components/CartItem";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import React from 'react';
 
 export default function Cart() {
     return (

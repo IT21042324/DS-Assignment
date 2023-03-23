@@ -2,6 +2,7 @@ import { faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import NavBar from "./Navbar";
+import React from 'react';
 
 function Header () {
     return (
