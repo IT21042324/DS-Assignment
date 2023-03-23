@@ -1,6 +1,7 @@
 import { faFacebookF, faLinkedinIn, faYoutube, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pic from "../assets/pay.png";
+import React from 'react';
 
 function Footer () {
     const currYear = new Date().getFullYear();
