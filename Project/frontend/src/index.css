@@ -1,5 +1,10 @@
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -11,16 +16,57 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Global Styles */
+
+h1 {
+  font-size: 50px;
+  line-height: 64px;
+  color: #222;
+}
+
+h2 {
+  font-size: 46px;
+  line-height: 54px;
+  color: #222;
+}
+
+h4 {
+  font-size: 20px;
+  color: #222;
+}
+
+h6 {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+p {
+  font-size: 16px;
+  color: #465b52;
+  margin: 15px 0 20px 0;
+}
+
+.section-p1 {
+  padding: 40px 80px;
+}
+
+.section-m1 {
+  margin: 40px 0;
+}
+
 header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: #E3E6F3;
-  margin: auto -16px;
-  padding: 0px 32px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  padding: 20px 80px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
 
 header h1 {
+  display: flex;
+  align-items: center;
   color: #1a1a1a;
   font-family: "McLaren", cursive;
   font-weight: 200;
@@ -31,6 +77,7 @@ header nav {
   gap: 30px;
   align-items: center;
   position: relative;
+  font-weight: 500;
 }
 
 header nav div:hover,
@@ -39,28 +86,279 @@ header nav div.active {
   cursor: pointer;
 }
 
-header nav button {
+/* header nav button {
   display: flex;
   padding: 5px;
   border-radius: 50%;
   border: none;
-}
+} */
 
 .navbar-icons {
   display: flex;
   gap: 20px;
-  padding: 32px;
   align-items: center;
 }
 
-footer {
-  position: absolute;
+#HomeBanner {
+  background-image: url("./assets/tinywow_IMG-20221219-WA0153_17188570.png");
+  background-color: #E3E6F3;
+  height: 90vh;
+  width: auto;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top 20% right 20%;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#HomeBanner h4 {
+  padding-bottom: 15px;
+}
+
+#HomeBanner h1 {
+  color: #088178;
+}
+
+#HomeBanner button {
+  width: 10%;
+  padding: 8px;
+  border-radius: 25px;
+  background-color: #e871a1;
+  font-weight:700;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+#feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#feature .fe-box{
+  width: 180px;
   text-align: center;
-  bottom: 0;
+  padding: 25px 15px;
+  box-shadow: 20px 20px 34px rgba(0, 0, 0, 0.03);
+  border: 1px solid #cce7d0;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+#feature .fe-box:hover {
+  box-shadow: 10px 10px 50px rgba(70, 62, 220, 0.1);
+}
+
+#feature .fe-box img {
   width: 100%;
-  height: 2.5rem;
+  margin-bottom: 10px;
+}
+
+#feature .fe-box h6 {
+  display: inline-block;
+  padding: 9px 8px 6px 8px;
+  line-height: 1;
+  border-radius: 5px;
+  color: #088178;
+  background-color: #fddde4;
+}
+
+#action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url("./assets/b2.jpg");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  background-position: center;
+}
+
+#action h4 {
+  color: white;
+  font-size: 16px;
+}
+
+#action h2 {
+  color: white;
+  font-size: 30px;
+  padding: 10px 0;
+}
+
+#action h2 span{
+  color: #ef3636;
+}
+
+#action button {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 15px 30px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+}
+
+#action button:hover {
+  background: #088178;
+  color: white;
+}
+
+#sm-banner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+ 
+}
+
+#sm-banner .banner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  background-image: url("./assets/orange.jpeg");
+  min-width: 30%;
+  height: 95vh;
+  background-size: cover;
+  background-position: center;
+  
+
+  padding: 30px;
+}
+
+#sm-banner h4 {
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+#sm-banner h2 {
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+#sm-banner span {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 15px;
+}
+
+#sm-banner button {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 11px 18px;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid white;
+  outline: none;
+  transition: 0.2s;
+}
+
+#sm-banner button:hover {
+  background: #088178;
+  border: 1px solid #088178;
+}
+
+#mn-banner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 80px;
+}
+
+#mn-banner .banner-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-image: url("./assets/b17.jpg");
+  min-width: 30%;
+  height: 30vh;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#mn-banner .banner-box2 {
+  background-image: url("./assets/b17.jpg");
+}
+
+#mn-banner .banner-box3 {
+  background-image: url("./assets/b17.jpg");
+}
+
+#mn-banner h2 {
+  color: white;
+  font-weight: 900;
+  font-size: 22px;
+}
+
+#mn-banner h3 {
+  color: #ec544e;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+footer h1 {
+  margin-bottom: 30px;
+}
+
+footer h4 {
+  font-size: 14px;
+  padding-bottom: 20px;
+}
+
+footer a {
+  font-size: 13px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: #222;
 }
 
 footer p {
-  color: #ccc;
+  font-size: 13px;
+  margin: 0 0 8px 0;
+}
+
+footer .follow {
+  margin-bottom: 20px;
+}
+
+footer .follow .icon {
+  display: flex;
+  gap: 10px;
+  color: #465b52;
+  padding-right: 4px;
+  cursor: pointer;
+}
+
+footer .copyright {
+  width: 100%;
+  text-align: center;
 }
