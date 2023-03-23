@@ -10,8 +10,9 @@
   
   .cart__left {
     flex: 0.7;
-    margin-right: 1rem;
-    background: transparent;
+    margin-right: 5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    background: #fff;
     padding: 1rem;
   }
   

@@ -1,12 +1,21 @@
 import "./Cart.css";
 import CartItem from "../components/CartItem";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 export default function Cart() {
     return (
+      <div>
+      <Header />
+      <center><h2>Shopping Cart</h2></center>
           <div className="cart">
             <div className="cart__left">
-              <h2>Shopping Cart</h2>
                 <CartItem />
+                <CartItem />
+                <CartItem />
+                <CartItem />
+                <CartItem />
+                
             </div>
     
             <div className="cart__right">
@@ -19,5 +28,7 @@ export default function Cart() {
               </div>
             </div>
           </div>
+      <Footer />
+      </div>
       );
 }

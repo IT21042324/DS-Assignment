@@ -10,7 +10,11 @@ const itemsSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
+  image: {
+    type: String,
+    required: true,
+  },
+  storename: {
     type: String,
     required: true,
   },
@@ -26,14 +30,10 @@ const itemsSchema = new Schema({
     type: Number,
     required: true,
   },
-  totalPrice: {
-    type: Number,
-    required: true,
-  },
   reviews: {
     type: Array,
     default: [],
-  },
+  }, //retings are taken as an overall rating from each reviewer
 });
 
 module.exports = mongoose.model("Items", itemsSchema);
