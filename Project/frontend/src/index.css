@@ -100,13 +100,13 @@ header nav div.active {
 }
 
 #HomeBanner {
-  background-image: url("./assets/tinywow_IMG-20221219-WA0153_17188570.png");
+  background-image: url("./assets/hbanner.png");
   background-color: #E3E6F3;
   height: 90vh;
   width: auto;
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: top 20% right 20%;
+  background-position: top 20% right 0;
   padding: 0 80px;
   display: flex;
   flex-direction: column;
