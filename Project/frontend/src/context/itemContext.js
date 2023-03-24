@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import React from 'react';
+import React from "react";
 
 export const ItemContext = createContext();
 
@@ -13,7 +13,7 @@ export const ItemContextProvider = (props) => {
       case "CreateItem":
         return { items: [action.payload, ...state.items] };
       case "SetItems":
-        return { items: action.payload };
+        return { items: action.payload }; //we will anyways send data here as an array using axios
       case "DeleteItems":
         return {
           items: state.items.filter((data) => {

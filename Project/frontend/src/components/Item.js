@@ -3,10 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpand, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
-// import classes from "../pages/Buyer/item.module.css";
+import { useCartContext } from "../context/useCartContext";
 
 export default function Item(props) {
+  //importing cartContext,dispath and info from the cartContext
+  const { dispatch, info } = useCartContext();
+
+  const [selectedItem, setSelectedItem] = useState(0);
+
+  //to print details everytime the info is changed.. later remove it
+  useEffect(() => {
+    console.log(info);
+  }, [info]);
+
+  function addItemToCart(data) {
+    if (selectedItem + 1 > props.details.quantity) {
+      alert("There are no more available items");
+    } else {
+      setSelectedItem((prev) => prev + 1);
+      dispatch({ type: "UpdateCart", payload: data });
+      alert("Item Added To Cart");
+    }
+  }
+
   const [showPopup, setShowPopup] = useState(false);
+  // const [quantity, setQuantity] = useState(0);
+  // const [available, setAvailable]
 
   const handleViewItemClick = () => {
     setShowPopup(true);
@@ -18,6 +40,7 @@ export default function Item(props) {
 
   const [rating, setRating] = useState(0);
 
+  //To get the avg rating of each product based on all the customers rating
   useEffect(() => {
     if (props.details.reviews.length > 0) {
       const averageRating =
@@ -45,12 +68,25 @@ export default function Item(props) {
             <button title="View Item" onClick={handleViewItemClick}>
               <FontAwesomeIcon icon={faExpand} />
             </button>
-            <button title="Add To Cart">
-              <FontAwesomeIcon icon={faCartPlus} />
+            <button
+              title="Add To Cart"
+              onClick={(e) => {
+                addItemToCart({
+                  itemID: props.details._id,
+                  itemName: props.details.itemName,
+                  itemPrice: props.details.price,
+                  itemQuantity: selectedItem + 1,
+                  itemImage: props.details.image,
+                });
+              }}
+            >
+              {selectedItem}
+              <FontAwesomeIcon icon={faCartShopping} />
             </button>
           </div>
         </div>
       </div>
+      {/* For the popup form */}
       {showPopup && (
         <div
           className="popup"
@@ -70,7 +106,7 @@ export default function Item(props) {
 
             <button
               style={{
-                margin: "0",
+                marginBottom: "10px",
                 color: "white",
                 backgroundColor: "black",
               }}
