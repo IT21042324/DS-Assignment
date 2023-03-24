@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
 // import classes from "../pages/Buyer/item.module.css";
@@ -46,7 +46,7 @@ export default function Item(props) {
               <FontAwesomeIcon icon={faExpand} />
             </button>
             <button title="Add To Cart">
-              <FontAwesomeIcon icon={faCartShopping} />
+              <FontAwesomeIcon icon={faCartPlus} />
             </button>
           </div>
         </div>
