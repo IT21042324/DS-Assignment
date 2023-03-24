@@ -5,6 +5,14 @@ const {
   getAllPayment,
   deletePayment,
   updatePayment,
+Nisura
+
+  createPayment,
+  getAllPayment,
+  deletePayment,
+  updatePayment,
+
+
 } = require("../controller/paymentController");
 
 //create a new payment
