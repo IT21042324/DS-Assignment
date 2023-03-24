@@ -20,6 +20,5 @@ export const UseItemContext = () => {
     }
     fetchData();
   }, [dispatch]);
-
   return { itemContext, dispatch, items };
 };

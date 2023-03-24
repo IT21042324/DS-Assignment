@@ -2,29 +2,39 @@ import { Link } from "react-router-dom";
 import "./CartItem.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import item from "../assets/iherb.jpg";
 import React from "react";
+import { useCartContext } from "../context/useCartContext";
 
-const CartItem = () => {
+const CartItem = (props) => {
+  const { dispatch, info } = useCartContext();
+
   return (
     <div className="cartItem">
       <div className="cartItem__image">
-        <img src="/" alt="" />
+        <img
+          src={props.details.itemImage}
+          style={{ width: "100px", height: "100px" }}
+          alt={props.details.itemName}
+        />
       </div>
 
-      <Link to={"/"} className="cartItem__name">
-        <p>Product 01</p>
-      </Link>
+      {/* <Link to={"/"} className="cartItem__name"> */}
+      <p>{props.details.itemName}</p>
+      {/* </Link> */}
 
-      <p className="cartItem__price"> $499.99</p>
+      <p className="cartItem__price"> Rs. {props.details.itemPrice}</p>
 
-      <select className="cartItem__select">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
+      <p className="cartItem__price"> x{props.details.itemQuantity}</p>
 
-      <button className="cartItem__deleteBtn">
+      <button
+        className="cartItem__deleteBtn"
+        onClick={(e) => {
+          dispatch({
+            type: "RemoveFromCart",
+            payload: props.details.itemID,
+          });
+        }}
+      >
         <i>
           <FontAwesomeIcon icon={faTrash} />
         </i>

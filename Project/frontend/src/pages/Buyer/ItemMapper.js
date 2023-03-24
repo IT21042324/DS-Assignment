@@ -1,33 +1,19 @@
-import { useState } from "react";
 import Item from "../../components/Item";
 import { UseItemContext } from "../../context/useItemContext";
-import React from "react";
+import { React, useState } from "react";
+import SeachBar from "../../components/SearchComponent";
 
 export const ItemMapper = () => {
   const { items } = UseItemContext();
-
   const [search, setSearch] = useState("");
+
+  function getSearchValue(searchResult) {
+    setSearch(searchResult);
+  }
 
   return (
     <div>
-      <div
-        class="input-group"
-        style={{ width: "30%", float: "right", marginRight: "20px" }}
-      >
-        <input
-          type="search"
-          class="form-control rounded"
-          placeholder="Search"
-          aria-label="Search"
-          aria-describedby="search-addon"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="button" class="btn btn-outline-primary">
-          search
-        </button>
-      </div>
-      <br />
-      <br />
+      <SeachBar functionSearch={getSearchValue} />
       <div
         style={{
           display: "flex",
@@ -42,7 +28,6 @@ export const ItemMapper = () => {
               dat.storename.toLowerCase().includes(search.toLowerCase())
             );
           })
-
           .map((dat) => (
             <div
               key={dat._id}
