@@ -37,11 +37,11 @@ function NavBar() {
       </Link>
 
       <Link
-        to="/merchant"
+        to="/seller"
         style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Merchant")}
+        onClick={() => onNavLinkClick("Seller")}
       >
-        <div className={selection === "Merchant" ? "active" : ""}>
+        <div className={selection === "Seller" ? "active" : ""}>
           Become A Seller
         </div>
       </Link>
