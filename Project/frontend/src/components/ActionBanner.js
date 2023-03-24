@@ -12,7 +12,7 @@ function ActionBanner() {
         1. Create Seller Account {">>"} 2. Upload Your Products {">>"} 3. Start
         Selling
       </h2>
-      <Link to="/merchant">
+      <Link to="/seller">
         <button>Become a Seller</button>
       </Link>
     </section>
