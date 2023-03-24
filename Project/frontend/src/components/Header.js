@@ -10,9 +10,11 @@ function Header () {
             <h1>RB&NS</h1>
             <NavBar />
             <div className="navbar-icons">
+                <Link to={"/login"}>
                 <div className="user">
                     <FontAwesomeIcon icon={faUser} />
                 </div>
+                </Link>
                 <Link to="/Cart">
                 <div className="cart">
                     <FontAwesomeIcon icon={faShoppingCart} />
