@@ -85,7 +85,7 @@ export default function Item(props) {
               }}
             >
               {selectedItem}
-              <FontAwesomeIcon icon={faCartShopping} />
+              <FontAwesomeIcon icon={faCartPlus} />
             </button>
           </div>
         </div>

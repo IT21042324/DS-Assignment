@@ -364,6 +364,22 @@ header nav div.active {
   font-size: 15px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  min-width: 30%;
+  background-color: #f6f6f6;
+  border: 1px solid #E3E6F3;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.login-c {
+  padding: 40px 80px;
+  display: flex;
+  justify-content: space-around;
+}
+
 footer {
   display: flex;
   flex-wrap: wrap;

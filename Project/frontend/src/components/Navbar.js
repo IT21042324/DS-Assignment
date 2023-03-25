@@ -37,7 +37,7 @@ function NavBar() {
       </Link>
 
       <Link
-        to="/seller"
+        to="/seller/register"
         style={{ textDecoration: "none", color: "black" }}
         onClick={() => onNavLinkClick("Seller")}
       >
