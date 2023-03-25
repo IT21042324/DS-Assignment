@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React from 'react';
+import React from "react";
 
 function HomeBanner() {
   return (
@@ -7,7 +7,7 @@ function HomeBanner() {
       <h4>Trade-in-offer</h4>
       <h2>Super value deals</h2>
       <h1>On all products</h1>
-      <p>Save more with coupons & up to 60% off!</p>
+      <p>Pick Your Herbal Cure</p>
 
       <Link to="/product" style={{ textDecoration: "none" }}>
         <button>Shop Now</button>

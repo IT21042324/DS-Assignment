@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExpand,
+  faCartPlus,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
 import { useCartContext } from "../context/useCartContext";
@@ -103,16 +107,6 @@ export default function Item(props) {
             <h4 style={{ color: "black" }}>{props.details.itemName}</h4>
 
             <h2 style={{ color: "black" }}>{props.details.storename}</h2>
-
-            <button
-              style={{
-                marginBottom: "10px",
-                color: "white",
-                backgroundColor: "black",
-              }}
-            >
-              Add Item to Cart
-            </button>
 
             <h3>Reviews</h3>
             {props.details.reviews.map((rev) => {
