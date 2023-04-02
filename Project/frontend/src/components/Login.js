@@ -1,13 +1,29 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
-
+import { useRef } from "react";
+import { UseBackendAPI } from "../context/useBackendApi";
 export default function Login() {
+  //Creating refs to hold values of login form values
+  const userName = useRef();
+  const password = useRef();
+
+  const { login } = UseBackendAPI();
+  const loginHandler = (e) => {
+    e.preventDefault();
+
+    //Using the login function provided by the backendAPI component to verify the user
+    login({
+      userName: userName.current.value,
+      password: password.current.value,
+    });
+  };
+
   return (
     <div>
       <Header />
       <div className="login-c">
-        <form>
+        <form onSubmit={loginHandler}>
           <h3 className="text-center mb-4">Sign In</h3>
 
           <div className="mb-3">
@@ -16,6 +32,8 @@ export default function Login() {
               type="email"
               className="form-control"
               placeholder="example@example.com"
+              ref={userName}
+              required
             />
           </div>
 
@@ -25,6 +43,7 @@ export default function Login() {
               type="password"
               className="form-control"
               placeholder="password"
+              ref={password}
             />
           </div>
 
@@ -42,10 +61,9 @@ export default function Login() {
           </div>
 
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              Sign In
-            </button>
+            <input type="submit" className="btn btn-primary" value="Sign In" />
           </div>
+
           <p className="forgot-password text-center">
             Don't have an account yet?{" "}
             <Link to={"/register"}>Register Now</Link>

@@ -12,13 +12,9 @@ const userLogin = async (req, res) => {
     const user = await userModel.login(userName, password);
 
     const token = createToken(user._id);
+    user.token = token;
 
-    res.status(200).json({
-      userName: user.userName,
-      password: user.password,
-      role: user.role,
-      token,
-    });
+    res.status(200).json(user);
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ err: err.message });
