@@ -12,6 +12,8 @@ export const UserContextProvider = (props) => {
     switch (action.type) {
       case "SetUser":
         return { user1: action.payload }; //data is sent here as an array using axios since only one user
+      case "Logout":
+        return { user1: [] };
       default:
         return state;
     }
