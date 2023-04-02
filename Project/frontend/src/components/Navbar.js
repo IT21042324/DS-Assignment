@@ -5,10 +5,6 @@ import React from "react";
 function NavBar() {
   const [selection, setSelection] = useState("Home");
 
-  const onNavLinkClick = (link) => {
-    setSelection(link);
-  };
-
   useEffect(() => {
     const path = window.location.pathname;
 
@@ -16,33 +12,25 @@ function NavBar() {
       setSelection("Home");
     } else if (path === "/product") {
       setSelection("Products");
+    } else if (path === "/seller/register") {
+      setSelection("Seller");
     }
   }, []);
 
   return (
     <nav>
-      <Link
-        to="/"
-        style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Home")}
-      >
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Home" ? "active" : ""}>Home</div>
       </Link>
-      <Link
-        to="/product"
-        style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Products")}
-      >
+      <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
-
       <Link
         to="/seller/register"
         style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Seller")}
       >
         <div className={selection === "Seller" ? "active" : ""}>
-          Become A Seller
+          Sell On RB&NS
         </div>
       </Link>
     </nav>
