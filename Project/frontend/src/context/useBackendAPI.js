@@ -29,5 +29,29 @@ export function UseBackendAPI() {
         console.log(err);
       }
     },
+    login: async function (userDetails) {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8080/api/user/login/",
+          userDetails
+        );
+
+        console.log(data);
+
+        dispatch({ type: "SetUser", payload: [data] });
+
+        // Check if a user object is stored in the local storage
+        if (localStorage.getItem("user")) {
+          localStorage.setItem("user", JSON.stringify(data));
+        } else {
+          localStorage.setItem("user", JSON.stringify(data));
+        }
+
+        //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
+        navigate("/product");
+      } catch (err) {
+        console.log(err);
+      }
+    },
   };
 }

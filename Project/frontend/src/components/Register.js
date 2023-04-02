@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useState, useRef } from "react";
-import { UseBackendAPI } from "../context/useBackendAPI";
+import { UseBackendAPI } from "../context/useBackendApi";
 import avatar from "../assets/profilePic.png";
 
 export default function Register() {
