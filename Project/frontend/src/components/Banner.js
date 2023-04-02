@@ -53,7 +53,7 @@ export function MiniBanner() {
   );
 }
 
-function SmallBanner() {
+export function SmallBanner() {
   return (
     <section id="sm-banner" className="section-p1">
       <div className="banner-box">
