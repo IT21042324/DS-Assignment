@@ -3,9 +3,9 @@ import Home from "./pages/Buyer/Home";
 import Cart from "./pages/Buyer/Cart";
 import { Routes, Route } from "react-router-dom";
 import Product from "./pages/Buyer/Product";
-import React from 'react';
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import React from "react";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   return (

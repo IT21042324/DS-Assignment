@@ -1,13 +1,18 @@
-import { faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import NavBar from "./Navbar";
 import { useState } from "react";
-import image from "../assets/profilePic.png";
+import axios from "axios";
+import { UseUserContext } from "../context/useUserContext";
 
 function Header() {
+  //for the userprofile popup.
+
+  const { user1 } = UseUserContext();
+
   const [showPopup, setShowPopup] = useState(false);
-  const [profilePic, setProfilePic] = useState("");
+
   const handleViewItemClick = () => {
     setShowPopup(true);
   };
@@ -15,6 +20,11 @@ function Header() {
   const handleClosePopup = () => {
     setShowPopup(false);
   };
+
+  const [userName, setUserName] = useState("");
+
+  //To set the base64 value of the selected userProfile Image
+  const [profilePic, setProfilePic] = useState("");
 
   function convertToBase64(e) {
     const reader = new FileReader();
@@ -28,23 +38,38 @@ function Header() {
     };
   }
 
-  const [user, setUser] = useState(true);
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const submittedData = await axios.patch(
+        "http://localhost:8080/api/user/update/",
+        { userId: "6405d20f6d0593dac266cafe", userName, image: profilePic }
+      );
+      console.log(submittedData);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <header>
       <h1>RB&NS</h1>
       <NavBar />
       <div className="navbar-icons">
         <div>
-          {user ? (
-            <img
-              src={image}
-              style={{ width: "25px", height: "25px", borderRadius: "40px" }}
-              onClick={(e) => {
-                setShowPopup(true);
-              }}
-            ></img>
+          {user1[0] ? (
+            <div style={{ display: "flex" }}>
+              <h5>{user1[0].userName}</h5> &nbsp;&nbsp;&nbsp;
+              <img
+                src={user1[0].image}
+                style={{ width: "25px", height: "25px", borderRadius: "40px" }}
+                onClick={(e) => {
+                  setShowPopup(true);
+                }}
+              ></img>
+            </div>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link to="/login">Login </Link>
           )}
         </div>
         <Link to="/Cart">
@@ -67,7 +92,7 @@ function Header() {
           <div className="popup-content">
             {profilePic == "" || profilePic == null ? (
               <img
-                src={image}
+                src={user1[0].image}
                 style={{
                   width: "200px",
                   height: "200px",
@@ -75,7 +100,7 @@ function Header() {
               />
             ) : (
               <img
-                src={profilePic}
+                src={user1[0].image}
                 style={{
                   width: "200px",
                   height: "200px",
@@ -83,7 +108,21 @@ function Header() {
               />
             )}
 
-            <h4 style={{ color: "black" }}>UserName</h4>
+            <h4 style={{ color: "black" }}>
+              <input
+                type="text"
+                defaultValue="UserName"
+                style={{ border: "none", outline: "none", textAlign: "center" }}
+                onFocus={(event) => {
+                  event.target.style.outline = "2px dashed black";
+                }}
+                onBlur={(event) => {
+                  event.target.style.outline = "none";
+                }}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </h4>
+
             <input
               accept="image/*"
               type="file"
@@ -97,6 +136,18 @@ function Header() {
             />
 
             <h2 style={{ color: "black" }}></h2>
+            <input
+              type="submit"
+              value="Save Details"
+              style={{
+                padding: "10px",
+                color: "white",
+                backgroundColor: "black",
+              }}
+              onClick={(e) => {
+                submitHandler(e);
+              }}
+            />
 
             <h3></h3>
           </div>

@@ -25,7 +25,7 @@ const userSchema = new Schema({
   image: {
     type: String,
   },
-  type: {
+  role: {
     type: String,
     required: true,
   },
@@ -37,7 +37,8 @@ userSchema.statics.signup = async function (
   password,
   contact,
   address,
-  type
+  image,
+  role
 ) {
   const exist = await this.findOne({ userName });
 
@@ -54,7 +55,8 @@ userSchema.statics.signup = async function (
     password: hash,
     contact,
     address,
-    type,
+    image,
+    role,
   });
 
   return singedUser; //To return a signedup new user object
