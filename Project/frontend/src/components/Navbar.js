@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
+import { UseUserContext } from "../context/useUserContext";
 
 function NavBar() {
   const [selection, setSelection] = useState("Home");
+
+  //To get the logged in userRoler
+  const { userRole } = UseUserContext();
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -25,14 +29,18 @@ function NavBar() {
       <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
-      <Link
-        to="/seller/register"
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <div className={selection === "Seller" ? "active" : ""}>
-          Sell On RB&NS
-        </div>
-      </Link>
+      {userRole ? (
+        <Link
+          to="/seller/register"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <div className={selection === "Seller" ? "active" : ""}>
+            Sell On RB&NS
+          </div>
+        </Link>
+      ) : (
+        ""
+      )}
     </nav>
   );
 }

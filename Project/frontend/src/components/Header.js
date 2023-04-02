@@ -7,18 +7,19 @@ import axios from "axios";
 import { UseUserContext } from "../context/useUserContext";
 
 function Header() {
+  const { user1, logoutUser } = UseUserContext();
+
   //for the userprofile popup.
-
-  const { user1 } = UseUserContext();
-
   const [showPopup, setShowPopup] = useState(false);
-
-  const handleViewItemClick = () => {
-    setShowPopup(true);
-  };
 
   const handleClosePopup = () => {
     setShowPopup(false);
+  };
+
+  //The function to logout
+  const logoutFunction = () => {
+    //To logout the user
+    logoutUser();
   };
 
   const [userName, setUserName] = useState("");
@@ -59,10 +60,21 @@ function Header() {
         <div>
           {user1[0] ? (
             <div style={{ display: "flex" }}>
-              <h5>{user1[0].userName}</h5> &nbsp;&nbsp;&nbsp;
+              <div style={{ marginTop: "5px" }}>
+                <h6>{user1[0].userName}</h6>
+                <Link to="/" onClick={logoutFunction}>
+                  <h6 style={{ float: "right", color: "red" }}>Logout</h6>
+                </Link>
+              </div>
+              &nbsp;&nbsp;&nbsp;
               <img
                 src={user1[0].image}
-                style={{ width: "25px", height: "25px", borderRadius: "40px" }}
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  borderRadius: "40px",
+                  marginTop: "10px",
+                }}
                 onClick={(e) => {
                   setShowPopup(true);
                 }}
@@ -146,6 +158,7 @@ function Header() {
               }}
               onClick={(e) => {
                 submitHandler(e);
+                handleClosePopup();
               }}
             />
 
