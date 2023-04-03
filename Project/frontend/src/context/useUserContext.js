@@ -13,30 +13,40 @@ export const UseUserContext = () => {
         payload: [user],
       });
     }
-  }, []);
+  }, [dispatch]);
 
   function getUser() {
     if (localStorage.getItem("user")) {
       const user = JSON.parse(localStorage.getItem("user"));
-
       return user;
     }
   }
-  function getUserRole() {
-    if (localStorage.getItem("user")) {
-      const user = JSON.parse(localStorage.getItem("user"));
 
+  function getUserRole() {
+    const userSaved = localStorage.getItem("user");
+    if (userSaved) {
+      const user = JSON.parse(userSaved);
       return user.role;
     }
   }
 
-  //Since the login and register function is used between all three client,merchant and admin we try to set the userRole based on the interface login/register is clicked from
-  function setUserRole(role) {}
+  function setUserRole(role) {
+    const userSaved = localStorage.getItem("user");
+    if (userSaved) {
+      const user = JSON.parse(userSaved);
+      user.role = role;
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch({
+        type: "SetUser",
+        payload: [user],
+      });
+    }
+  }
 
   function logoutUser() {
-    if (localStorage.getItem("user")) {
+    const userSaved = localStorage.getItem("user");
+    if (userSaved) {
       localStorage.removeItem("user");
-
       alert("Logged Out");
       dispatch({ type: "Logout" });
     }

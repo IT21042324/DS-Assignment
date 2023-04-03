@@ -2,9 +2,10 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import NavBar from "./Navbar";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useRef } from "react";
+import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
+import profileImg from "../assets/profileImg.jpg";
 
 function Header() {
   const { user1, logoutUser, dispatch } = UseUserContext();
@@ -22,7 +23,7 @@ function Header() {
     logoutUser();
   };
 
-  const [userName, setUserName] = useState("");
+  const userName = useRef();
 
   //To set the base64 value of the selected userProfile Image
   const [profilePic, setProfilePic] = useState("");
@@ -31,20 +32,19 @@ function Header() {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = () => setProfilePic(reader.result);
-
     reader.onerror = (error) => console.log("error: ", error);
   }
 
+  const { updateUser } = useBackendAPI();
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const submittedData = await axios.patch(
-        "http://localhost:8080/api/user/update/",
-        { userId: "6405d20f6d0593dac266cafe", userName, image: profilePic }
-      );
-    } catch (err) {
-      console.log(err.message);
-    }
+
+    await updateUser({
+      userId: user1[0]._id,
+      userName: userName.current.value,
+      image: profilePic,
+    });
   };
 
   return (
@@ -62,18 +62,35 @@ function Header() {
                 </Link>
               </div>
               &nbsp;&nbsp;&nbsp;
-              <img
-                src={user1[0].image}
-                style={{
-                  width: "25px",
-                  height: "25px",
-                  borderRadius: "40px",
-                  marginTop: "10px",
-                }}
-                onClick={(e) => {
-                  setShowPopup(true);
-                }}
-              ></img>
+              {profilePic ? (
+                <img
+                  src={profilePic}
+                  alt={user1[0].userName}
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    borderRadius: "40px",
+                    marginTop: "10px",
+                  }}
+                  onClick={(e) => {
+                    setShowPopup(true);
+                  }}
+                />
+              ) : (
+                <img
+                  src={user1[0].image}
+                  alt={user1[0].userName}
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    borderRadius: "40px",
+                    marginTop: "10px",
+                  }}
+                  onClick={(e) => {
+                    setShowPopup(true);
+                  }}
+                />
+              )}
             </div>
           ) : (
             <Link
@@ -82,7 +99,7 @@ function Header() {
                 dispatch({ type: "SetUserRole", userRole: "Buyer" });
               }}
             >
-              Login{" "}
+              Login
             </Link>
           )}
         </div>
@@ -104,12 +121,25 @@ function Header() {
           }}
         >
           <div className="popup-content">
-            {profilePic == "" || profilePic == null ? (
+            {!user1[0].image ? (
               <img
-                src={user1[0].image}
+                src={profileImg}
+                style={{
+                  backgroundColor: "white",
+                  width: "200px",
+                  height: "200px",
+                  borderRadius: "100%",
+                  border: "1px solid black",
+                }}
+                alt={user1[0].userName}
+              />
+            ) : profilePic ? (
+              <img
+                src={profilePic}
                 style={{
                   width: "200px",
                   height: "200px",
+                  borderRadius: "100%",
                 }}
               />
             ) : (
@@ -118,6 +148,7 @@ function Header() {
                 style={{
                   width: "200px",
                   height: "200px",
+                  borderRadius: "100%",
                 }}
               />
             )}
@@ -125,7 +156,7 @@ function Header() {
             <h4 style={{ color: "black" }}>
               <input
                 type="text"
-                defaultValue="UserName"
+                defaultValue={user1[0].userName}
                 style={{ border: "none", outline: "none", textAlign: "center" }}
                 onFocus={(event) => {
                   event.target.style.outline = "2px dashed black";
@@ -133,7 +164,7 @@ function Header() {
                 onBlur={(event) => {
                   event.target.style.outline = "none";
                 }}
-                onChange={(e) => setUserName(e.target.value)}
+                ref={userName}
               />
             </h4>
 

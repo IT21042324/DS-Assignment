@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useRef } from "react";
-import { UseBackendAPI } from "../context/useBackendAPI";
+import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
 import { faChampagneGlasses } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
@@ -10,7 +10,7 @@ export default function Login() {
   const userName = useRef();
   const password = useRef();
 
-  const { login } = UseBackendAPI();
+  const { login } = useBackendAPI();
   const loginHandler = async (e) => {
     e.preventDefault();
 
@@ -19,7 +19,7 @@ export default function Login() {
       userName: userName.current.value,
       password: password.current.value,
     });
-    // alert(info);
+    alert(info);
   };
 
   return (
