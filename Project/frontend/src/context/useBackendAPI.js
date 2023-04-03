@@ -1,7 +1,7 @@
 import axios from "axios";
 import { UseUserContext } from "./useUserContext";
 import { useNavigate } from "react-router-dom";
-import { faChampagneGlasses } from "@fortawesome/free-solid-svg-icons";
+import { SendEmail } from "../components/SendEmail";
 
 export function useBackendAPI() {
   const { dispatch } = UseUserContext();
@@ -22,6 +22,12 @@ export function useBackendAPI() {
         localStorage.setItem("user", JSON.stringify(data));
 
         dispatch({ type: "SetUser", payload: [data] });
+
+        //Here we send an email once the user is registered
+        SendEmail({
+          user_name: userDetails.userName,
+          role: userDetails.role,
+        });
 
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
         navigate("/product");
