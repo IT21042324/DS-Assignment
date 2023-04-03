@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
+import { UseUserContext } from "../context/useUserContext";
 
 function NavBar() {
   const [selection, setSelection] = useState("Home");
 
-  const onNavLinkClick = (link) => {
-    setSelection(link);
-  };
+  //To get the logged in userRoler
+  const { getUserRole, dispatch } = UseUserContext();
+  const userRole = getUserRole();
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -16,35 +17,37 @@ function NavBar() {
       setSelection("Home");
     } else if (path === "/product") {
       setSelection("Products");
+    } else if (path === "/seller/register") {
+      setSelection("Seller");
     }
   }, []);
 
   return (
     <nav>
-      <Link
-        to="/"
-        style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Home")}
-      >
+      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Home" ? "active" : ""}>Home</div>
       </Link>
-      <Link
-        to="/product"
-        style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Products")}
-      >
+      <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
-
-      <Link
-        to="/seller/register"
-        style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Seller")}
-      >
-        <div className={selection === "Seller" ? "active" : ""}>
-          Become A Seller
-        </div>
-      </Link>
+      {!(userRole === "Merchant") ? (
+        <Link
+          to="/seller/register"
+          style={{ textDecoration: "none", color: "black" }}
+          onClick={(e) => {
+            dispatch({
+              type: "SetUserRole",
+              userRole: "Merchant",
+            });
+          }}
+        >
+          <div className={selection === "Seller" ? "active" : ""}>
+            Sell On RB&NS
+          </div>
+        </Link>
+      ) : (
+        ""
+      )}
     </nav>
   );
 }

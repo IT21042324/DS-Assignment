@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExpand,
+  faCartPlus,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
 import { useCartContext } from "../context/useCartContext";
@@ -12,9 +16,7 @@ export default function Item(props) {
   const [selectedItem, setSelectedItem] = useState(0);
 
   //to print details everytime the info is changed.. later remove it
-  useEffect(() => {
-    console.log(info);
-  }, [info]);
+  useEffect(() => {}, [info]);
 
   function addItemToCart(data) {
     if (selectedItem + 1 > props.details.quantity) {
@@ -27,8 +29,6 @@ export default function Item(props) {
   }
 
   const [showPopup, setShowPopup] = useState(false);
-  // const [quantity, setQuantity] = useState(0);
-  // const [available, setAvailable]
 
   const handleViewItemClick = () => {
     setShowPopup(true);
@@ -103,16 +103,6 @@ export default function Item(props) {
             <h4 style={{ color: "black" }}>{props.details.itemName}</h4>
 
             <h2 style={{ color: "black" }}>{props.details.storename}</h2>
-
-            <button
-              style={{
-                marginBottom: "10px",
-                color: "white",
-                backgroundColor: "black",
-              }}
-            >
-              Add Item to Cart
-            </button>
 
             <h3>Reviews</h3>
             {props.details.reviews.map((rev) => {

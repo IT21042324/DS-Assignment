@@ -12,15 +12,9 @@ const userLogin = async (req, res) => {
     const user = await userModel.login(userName, password);
 
     const token = createToken(user._id);
+    user.token = token;
 
-    res
-      .status(200)
-      .json({
-        userName: user.userName,
-        password: user.password,
-        type: user.type,
-        token,
-      });
+    res.status(200).json(user);
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ err: err.message });
@@ -28,7 +22,7 @@ const userLogin = async (req, res) => {
 };
 
 const userSignUp = async function (req, res) {
-  const { userName, password, contact, address, type } = req.body;
+  const { userName, password, contact, address, role, image } = req.body;
 
   try {
     const user = await userModel.signup(
@@ -36,17 +30,51 @@ const userSignUp = async function (req, res) {
       password,
       contact,
       address,
-      type
+      image,
+      role
     );
     const token = createToken(user._id);
+    user.token = token;
 
-    res
-      .status(200)
-      .json({ userName, password, contact, address, token, token });
+    res.status(200).json(user);
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ err: err.message });
   }
 };
 
-module.exports = { userSignUp, userLogin };
+const updateUser = async function (req, res) {
+  const { userId, userName, image } = req.body;
+  var user;
+
+  try {
+    if (userName && image) {
+      user = await userModel.findOneAndUpdate(
+        { _id: userId },
+        { userName, image }
+      );
+    } else if (image) {
+      user = await userModel.findOneAndUpdate({ _id: userId }, { image });
+    } else if (userName) {
+      user = await userModel.findOneAndUpdate({ _id: userId }, { userName });
+    }
+    console.log(user);
+    return res.status(200).json(user);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+const getOneUser = async function (req, res) {
+  const id = req.params.id;
+
+  try {
+    const user = await userModel.find({ _id: id });
+    console.log(user);
+    res.status(200).json(user);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+module.exports = { userSignUp, userLogin, updateUser, getOneUser };
