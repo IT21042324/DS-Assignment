@@ -7,7 +7,7 @@ import axios from "axios";
 import { UseUserContext } from "../context/useUserContext";
 
 function Header() {
-  const { user1, logoutUser } = UseUserContext();
+  const { user1, logoutUser, dispatch } = UseUserContext();
 
   //for the userprofile popup.
   const [showPopup, setShowPopup] = useState(false);
@@ -30,13 +30,9 @@ function Header() {
   function convertToBase64(e) {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result);
-      setProfilePic(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("error: ", error);
-    };
+    reader.onload = () => setProfilePic(reader.result);
+
+    reader.onerror = (error) => console.log("error: ", error);
   }
 
   const submitHandler = async (e) => {
@@ -46,7 +42,6 @@ function Header() {
         "http://localhost:8080/api/user/update/",
         { userId: "6405d20f6d0593dac266cafe", userName, image: profilePic }
       );
-      console.log(submittedData);
     } catch (err) {
       console.log(err.message);
     }
@@ -81,7 +76,14 @@ function Header() {
               ></img>
             </div>
           ) : (
-            <Link to="/login">Login </Link>
+            <Link
+              to="/login"
+              onClick={(e) => {
+                dispatch({ type: "SetUserRole", userRole: "Buyer" });
+              }}
+            >
+              Login{" "}
+            </Link>
           )}
         </div>
         <Link to="/Cart">

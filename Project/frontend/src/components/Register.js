@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useState, useRef } from "react";
-import { UseBackendAPI } from "../context/useBackendApi";
+import { UseBackendAPI } from "../context/useBackendAPI";
 import avatar from "../assets/profilePic.png";
+import { UseUserContext } from "../context/useUserContext";
 
 export default function Register() {
   const [profilePic, setProfilePic] = useState(avatar);
@@ -13,6 +14,9 @@ export default function Register() {
   const password = useRef();
   const contact = useRef();
   const address = useRef();
+
+  //To set the user role
+  const { selectedUserRole } = UseUserContext();
 
   //Function to convert image to base64 so that it can be stored in the database
   function convertToBase64(e) {
@@ -35,7 +39,7 @@ export default function Register() {
       contact: contact.current.value,
       address: address.current.value,
       image: profilePic,
-      role: "Merchant",
+      role: selectedUserRole,
     };
 
     await registerUser(dataToSave);
