@@ -31,8 +31,6 @@ export default function Item(props) {
   }
 
   const [showPopup, setShowPopup] = useState(false);
-  // const [quantity, setQuantity] = useState(0);
-  // const [available, setAvailable]
 
   const handleViewItemClick = () => {
     setShowPopup(true);

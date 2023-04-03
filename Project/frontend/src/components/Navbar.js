@@ -7,7 +7,8 @@ function NavBar() {
   const [selection, setSelection] = useState("Home");
 
   //To get the logged in userRoler
-  const { userRole } = UseUserContext();
+  const { getUserRole, dispatch } = UseUserContext();
+  const userRole = getUserRole();
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -29,10 +30,16 @@ function NavBar() {
       <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
-      {userRole ? (
+      {!(userRole === "Merchant") ? (
         <Link
           to="/seller/register"
           style={{ textDecoration: "none", color: "black" }}
+          onClick={(e) => {
+            dispatch({
+              type: "SetUserRole",
+              userRole: "Merchant",
+            });
+          }}
         >
           <div className={selection === "Seller" ? "active" : ""}>
             Sell On RB&NS

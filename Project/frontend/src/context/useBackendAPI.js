@@ -10,7 +10,7 @@ export function UseBackendAPI() {
     registerUser: async function (userDetails) {
       try {
         const { data } = await axios.post(
-          "http://localhost:8080/api/user/signup",
+          "http://localhost:8080/api/user/signup/",
           userDetails
         );
 
@@ -36,8 +36,6 @@ export function UseBackendAPI() {
           userDetails
         );
 
-        console.log(data);
-
         dispatch({ type: "SetUser", payload: [data] });
 
         // Check if a user object is stored in the local storage
@@ -50,7 +48,7 @@ export function UseBackendAPI() {
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
         navigate("/product");
       } catch (err) {
-        console.log(err);
+        return err;
       }
     },
   };

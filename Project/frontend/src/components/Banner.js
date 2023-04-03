@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import { UseUserContext } from "../context/useUserContext";
 
 export function ActionBanner() {
+  const { dispatch } = UseUserContext();
+
   return (
     <section id="action" className="section-m1">
       <h4>Seller Corner</h4>
@@ -12,7 +15,15 @@ export function ActionBanner() {
         1. Create Seller Account {">>"} 2. Upload Your Products {">>"} 3. Start
         Selling
       </h2>
-      <Link to="/seller">
+      <Link
+        to="/seller/register"
+        onClick={(e) =>
+          dispatch({
+            type: "SetUserRole",
+            userRole: "Merchant",
+          })
+        }
+      >
         <button>Become a Seller</button>
       </Link>
     </section>

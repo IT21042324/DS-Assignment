@@ -2,21 +2,23 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useRef } from "react";
-import { UseBackendAPI } from "../context/useBackendApi";
+import { UseBackendAPI } from "../context/useBackendAPI";
+import { UseUserContext } from "../context/useUserContext";
 export default function Login() {
   //Creating refs to hold values of login form values
   const userName = useRef();
   const password = useRef();
 
   const { login } = UseBackendAPI();
-  const loginHandler = (e) => {
+  const loginHandler = async (e) => {
     e.preventDefault();
 
     //Using the login function provided by the backendAPI component to verify the user
-    login({
+    const info = await login({
       userName: userName.current.value,
       password: password.current.value,
     });
+    alert(info);
   };
 
   return (
