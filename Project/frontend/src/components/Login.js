@@ -4,6 +4,7 @@ import Header from "./Header";
 import { useRef } from "react";
 import { UseBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
+import { faChampagneGlasses } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   //Creating refs to hold values of login form values
   const userName = useRef();
@@ -18,7 +19,7 @@ export default function Login() {
       userName: userName.current.value,
       password: password.current.value,
     });
-    alert(info);
+    // alert(info);
   };
 
   return (
