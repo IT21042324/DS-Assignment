@@ -16,9 +16,7 @@ export default function Item(props) {
   const [selectedItem, setSelectedItem] = useState(0);
 
   //to print details everytime the info is changed.. later remove it
-  useEffect(() => {
-    console.log(info);
-  }, [info]);
+  useEffect(() => {}, [info]);
 
   function addItemToCart(data) {
     if (selectedItem + 1 > props.details.quantity) {

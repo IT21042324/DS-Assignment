@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useState, useRef } from "react";
-import { UseBackendAPI } from "../context/useBackendAPI";
+import { useBackendAPI } from "../context/useBackendAPI";
 import avatar from "../assets/profilePic.png";
 import { UseUserContext } from "../context/useUserContext";
 
@@ -29,7 +29,7 @@ export default function Register() {
       console.log("error: ", error);
     };
   }
-  const { registerUser } = UseBackendAPI();
+  const { registerUser } = useBackendAPI();
 
   //To register Merchant
   async function registerMerchant() {
