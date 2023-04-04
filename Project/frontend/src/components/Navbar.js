@@ -30,6 +30,13 @@ function NavBar() {
       <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
+      <Link
+        to="/seller/store"
+        style={{ textDecoration: "none", color: "black" }}
+        onClick={() => onNavLinkClick("Store")}
+      >
+        <div className={selection === "Store" ? "active" : ""}>Store</div>
+      </Link>
       {!(userRole === "Merchant") ? (
         <Link
           to="/seller/register"
