@@ -6,6 +6,7 @@ import Product from "./pages/Buyer/Product";
 import React from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Store from "./pages/Seller/Store";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/seller/register" element={<Register />} />
+        <Route path="/seller/store" element={<Store />} />
       </Routes>
     </div>
   );
