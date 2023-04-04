@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import "./Store.css";
 import React, { useState } from "react";
 import Banner from "./banner";
 import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
+import NavBar from "../../components/Navbar";
 
 export default function Register() {
   const [storeUrl, setStoreUrl] = useState("");
@@ -17,7 +18,7 @@ export default function Register() {
   };
   return (
     <div>
-      <Navbar />
+      <NavBar></NavBar>
       <Banner></Banner>
       <form className="form-container">
         <div>
