@@ -31,7 +31,7 @@ function NavBar() {
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
       <Link
-        to="/seller/store"
+        to="/Seller/store"
         style={{ textDecoration: "none", color: "black" }}
         onClick={() => onNavLinkClick("Store")}
       >
