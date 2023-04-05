@@ -20,6 +20,8 @@ function NavBar() {
       setSelection("Products");
     } else if (path === "/seller/register") {
       setSelection("Seller");
+    } else if (path === "/seller/store") {
+      setSelection("Store");
     }
   }, []);
 
@@ -32,7 +34,7 @@ function NavBar() {
         <div className={selection === "Products" ? "active" : ""}>Products</div>
       </Link>
       <Link
-        to="/Seller/store"
+        to="/seller/store"
         style={{ textDecoration: "none", color: "black" }}
         onClick={() => onNavLinkClick("Store")}
       >
