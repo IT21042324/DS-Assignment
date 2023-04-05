@@ -66,7 +66,9 @@ export default function Item(props) {
           {props.details.quantity ? (
             <span>{props.details.quantity} Available</span>
           ) : (
-            <span> Sold Out</span>
+            <span style={{ textDecoration: "line-through", color: "red" }}>
+              Sold Out
+            </span>
           )}
 
           <div>
