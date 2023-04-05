@@ -6,22 +6,26 @@ import { BrowserRouter } from "react-router-dom";
 import { ItemContextProvider } from "./context/itemContext";
 import { CartContextProvider } from "./context/cartContext";
 import { UserContextProvider } from "./context/userContext";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <UserContextProvider>
-        <ItemContextProvider>
-          <CartContextProvider>
-            <App />
-          </CartContextProvider>
-        </ItemContextProvider>
-      </UserContextProvider>
+      <PayPalScriptProvider
+        options={{
+          "client-id":
+            "Ae0K1qpBCZ331xu7kH8SIQSEjtGDFsDQ9qONYWEzWH8YWXnEy-k3Zx7pTi9QTO10zjWsy2if8zRytoj6",
+        }}
+      >
+        <UserContextProvider>
+          <ItemContextProvider>
+            <CartContextProvider>
+              <App />
+            </CartContextProvider>
+          </ItemContextProvider>
+        </UserContextProvider>
+      </PayPalScriptProvider>
     </React.StrictMode>
   </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

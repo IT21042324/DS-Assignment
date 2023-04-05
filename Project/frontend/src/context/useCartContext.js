@@ -5,5 +5,7 @@ export const useCartContext = () => {
   const cartContext = useContext(CartContext);
   const { dispatch, info } = cartContext;
 
+  console.log(info);
+
   return { cartContext, dispatch, info };
 };

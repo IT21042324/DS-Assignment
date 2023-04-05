@@ -10,6 +10,7 @@ const paymentSchema = new Schema({
     type: Array,
     default: [],
   },
+  userID: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Payment", paymentSchema);

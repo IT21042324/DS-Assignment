@@ -2,17 +2,19 @@ let Payment = require("../models/Payment");
 
 const createPayment = async (req, res) => {
   const amount = Number(req.body.amount);
-  const itemList = req.body.itemList;
+  const { itemList, userID } = req.body;
 
   const newPayment = new Payment({
     amount,
     itemList,
+    userID,
   });
 
-  newPayment
+  const data = newPayment
     .save()
     .then(() => {
-      res.json("Payment added successfully");
+      res.json(data);
+      console.log(data);
     })
     .catch((err) => {
       console.log(err);
