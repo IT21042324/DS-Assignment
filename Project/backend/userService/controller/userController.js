@@ -6,10 +6,10 @@ const createToken = (id) => {
 };
 
 const userLogin = async (req, res) => {
-  const { userName, password } = req.body;
+  const { userName, password, role } = req.body;
 
   try {
-    const user = await userModel.login(userName, password);
+    const user = await userModel.login(userName, password, role);
 
     const token = createToken(user._id);
     user.token = token;
@@ -67,9 +67,10 @@ const updateUser = async function (req, res) {
 
 const getOneUser = async function (req, res) {
   const id = req.params.id;
+  const { role } = req.body;
 
   try {
-    const user = await userModel.find({ _id: id });
+    const user = await userModel.find({ _id: id, role });
     console.log(user);
     res.status(200).json(user);
   } catch (err) {

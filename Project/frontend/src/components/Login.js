@@ -6,6 +6,7 @@ import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
 export default function Login() {
   //Creating refs to hold values of login form values
+  const { selectedUserRole } = UseUserContext();
   const userName = useRef();
   const password = useRef();
 
@@ -17,6 +18,7 @@ export default function Login() {
     const info = await login({
       userName: userName.current.value,
       password: password.current.value,
+      role: selectedUserRole,
     });
     if (info) alert(info);
   };

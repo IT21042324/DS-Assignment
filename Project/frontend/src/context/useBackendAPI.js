@@ -56,7 +56,10 @@ export function useBackendAPI() {
         dispatch({ type: "SetUser", payload: [data] });
 
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
-        navigate("/product");
+
+        user1[0].role === "Buyer"
+          ? navigate("/product")
+          : navigate("/seller/store");
       } catch (err) {
         console.log(err.response.data.err);
         return err.response.data.err;
