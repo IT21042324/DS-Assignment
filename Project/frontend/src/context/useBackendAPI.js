@@ -2,9 +2,15 @@ import axios from "axios";
 import { UseUserContext } from "./useUserContext";
 import { useNavigate } from "react-router-dom";
 import { SendEmail } from "../components/SendEmail";
+import { useCartContext } from "./useCartContext";
+import { UseItemContext } from "./useItemContext";
 
 export function useBackendAPI() {
-  const { dispatch } = UseUserContext();
+  const { info } = useCartContext();
+  const { dispatch, user1 } = UseUserContext();
+  const itemContext = UseItemContext();
+  const itemDispatch = itemContext.dispatch;
+
   const navigate = useNavigate();
 
   return {
@@ -42,8 +48,8 @@ export function useBackendAPI() {
           userDetails
         );
 
-        // Check if a user object is stored in the local storage
-        if (localStorage.getItem("user")) localStorage.removeItem("user");
+        // // Check if a user object is stored in the local storage
+        // if (localStorage.getItem("user")) localStorage.removeItem("user");
 
         localStorage.setItem("user", JSON.stringify(data));
 
@@ -52,7 +58,8 @@ export function useBackendAPI() {
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
         navigate("/product");
       } catch (err) {
-        return err;
+        console.log(err.response.data.err);
+        return err.response.data.err;
       }
     },
     updateUser: async function ({ userId, userName, image }) {
@@ -84,6 +91,33 @@ export function useBackendAPI() {
 
         await updateLocalStorage(data);
       } catch (err) {
+        return err.message;
+      }
+    },
+
+    purchaseItem: async function (data) {
+      //To create a new payment record
+      try {
+        await axios.post("http://localhost:8083/api/payment/add/", {
+          amount: data.total,
+          itemList: info,
+          userID: user1[0]._id,
+        });
+
+        //To update the itemCount once the purchase is done
+        try {
+          await info.map((rec) => {
+            axios.patch("http://localhost:8081/api/product/updateItem/", {
+              itemID: rec.itemID,
+              redQuantity: rec.itemQuantity,
+            });
+          });
+        } catch (err) {
+          console.log(err);
+          return err.message;
+        }
+      } catch (err) {
+        console.log(err);
         return err.message;
       }
     },

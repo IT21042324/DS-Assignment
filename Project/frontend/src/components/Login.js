@@ -4,7 +4,6 @@ import Header from "./Header";
 import { useRef } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
-import { faChampagneGlasses } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   //Creating refs to hold values of login form values
   const userName = useRef();
@@ -19,7 +18,7 @@ export default function Login() {
       userName: userName.current.value,
       password: password.current.value,
     });
-    alert(info);
+    if (info) alert(info);
   };
 
   return (
@@ -68,7 +67,7 @@ export default function Login() {
           </div>
 
           <p className="forgot-password text-center">
-            Don't have an account yet?{" "}
+            Don't have an account yet?
             <Link to={"/register"}>Register Now</Link>
           </p>
         </form>

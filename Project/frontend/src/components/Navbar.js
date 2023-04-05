@@ -5,6 +5,7 @@ import { UseUserContext } from "../context/useUserContext";
 
 function NavBar() {
   const [selection, setSelection] = useState("Home");
+  function onNavLinkClick() {}
 
   //To get the logged in userRoler
   const { getUserRole, dispatch } = UseUserContext();
