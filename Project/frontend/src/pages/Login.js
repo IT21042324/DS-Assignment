@@ -15,7 +15,7 @@ export default function Login() {
                     <input
                         type="email"
                         className="form-control"
-                        placeholder="example@example.com"
+                        placeholder="example@gmail.com"
                     />
                     </div>
 

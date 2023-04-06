@@ -42,7 +42,7 @@ function NavBar() {
         onClick={() => onNavLinkClick("Seller")}
       >
         <div className={selection === "Seller" ? "active" : ""}>
-          Become A Seller
+          Seller Corner
         </div>
       </Link>
     </nav>
