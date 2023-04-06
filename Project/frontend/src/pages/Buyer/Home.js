@@ -1,10 +1,9 @@
-import ActionBanner from "../../components/ActionBanner";
 import Features from "../../components/Features";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import HomeBanner from "../../components/HomeBanner";
-import { ItemMapperHome } from "./ItemMapperHome";
-import React from 'react';
+import { ItemMapperHome } from "../../components/ItemMappers";
+import React from "react";
+import { HomeBanner, ActionBanner } from "../../components/Banner";
 
 export default function Home() {
   return (

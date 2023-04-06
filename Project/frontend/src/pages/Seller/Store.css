@@ -1,0 +1,29 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color:cadetblue;
+  }
+  
+  .left-side {
+    margin: auto;
+    width: 50%;
+    padding-right: 10px;
+    float:left;
+  }
+  
+  .right-side {
+    margin: auto;
+    width: 50%;
+    padding-left: 10px;
+    float:right;
+    
+  }
+  .img{
+    max-width: fit-content;
+    max-height: fit-content;
+  }
+  .img1{
+    position:center;
+  }

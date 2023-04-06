@@ -2,7 +2,7 @@ export default function SeachBar(props) {
   return (
     <div>
       <div
-        class="input-group"
+        className="input-group"
         style={{
           width: "30%",
           float: "right",
@@ -11,13 +11,13 @@ export default function SeachBar(props) {
       >
         <input
           type="search"
-          class="form-control rounded"
+          className="form-control rounded"
           placeholder="Search based on Item or Store"
           aria-label="Search"
           aria-describedby="search-addon"
           onChange={(e) => props.functionSearch(e.target.value)}
         />
-        <button type="button" class="btn btn-outline-primary">
+        <button type="button" className="btn btn-outline-primary">
           Search
         </button>
       </div>

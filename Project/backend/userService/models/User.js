@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt");
 const userSchema = new Schema({
   userName: {
     type: String,
-    unique: true,
     required: true,
   },
   password: {
@@ -25,7 +24,7 @@ const userSchema = new Schema({
   image: {
     type: String,
   },
-  type: {
+  role: {
     type: String,
     required: true,
   },
@@ -37,14 +36,18 @@ userSchema.statics.signup = async function (
   password,
   contact,
   address,
-  type
+  image,
+  role
 ) {
-  const exist = await this.findOne({ userName });
+  const exist = await this.find({ userName });
 
   if (!userName || !password || !contact || !address)
     throw Error("Please fill all fields");
   if (!validator.isEmail(userName)) throw Error("Email is invalid");
-  if (exist) throw Error("Email is already in use");
+  if (exist.length === 1)
+    if (exist[0].role == role) throw Error("Email is already in use");
+
+  if (exist.length > 1) throw Error("Email is already in use");
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
@@ -54,7 +57,8 @@ userSchema.statics.signup = async function (
     password: hash,
     contact,
     address,
-    type,
+    image,
+    role,
   });
 
   return singedUser; //To return a signedup new user object
