@@ -10,6 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f2f6f1;
 }
 
 code {
@@ -59,7 +60,7 @@ header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #E3E6F3;
+  background-color: #cffaee;
   padding: 20px 80px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
@@ -82,7 +83,7 @@ header nav {
 
 header nav div:hover,
 header nav div.active {
-  color: #088178;
+  color: #e75308;
   cursor: pointer;
 }
 
@@ -101,7 +102,7 @@ header nav div.active {
 
 #HomeBanner {
   background-image: url("./assets/hbanner.png");
-  background-color: #E3E6F3;
+  background-color: #cffaee;
   height: 90vh;
   width: auto;
   background-size: contain;
@@ -118,14 +119,14 @@ header nav div.active {
 }
 
 #HomeBanner h1 {
-  color: #088178;
+  color: #e6753d;
 }
 
 #HomeBanner button {
   width: 10%;
   padding: 8px;
   border-radius: 25px;
-  background-color: #e871a1;
+  background-color: #fb7f21;
   font-weight:700;
   border: none;
   color: #fff;
@@ -142,6 +143,7 @@ header nav div.active {
 #feature .fe-box{
   width: 180px;
   text-align: center;
+  background-color: white;
   padding: 25px 15px;
   box-shadow: 20px 20px 34px rgba(0, 0, 0, 0.03);
   border: 1px solid #cce7d0;
@@ -182,8 +184,8 @@ header nav div.active {
   width: 23%;
   min-width: 250px;
   padding: 10px 12px;
-  background-color: #E3E6F3;
-  border: 1px solid #fb7f21;
+  border: 1px solid #14c3a2;
+  background-color: white;
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
@@ -206,10 +208,10 @@ header nav div.active {
   margin: 10px;
   height: 40px;
   border-radius: 5px;
-  background-color: white;
+  background-color: #cce7d0;
   color: black;
   font-weight: 500;
-  border: 1px solid #fb7f21;
+  border: 1px solid #14c3a2;
   cursor: pointer;
 }
 
@@ -261,7 +263,7 @@ header nav div.active {
 }
 
 #action button:hover {
-  background: #088178;
+  background: #fb7f21;
   color: white;
 }
 
@@ -398,6 +400,9 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  background-color: white;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
 }
 
 footer .col {
@@ -520,4 +525,74 @@ h3 {
   line-height: 1.5;
 }
 
+.sideMenu {
+  position: fixed;
+  background-color: #021410;
+  max-width: 300px;
+  width: 100%;
+  height: 100%;
+}
 
+.sideMenu .items {
+  padding: 40px 0;
+  margin: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.sideMenu .items .li:hover {
+  background-color: white;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+.main-wrap {
+  margin-left: 300px;
+  position: relative;
+}
+.content-main {
+  padding: 30px 3%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card {
+  margin: 20px;
+}
+
+.icontext {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
+}
+
+.icontext .icon {
+  position: relative;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-right: 15px;
+}
+
+.icontext .icon.border {
+  max-height: 28px;
+}
+
+.icontext small, .icontext .title {
+  display: block;
+}
+
+.icontext span {
+  font-size: 22px;
+  font-weight: 600;
+  display: block;
+}
+
+.icontext span.text-sm {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6c757d;
+}
