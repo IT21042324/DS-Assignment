@@ -1,44 +1,36 @@
-import { Link } from "react-router-dom";
 import "./Store.css";
-import React, { useState } from "react";
-import Banner from "./banner";
+import React, { useRef } from "react";
 import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import { useBackendAPI } from "../../context/useBackendAPI";
 
 export default function Register() {
-  const [storeUrl, setStoreUrl] = useState("");
+  const storeName = useRef();
+  const location = useRef();
 
-  const handleStoreChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      setStoreUrl(reader.result);
+  const { createStore } = useBackendAPI();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const store = {
+      storeName: storeName.current.value,
+      location: location.current.value,
     };
+
+    //To create a store and add it to the merchant's storeID field in the merchant doc as well
+    await createStore(store);
   };
+
   return (
     <div>
-      <Banner></Banner>
-      <form className="form-container">
+      <Header />
+      <form className="form-container" onSubmit={(e) => submitHandler(e)}>
         <div>
           <h1 style={{ fontWeight: "bold", color: "White" }}>
             Enter Store Details
           </h1>
         </div>
-        <br></br>
-        <div className="left-side">
-          <div className="mb-1">
-            <label>Store Item Image</label>
-            <input
-              type="file"
-              className="form-control"
-              id="StoreItemInput"
-              onChange={handleStoreChange}
-            />
-          </div>
-          <div className="img">
-            {storeUrl && <img src={storeUrl} alt="store" />}
-          </div>
-        </div>
+        <br />
 
         <div className="right-side">
           <div className="mb-3">
@@ -47,6 +39,7 @@ export default function Register() {
               type="text"
               className="form-control"
               placeholder="enter a store name"
+              ref={storeName}
             />
           </div>
 
@@ -56,24 +49,7 @@ export default function Register() {
               type="text"
               className="form-control"
               placeholder="enter a location"
-            />
-          </div>
-
-          <div className="mb-3">
-            <label>Category</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="enter a category"
-            />
-          </div>
-
-          <div className="mb-3">
-            <label>Store Item</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="enter a store item"
+              ref={location}
             />
           </div>
 
@@ -84,7 +60,7 @@ export default function Register() {
           </div>
         </div>
       </form>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }
