@@ -16,9 +16,9 @@ function NavBar() {
 
     if (path === "/") {
       setSelection("Home");
-    } else if (path === "/product") {
+    } else if (path === "/buyer/product") {
       setSelection("Products");
-    } else if (path === "/seller/register") {
+    } else if (path === "/register") {
       setSelection("Seller");
     } else if (path === "/seller/store") {
       setSelection("Store");
@@ -33,7 +33,7 @@ function NavBar() {
             <div className={selection === "Home" ? "active" : ""}>Home</div>
           </Link>
           <Link
-            to="/product"
+            to="/buyer/product"
             style={{ textDecoration: "none", color: "black" }}
           >
             <div className={selection === "Products" ? "active" : ""}>
@@ -57,7 +57,7 @@ function NavBar() {
 
       {!(userRole === "Merchant") ? (
         <Link
-          to="/seller/register"
+          to="/register"
           style={{ textDecoration: "none", color: "black" }}
           onClick={(e) => {
             dispatch({
