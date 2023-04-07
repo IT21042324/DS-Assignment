@@ -3,16 +3,12 @@ import React, { useRef } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useBackendAPI } from "../../context/useBackendAPI";
-import { UseUserContext } from "../../context/useUserContext";
 
 export default function Register() {
   const storeName = useRef();
   const location = useRef();
 
-  const { getUser } = UseUserContext();
   const { createStore } = useBackendAPI();
-
-  const user = getUser();
 
   const submitHandler = async (e) => {
     e.preventDefault();

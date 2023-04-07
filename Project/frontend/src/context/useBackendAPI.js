@@ -6,7 +6,7 @@ import { useCartContext } from "./useCartContext";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
-  const { dispatch, user1, setStore, getUser } = UseUserContext();
+  const { dispatch, user1, setStore } = UseUserContext();
 
   const navigate = useNavigate();
 
@@ -56,9 +56,7 @@ export function useBackendAPI() {
 
         if (user1[0].role === "Buyer") navigate("/product");
         else if (user1[0].role === "Merchant") {
-          {
-            user1[0]?.storeID ? navigate("/seller") : navigate("/seller/store");
-          }
+          user1[0]?.storeID ? navigate("/seller") : navigate("/seller/store");
         }
       } catch (err) {
         console.log(err.response.data.err);

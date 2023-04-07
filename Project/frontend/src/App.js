@@ -3,14 +3,12 @@ import Home from "./pages/Buyer/Home";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { Navigate } from "react-router-dom";
 import { UseUserContext } from "./context/useUserContext";
 import { BuyerRoutes } from "./BuyerRoutes";
 import { SellerRoutes } from "./SellerRoutes";
 
 export default function App() {
-  const { user1, getUser } = UseUserContext();
-  const user = getUser();
+  const { user1 } = UseUserContext();
 
   return (
     <div className="App">
