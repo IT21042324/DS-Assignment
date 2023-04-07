@@ -24,6 +24,7 @@ export default function Register() {
     //To create a store and add it to the merchant's storeID field in the merchant doc as well
     const status = await createStore(store);
 
+    //To notify the user with relevant alert message
     if (status) alert("Store Created Successfully");
     else alert("Store Cannot Be created at the moment.. Please try later");
   };

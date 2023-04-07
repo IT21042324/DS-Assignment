@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./CartItem.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,9 +17,7 @@ const CartItem = (props) => {
         />
       </div>
 
-      {/* <Link to={"/"} className="cartItem__name"> */}
       <p>{props.details.itemName}</p>
-      {/* </Link> */}
 
       <p className="cartItem__price"> Rs. {props.details.itemPrice}</p>
 
