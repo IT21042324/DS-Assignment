@@ -3,13 +3,10 @@ import { UseUserContext } from "./useUserContext";
 import { useNavigate } from "react-router-dom";
 import { SendEmail } from "../components/SendEmail";
 import { useCartContext } from "./useCartContext";
-import { UseItemContext } from "./useItemContext";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
-  const { dispatch, user1 } = UseUserContext();
-  const itemContext = UseItemContext();
-  const itemDispatch = itemContext.dispatch;
+  const { dispatch, user1, setStore } = UseUserContext();
 
   const navigate = useNavigate();
 
@@ -110,10 +107,13 @@ export function useBackendAPI() {
         //To update the itemCount once the purchase is done
         try {
           await info.map((rec) => {
-            axios.patch("http://localhost:8081/api/product/updateItem/", {
-              itemID: rec.itemID,
-              redQuantity: rec.itemQuantity,
-            });
+            return axios.patch(
+              "http://localhost:8081/api/product/updateItem/",
+              {
+                itemID: rec.itemID,
+                redQuantity: rec.itemQuantity,
+              }
+            );
           });
         } catch (err) {
           console.log(err);
@@ -122,6 +122,23 @@ export function useBackendAPI() {
       } catch (err) {
         console.log(err);
         return err.message;
+      }
+    },
+    createStore: async function (store) {
+      store.merchantID = user1[0]._id;
+
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8082/api/store/add/",
+          store
+        );
+        setStore(data._id);
+
+        navigate("/seller");
+        return data;
+      } catch (err) {
+        alert("Store Cannot Be created at the moment.. Please try later");
+        return err;
       }
     },
   };

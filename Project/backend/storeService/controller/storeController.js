@@ -11,6 +11,7 @@ const createStore = async (req, res) => {
   await newStore
     .save()
     .then(() => {
+      console.log(newStore);
       res.json(newStore);
     })
     .catch((err) => {

@@ -43,6 +43,19 @@ export const UseUserContext = () => {
     }
   }
 
+  function setStore(storeID) {
+    const userSaved = localStorage.getItem("user");
+    if (userSaved) {
+      const user = JSON.parse(userSaved);
+      user.storeID = storeID;
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch({
+        type: "SetStore",
+        payload: storeID,
+      });
+    }
+  }
+
   function logoutUser() {
     const userSaved = localStorage.getItem("user");
     if (userSaved) {
@@ -57,6 +70,7 @@ export const UseUserContext = () => {
     dispatch,
     user1,
     selectedUserRole,
+    setStore,
     getUser,
     getUserRole,
     setUserRole,
