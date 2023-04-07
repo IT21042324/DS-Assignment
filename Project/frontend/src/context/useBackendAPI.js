@@ -6,7 +6,7 @@ import { useCartContext } from "./useCartContext";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
-  const { dispatch, user1, setStore } = UseUserContext();
+  const { dispatch, user1, setStore, getUser } = UseUserContext();
 
   const navigate = useNavigate();
 
@@ -32,9 +32,12 @@ export function useBackendAPI() {
           role: userDetails.role,
         });
 
-        //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
-        navigate("/product");
+        alert("Account Created Successfully");
+
+        if (data.role === "Buyer") navigate("/product");
+        else if (data.role === "Merchant") navigate("/seller/store");
       } catch (err) {
+        alert("Ooops.. There seems to be an error. Try again later");
         console.log(err);
       }
     },
@@ -44,9 +47,6 @@ export function useBackendAPI() {
           "http://localhost:8080/api/user/login/",
           userDetails
         );
-
-        // // Check if a user object is stored in the local storage
-        // if (localStorage.getItem("user")) localStorage.removeItem("user");
 
         localStorage.setItem("user", JSON.stringify(data));
 
@@ -132,13 +132,19 @@ export function useBackendAPI() {
           "http://localhost:8082/api/store/add/",
           store
         );
+
+        await axios.patch("http://localhost:8080/api/user/updateUserStore/", {
+          userID: user1[0]._id,
+          storeID: data._id,
+        });
+
         setStore(data._id);
 
         navigate("/seller");
-        return data;
+
+        return true;
       } catch (err) {
-        alert("Store Cannot Be created at the moment.. Please try later");
-        return err;
+        return false;
       }
     },
   };

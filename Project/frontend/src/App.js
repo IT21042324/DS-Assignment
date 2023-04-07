@@ -24,7 +24,7 @@ export default function App() {
         <Route
           path="/"
           element={
-            user1[0]?.role === "Buyer" || !user1[0] ? (
+            user?.role === "Buyer" || !user ? (
               <Home />
             ) : (
               <Navigate to="/seller/store" />
@@ -34,7 +34,6 @@ export default function App() {
 
         <Route path="/Cart" element={<Cart />} />
         <Route path="/product" element={<Product />} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/seller" element={<Seller />} />
@@ -45,7 +44,7 @@ export default function App() {
 
         <Route
           path="/seller/store"
-          element={!user1[0]?.storeID ? <Store /> : <Navigate to="/seller" />}
+          element={!user?.storeID ? <Store /> : <Navigate to="/seller" />}
         />
       </Routes>
     </div>
