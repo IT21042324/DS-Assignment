@@ -2,43 +2,37 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ordersSchema = new Schema({
-  orderid: {
+  userID: {
     type: String,
     required: true,
   },
-  userid: {
+  storeID: {
     type: String,
     required: true,
   },
-  storeid: {
+  merchantID: {
     type: String,
     required: true,
   },
-  merchantid: {
+  paymentID: {
     type: String,
     required: true,
   },
-  paymentid: {
+  address: {
     type: String,
     required: true,
   },
-  deliveryaddress: {
-    type: String,
-    required: true,
-  },
-  orderdate: {
+  orderedDate: {
     type: Date,
+    default: Date.now,
     required: true,
   },
-  orderstatus: {
+  status: {
     type: String,
     required: true,
+    default: "Processing",
   },
-  deliverydate: {
-    type: Date,
-    required: true,
-  },
-  delivereddate: {
+  deliveredDate: {
     type: Date,
     required: true,
   },
