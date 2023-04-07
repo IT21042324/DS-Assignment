@@ -84,14 +84,13 @@ const updateUserStore = async (req, res) => {
   try {
     const updatedUser = await userModel.findOneAndUpdate(
       { _id: userID },
-      { storeID },
-      { new: true }
+      { storeID }
     );
-
+    console.log(updateUser);
     res.json(updatedUser);
   } catch (err) {
-    res.json(err);
     console.log(err);
+    res.json(err);
   }
 };
 

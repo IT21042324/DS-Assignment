@@ -9,15 +9,8 @@ export default function Product() {
   return (
     <div>
       <Header />
-
-      {user1[0]?.role === "Buyer" ||
-        (!user1[0] && (
-          <>
-            <Features />
-            <ItemMapper />
-          </>
-        ))}
-
+      <Features />
+      <ItemMapper />
       <Footer />
     </div>
   );
