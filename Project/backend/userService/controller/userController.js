@@ -78,4 +78,27 @@ const getOneUser = async function (req, res) {
   }
 };
 
-module.exports = { userSignUp, userLogin, updateUser, getOneUser };
+const updateUserStore = async (req, res) => {
+  const { userID, storeID } = req.body;
+
+  try {
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id: userID },
+      { storeID },
+      { new: true }
+    );
+
+    res.json(updatedUser);
+  } catch (err) {
+    res.json(err);
+    console.log(err);
+  }
+};
+
+module.exports = {
+  userSignUp,
+  userLogin,
+  updateUser,
+  getOneUser,
+  updateUserStore,
+};

@@ -11,21 +11,29 @@ import AddProduct from "./pages/Seller/Add-Product";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Store from "./pages/Seller/Store";
+import { Navigate } from "react-router-dom";
 import { UseUserContext } from "./context/useUserContext";
 
-function App() {
-  const { user1 } = UseUserContext();
+export default function App() {
+  const { user1, getUser } = UseUserContext();
+  const user = getUser();
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />} />
-        {user1[0]?.role === "Buyer" ||
-          (!user1[0] && (
-            <>
-              <Route path="/Cart" element={<Cart />} />
-              <Route path="/product" element={<Product />} />
-            </>
-          ))}
+        <Route
+          path="/"
+          element={
+            user1[0]?.role === "Buyer" || !user1[0] ? (
+              <Home />
+            ) : (
+              <Navigate to="/seller/store" />
+            )
+          }
+        />
+
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/product" element={<Product />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -34,10 +42,12 @@ function App() {
         <Route path="/seller/profile" element={<Profile />} />
         <Route path="/seller/product" element={<ProductList />} />
         <Route path="/seller/add-product" element={<AddProduct />} />
-        <Route path="/seller/store" element={<Store />} />
+
+        <Route
+          path="/seller/store"
+          element={!user1[0]?.storeID ? <Store /> : <Navigate to="/seller" />}
+        />
       </Routes>
     </div>
   );
 }
-
-export default App;

@@ -28,6 +28,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  storeID: String,
 });
 
 //Creating User schema functions

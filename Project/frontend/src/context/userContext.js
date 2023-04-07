@@ -17,7 +17,7 @@ export const UserContextProvider = (props) => {
         return {
           user1: action.payload,
           selectedUserRole: state.selectedUserRole,
-        }; //data is sent here as an array using axios since only one user
+        };
       case "Logout":
         return { user1: [], selectedUserRole: "" };
       case "SetUserRole":
@@ -27,6 +27,8 @@ export const UserContextProvider = (props) => {
           user1: state.user1,
           selectedUserRole: "",
         };
+      case "SetStore":
+        return { user1: (state.user1[0].storeID = action.payload) };
       default:
         return state;
     }
