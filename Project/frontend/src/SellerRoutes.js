@@ -1,15 +1,16 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Seller from "./pages/Seller/Seller";
 import Profile from "./pages/Seller/Profile";
 import ProductList from "./pages/Seller/ProductList";
 import AddProduct from "./pages/Seller/Add-Product";
 import Store from "./pages/Seller/Store";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UseUserContext } from "./context/useUserContext";
 
 export function SellerRoutes() {
-  const { user1, getUser } = UseUserContext();
+  const navigate = useNavigate();
+
+  const { getUser } = UseUserContext();
   const user = getUser();
 
   return (
@@ -22,7 +23,7 @@ export function SellerRoutes() {
 
         <Route
           path="/store"
-          element={!user?.storeID ? <Store /> : <Navigate to="/seller" />}
+          element={!user?.storeID ? <Store /> : navigate("/seller")}
         />
       </Routes>
     </div>

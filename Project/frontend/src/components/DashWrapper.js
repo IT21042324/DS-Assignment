@@ -28,9 +28,12 @@ function DashWrapper() {
           <p>Whole data about your business here</p>
         </div>
         <div>
-          <Link className="btn btn-primary" to={"/"} onClick={logoutFunction}>
-            Logout
-          </Link>
+          <input
+            type="Button"
+            className="btn btn-primary"
+            onClick={(e) => logoutFunction()}
+            value="Logout"
+          />
         </div>
       </div>
 
