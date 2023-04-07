@@ -19,7 +19,7 @@ export default function Cart() {
   // calculate the checkout price using reduce()
   const checkoutPrice = info.reduce(
     (acc, item) => acc + item.itemPrice * item.itemQuantity,
-    
+    0
   );
 
   const proceedToCheckout = () => {

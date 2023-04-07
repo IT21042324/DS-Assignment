@@ -9,7 +9,7 @@ import {
 import { UseUserContext } from "../context/useUserContext";
 
 function DashWrapper() {
-  const { user1, logoutUser, dispatch } = UseUserContext();
+  const { logoutUser } = UseUserContext();
 
   //The function to logout
   const logoutFunction = () => {
