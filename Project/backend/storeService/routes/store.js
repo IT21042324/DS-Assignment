@@ -6,16 +6,22 @@ const {
   updateStore,
   getOneStore,
   deleteStore,
+  updateStoreItem,
+  deleteStoreItem,
 } = require("../controller/storeController");
-//create
+//create store
 router.post("/add", createStore);
 //display
 router.get("/", getAllStore);
 //update
-router.put("/update/:storeid", updateStore);
+router.put("/update/", updateStore);
 
-router.delete("/delete/:storeid", deleteStore);
+router.delete("/delete/", deleteStore);
 
-router.get("/get/:storeid", getOneStore);
+router.get("/get/", getOneStore);
+
+//Routes to update and delete store items
+router.patch("/updateItem", updateStoreItem);
+router.patch("/deleteStoreItem", deleteStoreItem);
 
 module.exports = router;

@@ -64,10 +64,10 @@ userSchema.statics.signup = async function (
   return singedUser; //To return a signedup new user object
 };
 
-userSchema.statics.login = async function (userName, password) {
+userSchema.statics.login = async function (userName, password, role) {
   if (!userName || !password) throw Error("Please fill all fields");
 
-  const user = await this.findOne({ userName });
+  const user = await this.findOne({ userName, role });
   if (!user) throw Error("User Name doesn't exist");
 
   const match = await bcrypt.compare(password, user.password); //returns true or false
