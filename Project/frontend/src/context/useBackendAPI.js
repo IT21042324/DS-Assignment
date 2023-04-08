@@ -3,10 +3,12 @@ import { UseUserContext } from "./useUserContext";
 import { useNavigate } from "react-router-dom";
 import { SendEmail } from "../components/SendEmail";
 import { useCartContext } from "./useCartContext";
+import { UseStoreContext } from "./useStoreContext";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
   const { dispatch, user1, setStore } = UseUserContext();
+  const storeDispatch = UseStoreContext().dispatch;
 
   const navigate = useNavigate();
 
@@ -169,25 +171,7 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
-    saveProduct: async function (product) {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:8081/api/product/addItem/",
-          product
-        );
 
-        await axios.patch("http://localhost:8082/api/store/updateItem/", {
-          storeID: user1[0].storeID,
-          item: data,
-        });
-
-        alert("Item Added Successfully");
-      } catch (err) {
-        alert(
-          "There seems to be an error. Item cannot be uploaded at the moment"
-        );
-      }
-    },
     getStoreName: async function (storeID) {
       try {
         const { data } = await axios.get(
@@ -212,6 +196,49 @@ export function useBackendAPI() {
       } catch (err) {
         alert(
           "There seems to be an error. Store Name cannot be fethched at the moment"
+        );
+      }
+    },
+
+    saveProduct: async function (product) {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8081/api/product/addItem/",
+          product
+        );
+
+        await axios.patch("http://localhost:8082/api/store/updateItem/", {
+          storeID: user1[0].storeID,
+          item: data,
+        });
+
+        storeDispatch({ type: "AddItem", payload: product });
+
+        alert("Item Added Successfully");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be uploaded at the moment"
+        );
+      }
+    },
+
+    removeItem: async function (itemID) {
+      try {
+        await axios.delete(
+          "http://localhost:8081/api/product/deleteItem/" + itemID
+        );
+
+        await axios.patch("http://localhost:8082/api/store/deleteStoreItem/", {
+          storeID: user1[0].storeID,
+          itemID,
+        });
+
+        storeDispatch({ type: "DeleteItem", payload: { _id: itemID } });
+
+        alert("Item Removed from the store");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be removed at the moment"
         );
       }
     },
