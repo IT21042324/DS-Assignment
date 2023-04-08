@@ -3,7 +3,7 @@ import "./Store.css";
 import React, { useState } from "react";
 import Banner from "./banner";
 import Footer from "../../components/Footer";
-import NavBar from "../../components/Navbar";
+import Header from "../../components/Header";
 
 export default function Register() {
   const [storeUrl, setStoreUrl] = useState("");
@@ -18,7 +18,7 @@ export default function Register() {
   };
   return (
     <div>
-      <NavBar></NavBar>
+      <Header></Header>
       <Banner></Banner>
       <form className="form-container">
         <div>
