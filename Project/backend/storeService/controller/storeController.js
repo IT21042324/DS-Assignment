@@ -65,18 +65,16 @@ const deleteStore = async (req, res) => {
 };
 
 const getOneStore = async (req, res) => {
-  const { storeID } = req.body;
+  const id = req.params.id;
 
-  await Store.findById(storeID)
-    .then(() => {
-      res.status(200).send({ status: "Store fetched" });
-    })
-    .catch((err) => {
-      console.log(err.message);
-      res
-        .status(500)
-        .send({ status: "Unable to access store", error: err.message });
-    });
+  try {
+    const data = await Store.findById(id);
+    console.log(data);
+    res.json(data);
+  } catch (err) {
+    console.log(err.message);
+    res.send(err.message);
+  }
 };
 
 const getStoreItemCount = async (req, res) => {
@@ -91,7 +89,7 @@ const getStoreItemCount = async (req, res) => {
   }
 };
 
-const updateStoreItem = async (req, res) => {
+const addStoreItem = async (req, res) => {
   const { item, storeID } = req.body;
 
   try {
@@ -144,6 +142,6 @@ module.exports = {
   deleteStore,
   getOneStore,
   getStoreItemCount,
-  updateStoreItem,
+  addStoreItem,
   deleteStoreItem,
 };

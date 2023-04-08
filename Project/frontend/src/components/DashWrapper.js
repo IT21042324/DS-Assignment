@@ -1,3 +1,4 @@
+// Import necessary dependencies
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBox,
@@ -10,44 +11,62 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 function DashWrapper() {
+  // Access necessary functions and variables from custom hooks
   const { logoutUser, getUser } = UseUserContext();
-
   const { getTotalSalesAmount, getStoreItemCount } = useBackendAPI();
+
+  // Get user information from the context
   const user = getUser();
 
+  // Define state variables to store data
   const [salesTotal, setSalesTotal] = useState(0);
   const [salesOrderCount, setOrderCount] = useState(0);
   const [storeItemCount, setStoreItemCount] = useState(0);
 
+  // Define a state variable to track merchant's login status
   const [mechantIsLoggedIn, setMerchantIsLoggedIn] = useState(true);
 
+  // Use useEffect to get sales data and store item count when user changes
   useEffect(() => {
     async function getSalesData() {
+      // Get total sales amount and order count
       const { total, orderCount } = await getTotalSalesAmount(user.storeID);
+
+      // Get store item count
       const itemCount = await getStoreItemCount(user.storeID);
+
+      // Update state variables with fetched data
       setSalesTotal(total);
       setOrderCount(orderCount);
       setStoreItemCount(itemCount);
     }
+
+    // Call the getSalesData function when user changes
     getSalesData();
   }, [user]);
 
+  // Use useEffect to logout user if merchantIsLoggedIn state changes
   useEffect(() => {
     console.log(mechantIsLoggedIn);
 
-    if (!mechantIsLoggedIn) logoutUser();
+    if (!mechantIsLoggedIn) {
+      // Call the logoutUser function from the context
+      logoutUser();
+    }
   }, [mechantIsLoggedIn]);
 
-  //The function to logout
+  // Define a function to logout the user
   const logoutFunction = () => {
-    //To logout the user
-
+    // Set merchantIsLoggedIn state to false
     setMerchantIsLoggedIn(false);
+
+    // Show an alert to confirm the logout
     alert("Logged Out");
   };
 
   return (
     <section className="main-wrap">
+      {/* If the merchant is logged in, display the dashboard */}
       {mechantIsLoggedIn ? (
         <>
           <div
