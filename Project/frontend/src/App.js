@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./pages/Buyer/Home";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { UseUserContext } from "./context/useUserContext";

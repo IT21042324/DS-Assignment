@@ -8,11 +8,14 @@ const {
   deleteStore,
   updateStoreItem,
   deleteStoreItem,
+  getStoreItemCount,
 } = require("../controller/storeController");
 //create store
 router.post("/add", createStore);
 //display
 router.get("/", getAllStore);
+
+router.get("/getStoreItemCount/:id", getStoreItemCount);
 //update
 router.put("/update/", updateStore);
 

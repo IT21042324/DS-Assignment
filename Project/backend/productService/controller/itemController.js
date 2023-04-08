@@ -3,7 +3,6 @@ const itemModel = require("../models/Item");
 const getAllItems = async (req, res) => {
   try {
     const data = await itemModel.find();
-    // find({reps:20}) will give all documents of reps:20
 
     res.json(data);
   } catch (err) {
