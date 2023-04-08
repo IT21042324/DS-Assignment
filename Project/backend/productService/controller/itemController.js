@@ -15,12 +15,13 @@ const postItem = async (req, res) => {
   const {
     itemName,
     image,
-    storename,
+    storeName,
     description,
     category,
     price,
     quantity,
     discount,
+    storeID,
   } = req.body;
 
   const totalPrice = price - (price * discount) / 100;
@@ -35,7 +36,8 @@ const postItem = async (req, res) => {
       quantity,
       discount,
       totalPrice,
-      storename,
+      storeName,
+      storeID,
     });
 
     const data = await ItemModel.save();

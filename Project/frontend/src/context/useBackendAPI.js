@@ -169,5 +169,51 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
+    saveProduct: async function (product) {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8081/api/product/addItem/",
+          product
+        );
+
+        await axios.patch("http://localhost:8082/api/store/updateItem/", {
+          storeID: user1[0].storeID,
+          item: data,
+        });
+
+        alert("Item Added Successfully");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be uploaded at the moment"
+        );
+      }
+    },
+    getStoreName: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/store/get/" + storeID
+        );
+        return data.storeName;
+      } catch (err) {
+        alert(
+          "There seems to be an error. Store Name cannot be fethched at the moment"
+        );
+      }
+    },
+    getProductsOfStore: async function () {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/store/get/" + user1[0].storeID
+        );
+
+        const { storeItem } = data;
+
+        return storeItem;
+      } catch (err) {
+        alert(
+          "There seems to be an error. Store Name cannot be fethched at the moment"
+        );
+      }
+    },
   };
 }

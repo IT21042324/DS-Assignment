@@ -6,8 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ItemContextProvider } from "./context/itemContext";
 import { CartContextProvider } from "./context/cartContext";
 import { UserContextProvider } from "./context/userContext";
+import { StoreContextProvider } from "./context/storeContext";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
@@ -20,9 +20,11 @@ root.render(
       >
         <UserContextProvider>
           <ItemContextProvider>
-            <CartContextProvider>
-              <App />
-            </CartContextProvider>
+            <StoreContextProvider>
+              <CartContextProvider>
+                <App />
+              </CartContextProvider>
+            </StoreContextProvider>
           </ItemContextProvider>
         </UserContextProvider>
       </PayPalScriptProvider>
