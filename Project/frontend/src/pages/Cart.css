@@ -48,7 +48,7 @@
     border: 1px solid #171717;
     cursor: pointer;
   }
-  
+ 
   .cart__right div button:hover {
     opacity: 0.9;
   }
@@ -75,3 +75,4 @@
     }
   }
   
+

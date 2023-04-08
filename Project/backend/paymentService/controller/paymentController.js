@@ -2,17 +2,19 @@ let Payment = require("../models/Payment");
 
 const createPayment = async (req, res) => {
   const amount = Number(req.body.amount);
-  const itemList = req.body.itemList;
+  const { itemList, userID } = req.body;
 
   const newPayment = new Payment({
     amount,
     itemList,
+    userID,
   });
 
-  newPayment
+  const data = newPayment
     .save()
     .then(() => {
-      res.json("Payment added successfully");
+      res.json(data);
+      console.log(data);
     })
     .catch((err) => {
       console.log(err);
@@ -30,28 +32,29 @@ const getAllPayment = async (req, res) => {
 };
 
 const updatePayment = async (req, res) => {
-  let Id = req.params.id;
-  const { amount, itemList } = req.body;
+  const { paymentID, status } = req.body;
 
   const updatePayment = {
-    amount,
-    itemList,
+    status,
   };
 
-  const update = await Payment.findByIdAndUpdate(Id, updatePayment)
+  const update = await Payment.findOneAndUpdate(
+    { _id: paymentID },
+    updatePayment
+  )
     .then(() => {
       res.status(200).send({ status: "Payment Updated" });
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send({ status: "Error with updating data" });
+      res.status(500).send({ status: "Error updating data" });
     });
 };
 
 const deletePayment = async (req, res) => {
-  let Id = req.params.id;
+  const { paymentID } = req.body;
 
-  await Payment.findByIdAndDelete(Id)
+  await Payment.findByIdAndDelete(paymentID)
     .then(() => {
       res.status(200).send({ status: "Payment Deleted" });
     })

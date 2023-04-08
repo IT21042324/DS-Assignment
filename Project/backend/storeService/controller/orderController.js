@@ -1,33 +1,19 @@
 let Order = require("../models/Order");
 
 const createOrder = async (req, res) => {
-  const orderid = req.body.orderid;
-  const userid = req.body.userid;
-  const storeid = req.body.storeid;
-  const merchantid = req.body.merchantid;
-  const paymentid = req.body.paymentid;
-  const deliveryaddress = req.body.deliveryaddress;
-  const orderdate = req.body.orderdate;
-  const orderstatus = req.body.orderstatus;
-  const deliverydate = req.body.deliverydate;
-  const delivereddate = req.body.delivereddate;
+  const { userID, merchantID, storeID, paymentID, address } = req.body;
+
   const newOrder = new Order({
-    orderid,
-    userid,
-    storeid,
-    merchantid,
-    storeid,
-    paymentid,
-    deliveryaddress,
-    orderdate,
-    orderstatus,
-    deliverydate,
-    delivereddate,
+    userID,
+    merchantID,
+    storeID,
+    paymentID,
+    address,
   });
-  await newMerchant
+  await newOrder
     .save()
-    .then(() => {
-      res.json("Store Added");
+    .then((data) => {
+      res.json(data);
     })
     .catch((err) => {
       console.log(err);
@@ -43,35 +29,14 @@ const getAllOrder = async (req, res) => {
       console.log(err);
     });
 };
+
 const updateOrder = async (req, res) => {
-  let oid = req.params.orderid;
-  const {
-    orderid,
-    userid,
-    storeid,
-    merchantid,
-    paymentid,
-    deliveryaddress,
-    orderdate,
-    orderstatus,
-    deliverydate,
-    delivereddate,
-  } = req.body;
+  const { orderID, status } = req.body;
 
   const updateStore = {
-    orderid,
-    userid,
-    storeid,
-    merchantid,
-    storeid,
-    paymentid,
-    deliveryaddress,
-    orderdate,
-    orderstatus,
-    deliverydate,
-    delivereddate,
+    status,
   };
-  const update = await Order.findById(oid, updateStore)
+  const update = await Order.findById(orderID, updateStore)
     .then(() => {
       res.status(200).send({ Status: "Order updated", order: update });
     })
@@ -80,31 +45,18 @@ const updateOrder = async (req, res) => {
     });
 };
 
-const deleteOrder = async (req, res) => {
-  let oid = req.params.orderid;
-  await Store.findById(oid)
-    .then(() => {
-      res.status(200).send({ status: "Store deleted" });
-    })
-    .catch((err) => {
-      console.log(err.message);
-      res
-        .status(500)
-        .send({ status: "Error with delete merchant", error: err.message });
-    });
-};
-
 const getOneOrder = async (req, res) => {
-  let oid = req.params.orderid;
-  await Order.findById(oid)
-    .then(() => {
-      res.status(200).send({ status: "User fetched" });
+  const { orderID } = req.body;
+
+  await Order.findById(orderID)
+    .then((order) => {
+      res.status(200).send(order);
     })
     .catch((err) => {
       console.log(err.message);
       res
         .status(500)
-        .send({ status: "Error with delete Store", error: err.message });
+        .send({ status: "Error Fetching Order", error: err.message });
     });
 };
 
@@ -112,6 +64,5 @@ module.exports = {
   createOrder,
   getAllOrder,
   updateOrder,
-  deleteOrder,
   getOneOrder,
 };

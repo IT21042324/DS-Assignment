@@ -2,15 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const storesSchema = new Schema({
-  storeid: {
+  merchantID: {
     type: String,
     required: true,
   },
-  merchantid: {
-    type: String,
-    required: true,
-  },
-  storename: {
+  storeName: {
     type: String,
     required: true,
   },
@@ -18,13 +14,8 @@ const storesSchema = new Schema({
     type: String,
     required: true,
   },
-  category: {
-    type: String,
-    required: true,
-  },
-  storeitem: {
+  storeItem: {
     type: Array,
-    required: true,
   },
 });
 

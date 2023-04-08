@@ -16,7 +16,7 @@ export function ActionBanner() {
         Selling
       </h2>
       <Link
-        to="/seller/register"
+        to="/register"
         onClick={(e) =>
           dispatch({
             type: "SetUserRole",
@@ -38,7 +38,7 @@ export function HomeBanner() {
       <h1>On all products</h1>
       <p>Pick Your Herbal Cure</p>
 
-      <Link to="/product" style={{ textDecoration: "none" }}>
+      <Link to="/buyer/product" style={{ textDecoration: "none" }}>
         <button>Shop Now</button>
       </Link>
     </section>

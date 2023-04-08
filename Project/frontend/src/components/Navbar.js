@@ -5,9 +5,10 @@ import { UseUserContext } from "../context/useUserContext";
 
 function NavBar() {
   const [selection, setSelection] = useState("Home");
+  function onNavLinkClick() {}
 
   //To get the logged in userRoler
-  const { getUserRole, dispatch } = UseUserContext();
+  const { getUserRole, dispatch, user1 } = UseUserContext();
   const userRole = getUserRole();
 
   useEffect(() => {
@@ -15,31 +16,48 @@ function NavBar() {
 
     if (path === "/") {
       setSelection("Home");
-    } else if (path === "/product") {
+    } else if (path === "/buyer/product") {
       setSelection("Products");
-    } else if (path === "/seller/register") {
+    } else if (path === "/register") {
       setSelection("Seller");
+    } else if (path === "/seller/store") {
+      setSelection("Store");
     }
   }, []);
 
   return (
     <nav>
-      <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-        <div className={selection === "Home" ? "active" : ""}>Home</div>
-      </Link>
-      <Link to="/product" style={{ textDecoration: "none", color: "black" }}>
-        <div className={selection === "Products" ? "active" : ""}>Products</div>
-      </Link>
-      <Link
-        to="/Seller/store"
-        style={{ textDecoration: "none", color: "black" }}
-        onClick={() => onNavLinkClick("Store")}
-      >
-        <div className={selection === "Store" ? "active" : ""}>Store</div>
-      </Link>
+      {(user1[0]?.role === "Buyer" || !user1[0]) && (
+        <>
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <div className={selection === "Home" ? "active" : ""}>Home</div>
+          </Link>
+          <Link
+            to="/buyer/product"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div className={selection === "Products" ? "active" : ""}>
+              Products
+            </div>
+          </Link>
+        </>
+      )}
+
+      {user1[0]?.role === "Merchant" && (
+        <>
+          <Link
+            to="/seller/store"
+            style={{ textDecoration: "none", color: "black" }}
+            onClick={() => onNavLinkClick("Store")}
+          >
+            <div className={selection === "Store" ? "active" : ""}>Store</div>
+          </Link>
+        </>
+      )}
+
       {!(userRole === "Merchant") ? (
         <Link
-          to="/seller/register"
+          to="/register"
           style={{ textDecoration: "none", color: "black" }}
           onClick={(e) => {
             dispatch({

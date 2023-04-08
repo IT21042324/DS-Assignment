@@ -6,7 +6,6 @@ const getAllItems = async (req, res) => {
     // find({reps:20}) will give all documents of reps:20
 
     res.json(data);
-    console.log(data);
   } catch (err) {
     console.log(err.message);
   }
@@ -61,7 +60,6 @@ const getOneItem = async (req, res) => {
     res.json(err.message);
   }
 };
-
 const updateItem = async (req, res) => {
   const {
     itemID,
@@ -71,32 +69,44 @@ const updateItem = async (req, res) => {
     image,
     price,
     quantity,
+    redQuantity,
     discount,
   } = req.body;
 
-  let totalPrice;
-
-  if (price && discount) totalPrice = price - (price * discount) / 100;
-
   try {
-    // const itemToBeUpdated = await itemModel.findOne({ _id: itemID });
+    const itemToBeUpdated = await itemModel.findOne({ _id: itemID });
 
-    const updatedInfo = itemModel.findOneAndUpdate(
-      { _id: itemID },
-      {
-        itemID,
-        itemName,
-        description,
-        image,
-        category,
-        price,
-        quantity,
-        discount,
+    if (!redQuantity) {
+      itemToBeUpdated.itemName = itemName;
+      itemToBeUpdated.description = description;
+      itemToBeUpdated.category = category;
+      itemToBeUpdated.image = image;
+      itemToBeUpdated.price = price;
+      itemToBeUpdated.quantity = quantity;
+      itemToBeUpdated.discount = discount;
+
+      const updatedInfo = await itemModel.findOneAndUpdate(
+        { _id: itemID },
+        itemToBeUpdated
+      );
+      console.log(updatedInfo);
+      return res.json(updatedInfo);
+    } else {
+      const newQuantity = itemToBeUpdated.quantity - redQuantity;
+
+      if (newQuantity < 0) {
+        throw new Error("Not enough stock available");
       }
-    );
 
-    console.log(updatedInfo);
-    res.json(updatedInfo);
+      //Here we are only trying to reduce the itemQuantity with the giveen value
+      const updatedInfo = await itemModel.findOneAndUpdate(
+        { _id: itemID },
+        { quantity: newQuantity },
+        { new: true }
+      );
+      console.log(updatedInfo);
+      return res.json(updatedInfo);
+    }
   } catch (err) {
     console.log(err.message);
     res.json(err.message);

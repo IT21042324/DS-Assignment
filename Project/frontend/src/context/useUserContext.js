@@ -1,7 +1,9 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "./userContext";
+import { useNavigate } from "react-router-dom";
 
 export const UseUserContext = () => {
+  const navigate = useNavigate();
   const userContext = useContext(UserContext);
   const { dispatch, user1, selectedUserRole } = userContext;
 
@@ -43,12 +45,26 @@ export const UseUserContext = () => {
     }
   }
 
+  function setStore(storeID) {
+    const userSaved = localStorage.getItem("user");
+    if (userSaved) {
+      const user = JSON.parse(userSaved);
+      user.storeID = storeID;
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch({
+        type: "SetStore",
+        payload: storeID,
+      });
+    }
+  }
+
   function logoutUser() {
     const userSaved = localStorage.getItem("user");
     if (userSaved) {
       localStorage.removeItem("user");
-      alert("Logged Out");
       dispatch({ type: "Logout" });
+      navigate("/");
+      alert("Logged Out");
     }
   }
 
@@ -57,6 +73,7 @@ export const UseUserContext = () => {
     dispatch,
     user1,
     selectedUserRole,
+    setStore,
     getUser,
     getUserRole,
     setUserRole,

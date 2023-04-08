@@ -4,9 +4,9 @@ import Header from "./Header";
 import { useRef } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
-import { faChampagneGlasses } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   //Creating refs to hold values of login form values
+  const { selectedUserRole } = UseUserContext();
   const userName = useRef();
   const password = useRef();
 
@@ -18,8 +18,9 @@ export default function Login() {
     const info = await login({
       userName: userName.current.value,
       password: password.current.value,
+      role: selectedUserRole,
     });
-    alert(info);
+    if (info) alert(info);
   };
 
   return (
@@ -68,7 +69,7 @@ export default function Login() {
           </div>
 
           <p className="forgot-password text-center">
-            Don't have an account yet?{" "}
+            Don't have an account yet?
             <Link to={"/register"}>Register Now</Link>
           </p>
         </form>

@@ -103,7 +103,7 @@ function Header() {
             </Link>
           )}
         </div>
-        <Link to="/Cart">
+        <Link to="/buyer/Cart">
           <div className="cart">
             <FontAwesomeIcon icon={faShoppingCart} />
           </div>

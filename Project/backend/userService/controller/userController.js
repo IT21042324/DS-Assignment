@@ -6,10 +6,10 @@ const createToken = (id) => {
 };
 
 const userLogin = async (req, res) => {
-  const { userName, password } = req.body;
+  const { userName, password, role } = req.body;
 
   try {
-    const user = await userModel.login(userName, password);
+    const user = await userModel.login(userName, password, role);
 
     const token = createToken(user._id);
     user.token = token;
@@ -67,9 +67,10 @@ const updateUser = async function (req, res) {
 
 const getOneUser = async function (req, res) {
   const id = req.params.id;
+  const { role } = req.body;
 
   try {
-    const user = await userModel.find({ _id: id });
+    const user = await userModel.find({ _id: id, role });
     console.log(user);
     res.status(200).json(user);
   } catch (err) {
@@ -77,4 +78,26 @@ const getOneUser = async function (req, res) {
   }
 };
 
-module.exports = { userSignUp, userLogin, updateUser, getOneUser };
+const updateUserStore = async (req, res) => {
+  const { userID, storeID } = req.body;
+
+  try {
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id: userID },
+      { storeID }
+    );
+    console.log(updateUser);
+    res.json(updatedUser);
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+};
+
+module.exports = {
+  userSignUp,
+  userLogin,
+  updateUser,
+  getOneUser,
+  updateUserStore,
+};

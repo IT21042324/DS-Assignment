@@ -63,26 +63,37 @@ export default function Item(props) {
           <h5>{props.details.itemName}</h5>
           <span>{props.details.storename}</span>
           <h4>Rs. {props.details.price}</h4>
-          <span>{props.details.quantity} Available</span>
+          {props.details.quantity ? (
+            <span>{props.details.quantity} Available</span>
+          ) : (
+            <span style={{ textDecoration: "line-through", color: "red" }}>
+              Sold Out
+            </span>
+          )}
+
           <div>
-            <button title="View Item" onClick={handleViewItemClick}>
-              <FontAwesomeIcon icon={faExpand} />
-            </button>
-            <button
-              title="Add To Cart"
-              onClick={(e) => {
-                addItemToCart({
-                  itemID: props.details._id,
-                  itemName: props.details.itemName,
-                  itemPrice: props.details.price,
-                  itemQuantity: selectedItem + 1,
-                  itemImage: props.details.image,
-                });
-              }}
-            >
-              {selectedItem}
-              <FontAwesomeIcon icon={faCartPlus} />
-            </button>
+            {props.details.quantity ? (
+              <>
+                <button title="View Item" onClick={handleViewItemClick}>
+                  <FontAwesomeIcon icon={faExpand} />
+                </button>
+                <button
+                  title="Add To Cart"
+                  onClick={(e) => {
+                    addItemToCart({
+                      itemID: props.details._id,
+                      itemName: props.details.itemName,
+                      itemPrice: props.details.price,
+                      itemQuantity: selectedItem + 1,
+                      itemImage: props.details.image,
+                    });
+                  }}
+                >
+                  {selectedItem}
+                  <FontAwesomeIcon icon={faCartPlus} />
+                </button>
+              </>
+            ) : null}
           </div>
         </div>
       </div>
