@@ -148,5 +148,28 @@ export function useBackendAPI() {
         return false;
       }
     },
+    getTotalSalesAmount: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8083/api/payment/getStoreTotal/",
+          { storeID }
+        );
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    getStoreItemCount: async function () {
+      try {
+        console.log(user1[0].storeID);
+        const { data } = await axios.get(
+          "http://localhost:8082/api/store/getStoreItemCount/" +
+            user1[0].storeID
+        );
+        return data.itemCount;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   };
 }

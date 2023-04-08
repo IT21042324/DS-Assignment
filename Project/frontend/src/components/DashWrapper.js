@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBox,
@@ -7,9 +6,29 @@ import {
   faMoneyCheckDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseUserContext } from "../context/useUserContext";
+import { useBackendAPI } from "../context/useBackendAPI";
+import { useEffect, useState } from "react";
 
 function DashWrapper() {
-  const { logoutUser } = UseUserContext();
+  const { logoutUser, getUser } = UseUserContext();
+
+  const { getTotalSalesAmount, getStoreItemCount } = useBackendAPI();
+  const user = getUser();
+
+  const [salesTotal, setSalesTotal] = useState(0);
+  const [salesOrderCount, setOrderCount] = useState(0);
+  const [storeItemCount, setStoreItemCount] = useState(0);
+
+  useEffect(() => {
+    async function getSalesData() {
+      const { total, orderCount } = await getTotalSalesAmount(user.storeID);
+      const itemCount = await getStoreItemCount();
+      setSalesTotal(total);
+      setOrderCount(orderCount);
+      setStoreItemCount(itemCount);
+    }
+    getSalesData();
+  }, []);
 
   //The function to logout
   const logoutFunction = () => {
@@ -37,7 +56,7 @@ function DashWrapper() {
         </div>
       </div>
 
-      <div class="row">
+      <div class="row justify-content-center">
         <div class="col-lg-3">
           <div class="card card-body mb-4">
             <article class="icontext">
@@ -46,8 +65,7 @@ function DashWrapper() {
               </span>
               <div class="text">
                 <h6 class="mb-1 card-title">Revenue</h6>
-                <span>$13,456.5</span>
-                <span class="text-sm">Shipping fees are not included</span>
+                <span>${salesTotal}</span>
               </div>
             </article>
           </div>
@@ -59,8 +77,8 @@ function DashWrapper() {
                 <FontAwesomeIcon icon={faTruck} />
               </span>
               <div class="text">
-                <h6 class="mb-1 card-title">Orders</h6> <span>53.668</span>
-                <span class="text-sm">Excluding orders in transit</span>
+                <h6 class="mb-1 card-title">Orders</h6>{" "}
+                <span>{salesOrderCount}</span>
               </div>
             </article>
           </div>
@@ -72,22 +90,8 @@ function DashWrapper() {
                 <FontAwesomeIcon icon={faBox} />
               </span>
               <div class="text">
-                <h6 class="mb-1 card-title">Products</h6> <span>9.856</span>
-                <span class="text-sm">In 19 Categories</span>
-              </div>
-            </article>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="card card-body mb-4">
-            <article class="icontext">
-              <span class="icon icon-sm rounded-circle bg-info-light">
-                <FontAwesomeIcon icon={faMoneyCheckDollar} />
-              </span>
-              <div class="text">
-                <h6 class="mb-1 card-title">Monthly Earning</h6>{" "}
-                <span>$6,982</span>
-                <span class="text-sm">Based in your local time.</span>
+                <h6 class="mb-1 card-title">Products</h6>{" "}
+                <span>{storeItemCount}</span>
               </div>
             </article>
           </div>
@@ -110,8 +114,7 @@ function DashWrapper() {
                   <th scope="col">Payment Status</th>
                   <th scope="col">Payment Method</th>
                   <th scope="col" class="text-end">
-                    {" "}
-                    Action{" "}
+                    Action
                   </th>
                 </tr>
               </thead>

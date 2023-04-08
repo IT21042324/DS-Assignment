@@ -79,6 +79,18 @@ const getOneStore = async (req, res) => {
     });
 };
 
+const getStoreItemCount = async (req, res) => {
+  const storeID = req.params.id;
+
+  try {
+    const data = await Store.findOne({ _id: storeID });
+
+    res.json({ itemCount: data.storeItem.length });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 const updateStoreItem = async (req, res) => {
   const { item, storeID } = req.body;
 
@@ -131,6 +143,7 @@ module.exports = {
   updateStore,
   deleteStore,
   getOneStore,
+  getStoreItemCount,
   updateStoreItem,
   deleteStoreItem,
 };
