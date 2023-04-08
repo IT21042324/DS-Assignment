@@ -159,12 +159,10 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
-    getStoreItemCount: async function () {
+    getStoreItemCount: async function (storeID) {
       try {
-        console.log(user1[0].storeID);
         const { data } = await axios.get(
-          "http://localhost:8082/api/store/getStoreItemCount/" +
-            user1[0].storeID
+          "http://localhost:8082/api/store/getStoreItemCount/" + storeID
         );
         return data.itemCount;
       } catch (err) {
