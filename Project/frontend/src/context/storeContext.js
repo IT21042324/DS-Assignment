@@ -10,11 +10,11 @@ export const StoreContextProvider = (props) => {
 
   function reducer(state, action) {
     switch (action.type) {
-      case "CreateItem":
+      case "AddItem":
         return { items: [action.payload, ...state.items] };
       case "SetItems":
         return { items: action.payload }; //we will anyways send data here as an array using axios
-      case "DeleteItems":
+      case "DeleteItem":
         return {
           items: state.items.filter((data) => {
             return data._id !== action.payload._id;

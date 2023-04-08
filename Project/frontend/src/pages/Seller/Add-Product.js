@@ -70,9 +70,9 @@ export default function AddProduct() {
           </div>
         </div>
 
-        <div class="card mb-4">
+        <div className="card mb-4">
           <form onSubmit={(e) => onSubmitHandler(e)}>
-            <header class="card-header">
+            <header className="card-header">
               <h4>Product</h4>
               <div>
                 <input
@@ -88,25 +88,25 @@ export default function AddProduct() {
                   <label for="validationCustom01">Product title</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Type here"
                     ref={itemName}
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
                   <label for="validationCustom01">Product description</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Type here"
                     ref={description}
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
               </div>
               <div className="row">
@@ -114,26 +114,26 @@ export default function AddProduct() {
                   <label for="validationCustom01">Quantity</label>
                   <input
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="0"
                     ref={quantity}
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
                   <label for="validationCustom01">Image</label>
                   <input
                     type="file"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="0.00"
                     onChange={(e) => convertToBase64(e)}
                     ref={imageInputRef}
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
               </div>
               <div className="row">
@@ -141,25 +141,25 @@ export default function AddProduct() {
                   <label for="validationCustom01">Unit Price</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="0.00"
                     ref={price}
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col-md-4 mb-3">
                   <label for="validationCustom01">Discount</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="0.00"
                     ref={discount}
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
               </div>
             </div>

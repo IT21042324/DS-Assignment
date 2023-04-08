@@ -95,7 +95,7 @@ const addStoreItem = async (req, res) => {
   try {
     const store = await Store.findOne({ _id: storeID });
 
-    const itemArray = store.storeItem;
+    var itemArray = store.storeItem;
 
     itemArray.push(item);
 
@@ -118,13 +118,13 @@ const deleteStoreItem = async (req, res) => {
   try {
     const store = await Store.findOne({ _id: storeID });
 
-    const itemArray = store.item;
+    const itemArray = store.storeItem;
 
-    itemArray.filter((itm) => itm._id !== itemID);
+    var newArray = itemArray.filter((itm) => itm._id !== itemID);
 
     const updatedStore = await Store.findOneAndUpdate(
       { _id: storeID },
-      { storeItem: itemArray },
+      { storeItem: newArray },
       { new: true }
     );
 
