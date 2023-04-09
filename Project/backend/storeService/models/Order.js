@@ -10,10 +10,6 @@ const ordersSchema = new Schema({
     type: String,
     required: true,
   },
-  merchantID: {
-    type: String,
-    required: true,
-  },
   paymentID: {
     type: String,
     required: true,
@@ -30,11 +26,13 @@ const ordersSchema = new Schema({
   status: {
     type: String,
     required: true,
-    default: "Processing",
+    default: "Pending",
   },
   deliveredDate: {
     type: Date,
-    required: true,
+  },
+  itemList: {
+    type: Array,
   },
 });
 

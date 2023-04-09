@@ -10,7 +10,6 @@ export function PayPalCheckoutButton(props) {
 
   const { dispatch } = useCartContext();
 
-  const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -18,14 +17,7 @@ export function PayPalCheckoutButton(props) {
   const handleApprove = async (orderId) => {
     await purchaseItem({ total: product.price });
     console.log(orderId);
-    setPaidFor(true);
   };
-
-  if (paidFor && !error) {
-    alert("Payment Successfully Completed");
-    dispatch({ type: "ClearCart" });
-    navigate("/buyer/product");
-  }
 
   return (
     <>

@@ -31,6 +31,7 @@ function DashWrapper() {
     async function getSalesData() {
       // Get total sales amount and order count
       const { total, orderCount } = await getTotalSalesAmount(user.storeID);
+      // console.log(total, orderCount);
 
       // Get store item count
       const itemCount = await getStoreItemCount(user.storeID);

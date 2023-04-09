@@ -3,7 +3,6 @@ const itemModel = require("../models/Item");
 const getAllItems = async (req, res) => {
   try {
     const data = await itemModel.find();
-
     res.json(data);
   } catch (err) {
     console.log(err.message);

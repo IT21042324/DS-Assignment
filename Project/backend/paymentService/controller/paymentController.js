@@ -4,7 +4,7 @@ let Payment = require("../models/Payment");
 // This function creates a new payment and saves it to the database
 const createPayment = async (req, res) => {
   const amount = Number(req.body.amount);
-  const { itemList, userID } = req.body;
+  const { itemList, userID, storeID } = req.body;
 
   // Creating a new payment object
   const newPayment = new Payment({
@@ -15,15 +15,15 @@ const createPayment = async (req, res) => {
   });
 
   // Saving the payment object to the database
-  const data = newPayment
-    .save()
-    .then(() => {
-      res.json(data);
-      console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  try {
+    const data = await newPayment.save();
+    res.json(data);
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+    res.send(err.message);
+  }
 };
 
 // This function retrieves all payments from the database
@@ -49,10 +49,11 @@ const updatePayment = async (req, res) => {
   // Finding and updating the payment object in the database
   const update = await Payment.findOneAndUpdate(
     { _id: paymentID },
-    updatePayment
+    updatePayment,
+    { new: true }
   )
     .then(() => {
-      res.status(200).send({ status: "Payment Updated" });
+      res.status(200).json(update);
     })
     .catch((err) => {
       console.log(err);
@@ -77,18 +78,30 @@ const deletePayment = async (req, res) => {
 
 // This function calculates the total payment amount for a particular store and the number of orders
 const getTotalPaymentPerStore = async (req, res) => {
-  const { storeID } = req.body;
+  const storeID = req.params.id;
   try {
-    // Finding all payments for the store
-    const data = await Payment.find({ storeID });
-    let total = 0;
-    // Calculating the total payment amount for the store
-    data.map((dat) => {
-      total += dat.amount;
-    });
+    const results = await Payment.aggregate([
+      { $match: { "itemList.storeID": storeID } },
+      { $unwind: "$itemList" },
+      { $match: { "itemList.storeID": storeID } },
+      {
+        $group: {
+          _id: null,
+          totalAmount: {
+            $sum: {
+              $multiply: ["$itemList.itemPrice", "$itemList.itemQuantity"],
+            },
+          },
+        },
+      },
+    ]);
 
-    // Sending the total payment amount and the number of orders for the store
-    res.send({ total, orderCount: data.length });
+    if (results.length > 0) {
+      const { totalAmount } = results[0];
+      res.send({ total: totalAmount, orderCount: results.length });
+    } else {
+      res.send({ total: 0, orderCount: 0 });
+    }
   } catch (err) {
     console.log(err.message);
     res.json(err.message);

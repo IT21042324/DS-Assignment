@@ -21,6 +21,6 @@ router.put("/update/", updatePayment); // Handles PUT requests to update payment
 router.delete("/delete/", deletePayment); // Handles DELETE requests to delete a payment using the deletePayment() function
 
 //To get the total payments done to a certain store
-router.get("/getStoreTotal", getTotalPaymentPerStore); // Handles GET requests to get the total payments made to a specific store using the getTotalPaymentPerStore() function
+router.get("/getStoreTotal/:id", getTotalPaymentPerStore); // Handles GET requests to get the total payments made to a specific store using the getTotalPaymentPerStore() function
 
 module.exports = router; // Exports the router instance for use in the app.

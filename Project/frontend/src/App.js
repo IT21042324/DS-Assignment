@@ -17,7 +17,11 @@ export default function App() {
         <Route
           path="/"
           element={
-            !user1[0]?.role === "Buyer" ? <Home /> : <Navigate to="/seller" />
+            user1[0]?.role === "Buyer" || !user1[0] ? (
+              <Home />
+            ) : (
+              <Navigate to="/seller" />
+            )
           }
         />
 
