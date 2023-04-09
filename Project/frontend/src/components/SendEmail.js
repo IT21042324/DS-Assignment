@@ -7,7 +7,10 @@ export const SendEmail = (email) => {
   if (email.role === "Buyer")
     message =
       "Start browsing with RB&MS and stand a chance to win exclusive rewards and offers.";
-  else
+  else if (email.for === "purchase") {
+    message =
+      "Your Order has been approved. You will be notified on further status";
+  } else
     message =
       "Hurrayy!! Now you are a part of the RB&NS Merchant Community. Start selling your products and set a new height among your peers";
 

@@ -1,15 +1,12 @@
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBox,
   faDollarSign,
   faTruck,
   faMoneyCheckDollar,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseUserContext } from "../context/useUserContext";
-import { colors } from "@material-ui/core";
-import "./Dashboard.css";
+import "../Dashboard.css";
 
 function Dashboard() {
   const { logoutUser } = UseUserContext();

@@ -111,7 +111,6 @@ export function useBackendAPI() {
           }
         );
 
-        console.log(info[0].storeID);
         //To create a new Order record
         await axios.post("http://localhost:8082/api/order/add/", {
           userID: user1[0]._id,
@@ -264,13 +263,10 @@ export function useBackendAPI() {
           product
         );
 
-        const res = await axios.patch(
-          "http://localhost:8082/api/store/modifyItem/",
-          {
-            storeID: user1[0].storeID,
-            item: data,
-          }
-        );
+        await axios.patch("http://localhost:8082/api/store/modifyItem/", {
+          storeID: user1[0].storeID,
+          item: data,
+        });
 
         storeDispatch({ type: "ModifyItem", payload: data });
 
@@ -279,6 +275,17 @@ export function useBackendAPI() {
         alert(
           "There seems to be an error. Item cannot be modified at the moment"
         );
+      }
+    },
+    getAllItemsFromOneStore: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/order/getStoreOrder/" + storeID
+        );
+
+        return data;
+      } catch (err) {
+        console.log(err);
       }
     },
   };

@@ -1,14 +1,11 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCartContext } from "../context/useCartContext";
 import { useBackendAPI } from "../context/useBackendAPI";
 export function PayPalCheckoutButton(props) {
   const { purchaseItem } = useBackendAPI();
 
   const { product } = props;
-
-  const { dispatch } = useCartContext();
 
   const [error, setError] = useState(null);
 
