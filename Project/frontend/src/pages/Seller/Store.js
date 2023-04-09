@@ -3,16 +3,12 @@ import React, { useRef } from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useBackendAPI } from "../../context/useBackendAPI";
-import { UseUserContext } from "../../context/useUserContext";
 
 export default function Register() {
   const storeName = useRef();
   const location = useRef();
 
-  const { getUser } = UseUserContext();
   const { createStore } = useBackendAPI();
-
-  const user = getUser();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,6 +20,7 @@ export default function Register() {
     //To create a store and add it to the merchant's storeID field in the merchant doc as well
     const status = await createStore(store);
 
+    //To notify the user with relevant alert message
     if (status) alert("Store Created Successfully");
     else alert("Store Cannot Be created at the moment.. Please try later");
   };

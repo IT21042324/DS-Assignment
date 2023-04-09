@@ -14,11 +14,19 @@ const itemsSchema = new Schema({
     type: String,
     required: true,
   },
-  storename: {
+  storeID: {
+    type: String,
+    required: true,
+  },
+  storeName: {
     type: String,
     required: true,
   },
   price: {
+    type: Number,
+    required: true,
+  },
+  totalPrice: {
     type: Number,
     required: true,
   },

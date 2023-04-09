@@ -24,7 +24,7 @@ export function PayPalCheckoutButton(props) {
   if (paidFor && !error) {
     alert("Payment Successfully Completed");
     dispatch({ type: "ClearCart" });
-    navigate("/product");
+    navigate("/buyer/product");
   }
 
   return (
@@ -53,7 +53,7 @@ export function PayPalCheckoutButton(props) {
         }}
         onCancel={() => {
           alert("Payment Cancelled");
-          navigate("/Cart");
+          navigate("/buyer/Cart");
         }}
         onError={(err) => {
           setError(err);

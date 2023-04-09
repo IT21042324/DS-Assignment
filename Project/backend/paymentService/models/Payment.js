@@ -11,6 +11,20 @@ const paymentSchema = new Schema({
     default: [],
   },
   userID: { type: String, required: true },
+  status: {
+    type: String,
+    default: "Processing",
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
+  storeID: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Payment", paymentSchema);

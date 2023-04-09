@@ -1,22 +1,14 @@
 import "./App.css";
 import Home from "./pages/Buyer/Home";
-import Cart from "./pages/Buyer/Cart";
-import { Routes, Route } from "react-router-dom";
-import Product from "./pages/Buyer/Product";
-import React from "react";
-import Seller from "./pages/Seller/Seller";
-import Profile from "./pages/Seller/Profile";
-import ProductList from "./pages/Seller/ProductList";
-import AddProduct from "./pages/Seller/Add-Product";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Store from "./pages/Seller/Store";
-import { Navigate } from "react-router-dom";
 import { UseUserContext } from "./context/useUserContext";
+import { BuyerRoutes } from "./BuyerRoutes";
+import { SellerRoutes } from "./SellerRoutes";
 
 export default function App() {
-  const { user1, getUser } = UseUserContext();
-  const user = getUser();
+  const { user1 } = UseUserContext();
 
   return (
     <div className="App">
@@ -24,28 +16,19 @@ export default function App() {
         <Route
           path="/"
           element={
-            user?.role === "Buyer" || !user ? (
-              <Home />
-            ) : (
-              <Navigate to="/seller/store" />
-            )
+            !user1[0]?.role === "Buyer" ? <Home /> : <Navigate to="/seller" />
           }
         />
 
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/product" element={<Product />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/seller" element={<Seller />} />
-        <Route path="/seller/register" element={<Register />} />
-        <Route path="/seller/profile" element={<Profile />} />
-        <Route path="/seller/product" element={<ProductList />} />
-        <Route path="/seller/add-product" element={<AddProduct />} />
 
-        <Route
-          path="/seller/store"
-          element={!user?.storeID ? <Store /> : <Navigate to="/seller" />}
-        />
+        {(user1[0]?.role === "Buyer" || !user1[0]) && (
+          <Route path="/buyer/*" element={<BuyerRoutes />} />
+        )}
+        {user1[0]?.role === "Merchant" && (
+          <Route path="/seller/*" element={<SellerRoutes />} />
+        )}
       </Routes>
     </div>
   );

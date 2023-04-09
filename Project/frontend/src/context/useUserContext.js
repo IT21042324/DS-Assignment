@@ -60,9 +60,9 @@ export const UseUserContext = () => {
     const userSaved = localStorage.getItem("user");
     if (userSaved) {
       localStorage.removeItem("user");
-      alert("Logged Out");
       dispatch({ type: "Logout" });
-    }
+      return true;
+    } else return false;
   }
 
   return {

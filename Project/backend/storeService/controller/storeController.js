@@ -65,29 +65,70 @@ const deleteStore = async (req, res) => {
 };
 
 const getOneStore = async (req, res) => {
-  const { storeID } = req.body;
+  const id = req.params.id;
 
-  await Store.findById(storeID)
-    .then(() => {
-      res.status(200).send({ status: "Store fetched" });
-    })
-    .catch((err) => {
-      console.log(err.message);
-      res
-        .status(500)
-        .send({ status: "Unable to access store", error: err.message });
-    });
+  try {
+    const data = await Store.findById(id);
+    console.log(data);
+    res.json(data);
+  } catch (err) {
+    console.log(err.message);
+    res.send(err.message);
+  }
 };
 
-const updateStoreItem = async (req, res) => {
+const getStoreItemCount = async (req, res) => {
+  const storeID = req.params.id;
+
+  try {
+    const data = await Store.findOne({ _id: storeID });
+
+    res.json({ itemCount: data.storeItem.length });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
+const addStoreItem = async (req, res) => {
   const { item, storeID } = req.body;
 
   try {
     const store = await Store.findOne({ _id: storeID });
 
-    const itemArray = store.storeItem;
+    var itemArray = store.storeItem;
 
     itemArray.push(item);
+
+    const updatedStore = await Store.findOneAndUpdate(
+      { _id: storeID },
+      { storeItem: itemArray },
+      { new: true }
+    );
+
+    console.log(updatedStore);
+    res.send(updatedStore);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
+const modifyStoreItem = async (req, res) => {
+  const { item, storeID } = req.body;
+
+  try {
+    const store = await Store.findOne({ _id: storeID });
+
+    var itemArray = store.storeItem;
+
+    var itemArray = itemArray.map((itm) => {
+      if (itm._id === item._id) {
+        // Replace elements in itm with elements from item
+        return Object.assign({}, itm, item);
+      } else {
+        // Return original object
+        return itm;
+      }
+    });
 
     const updatedStore = await Store.findOneAndUpdate(
       { _id: storeID },
@@ -108,13 +149,13 @@ const deleteStoreItem = async (req, res) => {
   try {
     const store = await Store.findOne({ _id: storeID });
 
-    const itemArray = store.item;
+    const itemArray = store.storeItem;
 
-    itemArray.filter((itm) => itm._id !== itemID);
+    var newArray = itemArray.filter((itm) => itm._id !== itemID);
 
     const updatedStore = await Store.findOneAndUpdate(
       { _id: storeID },
-      { storeItem: itemArray },
+      { storeItem: newArray },
       { new: true }
     );
 
@@ -131,6 +172,8 @@ module.exports = {
   updateStore,
   deleteStore,
   getOneStore,
-  updateStoreItem,
+  getStoreItemCount,
+  addStoreItem,
   deleteStoreItem,
+  modifyStoreItem,
 };
