@@ -10,7 +10,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f2f6f1;
+   background-color: #f2f6f1;
+ 
 }
 
 code {
@@ -542,7 +543,7 @@ h3 {
 }
 
 .sideMenu .items .li:hover {
-  background-color: white;
+  background-color:white;
   padding: 4px;
   border-radius: 5px;
 }
@@ -559,6 +560,7 @@ h3 {
 
 .card {
   margin: 20px;
+
 }
 
 .icontext {
@@ -568,6 +570,7 @@ h3 {
   -webkit-box-align: top;
       -ms-flex-align: top;
           align-items: top;
+         
 }
 
 .icontext .icon {
@@ -589,6 +592,7 @@ h3 {
   font-size: 22px;
   font-weight: 600;
   display: block;
+  
 }
 
 .icontext span.text-sm {
