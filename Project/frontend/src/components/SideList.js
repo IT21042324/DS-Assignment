@@ -1,9 +1,7 @@
 import {
-  faBox,
   faDashboard,
   faGear,
   faListSquares,
-  faPerson,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";

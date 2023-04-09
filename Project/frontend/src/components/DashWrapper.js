@@ -4,6 +4,7 @@ import {
   faBox,
   faDollarSign,
   faTruck,
+  faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseUserContext } from "../context/useUserContext";
 import { useBackendAPI } from "../context/useBackendAPI";
@@ -13,7 +14,8 @@ import { Navigate } from "react-router-dom";
 function DashWrapper() {
   // Access necessary functions and variables from custom hooks
   const { logoutUser, getUser } = UseUserContext();
-  const { getTotalSalesAmount, getStoreItemCount } = useBackendAPI();
+  const { getTotalSalesAmount, getStoreItemCount, getAllItemsFromOneStore } =
+    useBackendAPI();
 
   // Get user information from the context
   const user = getUser();
@@ -22,6 +24,7 @@ function DashWrapper() {
   const [salesTotal, setSalesTotal] = useState(0);
   const [salesOrderCount, setOrderCount] = useState(0);
   const [storeItemCount, setStoreItemCount] = useState(0);
+  const [storeDetails, setStoreDetails] = useState([]);
 
   // Define a state variable to track merchant's login status
   const [mechantIsLoggedIn, setMerchantIsLoggedIn] = useState(true);
@@ -31,15 +34,17 @@ function DashWrapper() {
     async function getSalesData() {
       // Get total sales amount and order count
       const { total, orderCount } = await getTotalSalesAmount(user.storeID);
-      // console.log(total, orderCount);
 
       // Get store item count
       const itemCount = await getStoreItemCount(user.storeID);
+
+      const data = await getAllItemsFromOneStore(user.storeID);
 
       // Update state variables with fetched data
       setSalesTotal(total);
       setOrderCount(orderCount);
       setStoreItemCount(itemCount);
+      setStoreDetails(data);
     }
 
     // Call the getSalesData function when user changes
@@ -143,13 +148,30 @@ function DashWrapper() {
                       <th scope="col">Customer</th>
                       <th scope="col">Date</th>
                       <th scope="col">Total Price</th>
-                      <th scope="col">Payment Status</th>
-                      <th scope="col">Payment Method</th>
+                      <th scope="col">Order Status</th>
                       <th scope="col" className="text-end">
                         Action
                       </th>
                     </tr>
                   </thead>
+                  {storeDetails.map((data) => {
+                    return (
+                      <tr key={data._id}>
+                        <td scope="col">{data._id}</td>
+                        <td>{data.userID}</td>
+                        <td>{data.orderedDate}</td>
+                        <td>find it out</td>
+                        <td>{data.status}</td>
+                        <td scope="col">
+                          <button
+                            style={{ border: "none", background: "none" }}
+                          >
+                            <FontAwesomeIcon icon={faSquareCheck} />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </table>
               </div>
             </div>

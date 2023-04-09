@@ -5,6 +5,7 @@ const {
   getAllOrder,
   updateOrder,
   getOneOrder,
+  getAllOrderPerStore,
 } = require("../controller/orderController");
 //create
 router.post("/add", createOrder);
@@ -14,5 +15,7 @@ router.get("/", getAllOrder);
 router.patch("/update/", updateOrder);
 
 router.get("/get/", getOneOrder);
+
+router.get("/getStoreOrder/:id", getAllOrderPerStore);
 
 module.exports = router;
