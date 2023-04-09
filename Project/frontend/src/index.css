@@ -100,12 +100,34 @@ header nav div.active {
   align-items: center;
 }
 
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: left;
+  left: 0;
+  padding: 0 80px;
+}
+.carousel-caption button {
+  width: 10%;
+  padding: 8px;
+  border-radius: 25px;
+  background-color: #fb7f21;
+  font-weight:700;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+.carousel-caption h1 {
+  color: #e6753d;
+}
+
 #HomeBanner {
-  background-image: url("./assets/hbanner.png");
+  background-image: url("./assets/slider1.jpg");
   background-color: #cffaee;
   height: 90vh;
   width: auto;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: top 20% right 0;
   padding: 0 80px;
