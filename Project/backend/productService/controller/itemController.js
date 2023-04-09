@@ -61,53 +61,41 @@ const getOneItem = async (req, res) => {
     res.json(err.message);
   }
 };
+
 const updateItem = async (req, res) => {
-  const {
-    itemID,
-    itemName,
-    description,
-    category,
-    image,
-    price,
-    quantity,
-    redQuantity,
-    discount,
-  } = req.body;
+  const itemInfo = req.body;
 
   try {
-    const itemToBeUpdated = await itemModel.findOne({ _id: itemID });
+    let updatedInfo;
 
-    if (!redQuantity) {
-      itemToBeUpdated.itemName = itemName;
-      itemToBeUpdated.description = description;
-      itemToBeUpdated.category = category;
-      itemToBeUpdated.image = image;
-      itemToBeUpdated.price = price;
-      itemToBeUpdated.quantity = quantity;
-      itemToBeUpdated.discount = discount;
-
-      const updatedInfo = await itemModel.findOneAndUpdate(
-        { _id: itemID },
-        itemToBeUpdated
+    if (itemInfo.redQuantity) {
+      const { quantity } = await itemModel.findById(
+        itemInfo.itemID,
+        "quantity"
       );
-      console.log(updatedInfo);
-      return res.json(updatedInfo);
-    } else {
-      const newQuantity = itemToBeUpdated.quantity - redQuantity;
 
-      if (newQuantity < 0) {
+      if (quantity < itemInfo.redQuantity) {
         throw new Error("Not enough stock available");
       }
 
-      //Here we are only trying to reduce the itemQuantity with the giveen value
-      const updatedInfo = await itemModel.findOneAndUpdate(
-        { _id: itemID },
-        { quantity: newQuantity },
+      updatedInfo = await itemModel.findByIdAndUpdate(
+        itemInfo.itemID,
+        { $inc: { quantity: -itemInfo.redQuantity } },
         { new: true }
       );
-      console.log(updatedInfo);
-      return res.json(updatedInfo);
+    } else {
+      itemInfo.totalPrice =
+        itemInfo.price - (itemInfo.price * itemInfo.discount) / 100;
+
+      updatedInfo = await itemModel.findByIdAndUpdate(
+        itemInfo.itemID,
+        itemInfo,
+        { new: true }
+      );
     }
+
+    console.log(updatedInfo);
+    return res.json(updatedInfo);
   } catch (err) {
     console.log(err.message);
     res.json(err.message);

@@ -9,6 +9,7 @@ const {
   addStoreItem,
   deleteStoreItem,
   getStoreItemCount,
+  modifyStoreItem,
 } = require("../controller/storeController");
 //create store
 router.post("/add", createStore);
@@ -23,8 +24,8 @@ router.delete("/delete/", deleteStore);
 
 router.get("/get/:id", getOneStore);
 
-//Routes to update and delete store items
-router.patch("/updateItem", addStoreItem);
-router.patch("/deleteStoreItem", deleteStoreItem);
+router.patch("/updateItem", addStoreItem); //to add item to store item Array
+router.patch("/modifyItem", modifyStoreItem); //to modify the item in Store item array
+router.patch("/deleteStoreItem", deleteStoreItem); //to delete the item from store item array
 
 module.exports = router;

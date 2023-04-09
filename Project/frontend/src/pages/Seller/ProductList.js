@@ -9,10 +9,48 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { UseStoreContext } from "../../context/useStoreContext";
 import { useBackendAPI } from "../../context/useBackendAPI";
+import { useRef, useState } from "react";
 
 // Define a function component ProductList
 export default function ProductList() {
-  const { removeItem } = useBackendAPI();
+  // Define a state variable to handle showing the shipping estimate popup
+  const [showPopup, setShowPopup] = useState(false);
+  const [itemID, setItemID] = useState("");
+
+  //Declaring all varibale with ref
+  const itemName = useRef(),
+    description = useRef(),
+    price = useRef(),
+    quantity = useRef(),
+    discount = useRef();
+
+  const { removeItem, updateItem } = useBackendAPI();
+
+  // Define a function to handle closing the shipping estimate popup
+  const handleClosePopup = (id) => {
+    setShowPopup(false);
+  };
+
+  // Define a function to open popup form
+  const handleEditButtonClick = (itemID) => {
+    setItemID(itemID);
+    setShowPopup(true);
+  };
+
+  //To handle update when the popup form submit is cliked
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    await updateItem({
+      itemID,
+      itemName: itemName.current.value,
+      description: description.current.value,
+      price: price.current.value,
+      quantity: quantity.current.value,
+      discount: discount.current.value,
+    });
+
+    setShowPopup(false);
+  };
 
   // Get the items from the StoreContext
   const { items } = UseStoreContext();
@@ -90,6 +128,7 @@ export default function ProductList() {
                         <td className="text-end">
                           <button
                             style={{ border: "none", background: "none" }}
+                            onClick={(e) => handleEditButtonClick(dat._id)}
                           >
                             <FontAwesomeIcon icon={faPenToSquare} />
                           </button>
@@ -108,6 +147,101 @@ export default function ProductList() {
               </table>
             </div>
           </div>
+          {showPopup && (
+            <div
+              className="popup"
+              style={{ display: showPopup ? "flex" : "none" }}
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  handleClosePopup();
+                }
+              }}
+            >
+              <div className="popup-content">
+                <div className="card mb-4">
+                  <form onSubmit={(e) => onSubmitHandler(e)}>
+                    <header className="card-header">
+                      <h4>Product</h4>
+                      <div>
+                        <input
+                          className="btn btn-success"
+                          type="submit"
+                          value="Submit"
+                        />
+                      </div>
+                    </header>
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-md-4 mb-3">
+                          <label for="validationCustom01">Product title</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="validationCustom01"
+                            placeholder="Type here"
+                            ref={itemName}
+                            required
+                          />
+                        </div>
+                        <div className="col">
+                          <label for="validationCustom01">
+                            Product description
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="validationCustom01"
+                            placeholder="Type here"
+                            ref={description}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col">
+                          <label for="validationCustom01">Quantity</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            id="validationCustom01"
+                            placeholder="0"
+                            ref={quantity}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-4 mb-3">
+                          <label for="validationCustom01">Unit Price</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="validationCustom01"
+                            placeholder="0.00"
+                            ref={price}
+                            required
+                          />
+                          <div className="valid-feedback">Looks good!</div>
+                        </div>
+                        <div className="col-md-4 mb-3">
+                          <label for="validationCustom01">Discount</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="validationCustom01"
+                            placeholder="0.00"
+                            ref={discount}
+                            required
+                          />
+                          <div className="valid-feedback">Looks good!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </div>
