@@ -5,6 +5,7 @@ import {
   faDollarSign,
   faTruck,
   faMoneyCheckDollar,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseUserContext } from "../context/useUserContext";
 import { colors } from "@material-ui/core";
@@ -84,11 +85,11 @@ function Dashboard() {
           <div class="card card-body mb-4">
             <article class="icontext">
               <span class="icon icon-sm rounded-circle bg-warning-light">
-                <FontAwesomeIcon icon={faBox} />
+                <FontAwesomeIcon icon={faUserGroup} />
               </span>
               <div class="text">
-                <h6 class="mb-1 card-title">Products</h6> <span>9.856</span>
-                <span class="text-sm">In 19 Categories</span>
+                <h6 class="mb-1 card-title">Users</h6> <span></span>
+                <span class="text-sm">Have 5 members</span>
               </div>
             </article>
           </div>

@@ -1,9 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import Admin from "./Admin/Admin";
-
-import AddUser from "./Admin/add-user";
-import UserList from "./Admin/UserList";
-
+import Admin from "./pages/Admin/Admin";
+import AddUser from "./pages/Admin/add-user";
+import UserList from "./pages/Admin/UserList";
 export function AdminRoutes() {
   return (
     <div className="App">

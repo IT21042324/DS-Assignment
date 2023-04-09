@@ -2,7 +2,10 @@ import {
   faBox,
   faDashboard,
   faGear,
+  faListSquares,
+  faPerson,
   faUser,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -12,7 +15,7 @@ function SideList() {
     <section className="sideList">
       <div className="logo">
         <Link
-          to={"/seller"}
+          to={"/admin"}
           style={{
             textDecoration: "none",
             color: "white",
@@ -28,7 +31,7 @@ function SideList() {
       <div className="items">
         <div className="li">
           <Link
-            to={"/seller"}
+            to={"/admin"}
             style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
           >
             <FontAwesomeIcon icon={faDashboard} />
@@ -37,7 +40,7 @@ function SideList() {
         </div>
         <div className="li">
           <Link
-            to={"/seller/profile"}
+            to={"/admin/profile"}
             style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
           >
             <FontAwesomeIcon icon={faUser} />
@@ -46,16 +49,25 @@ function SideList() {
         </div>
         <div className="li">
           <Link
-            to={"/seller/product"}
+            to={"/admin/user"}
             style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
           >
-            <FontAwesomeIcon icon={faBox} />
-            &nbsp;&nbsp;Products
+            <FontAwesomeIcon icon={faUsers} />
+            &nbsp;&nbsp;Users
           </Link>
         </div>
         <div className="li">
           <Link
-            to={"/seller"}
+            to={"/admin"}
+            style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
+          >
+            <FontAwesomeIcon icon={faListSquares} />
+            &nbsp;&nbsp;Orders
+          </Link>
+        </div>
+        <div className="li">
+          <Link
+            to={"/admin"}
             style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
           >
             <FontAwesomeIcon icon={faGear} />
