@@ -112,6 +112,37 @@ const addStoreItem = async (req, res) => {
   }
 };
 
+const modifyStoreItem = async (req, res) => {
+  const { item, storeID } = req.body;
+
+  try {
+    const store = await Store.findOne({ _id: storeID });
+
+    var itemArray = store.storeItem;
+
+    var itemArray = itemArray.map((itm) => {
+      if (itm._id === item._id) {
+        // Replace elements in itm with elements from item
+        return Object.assign({}, itm, item);
+      } else {
+        // Return original object
+        return itm;
+      }
+    });
+
+    const updatedStore = await Store.findOneAndUpdate(
+      { _id: storeID },
+      { storeItem: itemArray },
+      { new: true }
+    );
+
+    console.log(updatedStore);
+    res.send(updatedStore);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 const deleteStoreItem = async (req, res) => {
   const { storeID, itemID } = req.body;
 
@@ -144,4 +175,5 @@ module.exports = {
   getStoreItemCount,
   addStoreItem,
   deleteStoreItem,
+  modifyStoreItem,
 };

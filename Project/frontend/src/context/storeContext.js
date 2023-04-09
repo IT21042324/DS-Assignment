@@ -14,6 +14,18 @@ export const StoreContextProvider = (props) => {
         return { items: [action.payload, ...state.items] };
       case "SetItems":
         return { items: action.payload }; //we will anyways send data here as an array using axios
+      case "ModifyItem":
+        return {
+          items: state.items.map((itm) => {
+            if (itm._id === action.payload._id)
+              return Object.assign({}, itm, action.payload);
+            else {
+              // Return original object
+              return itm;
+            }
+          }),
+        };
+
       case "DeleteItem":
         return {
           items: state.items.filter((data) => {

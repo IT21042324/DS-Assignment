@@ -242,5 +242,30 @@ export function useBackendAPI() {
         );
       }
     },
+
+    updateItem: async function (product) {
+      try {
+        const { data } = await axios.patch(
+          "http://localhost:8081/api/product/updateItem/",
+          product
+        );
+
+        const res = await axios.patch(
+          "http://localhost:8082/api/store/modifyItem/",
+          {
+            storeID: user1[0].storeID,
+            item: data,
+          }
+        );
+
+        storeDispatch({ type: "ModifyItem", payload: data });
+
+        alert("Item details updated");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be modified at the moment"
+        );
+      }
+    },
   };
 }
