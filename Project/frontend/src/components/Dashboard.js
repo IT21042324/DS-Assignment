@@ -88,7 +88,7 @@ function Dashboard() {
                 <FontAwesomeIcon icon={faUserGroup} />
               </span>
               <div class="text">
-                <h6 class="mb-1 card-title">Users</h6> <span></span>
+                <h6 class="mb-2 card-title">Users</h6> <span></span>
                 <span class="text-sm">Have 5 members</span>
               </div>
             </article>
@@ -112,19 +112,20 @@ function Dashboard() {
 
       <div class="card mb-4">
         <header class="card-header">
-          <h4>Latest Orders</h4>
+          <h4>Users</h4>
         </header>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>#ID</th>
-                  <th scope="col">Customer</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Total Price</th>
-                  <th scope="col">Payment Status</th>
-                  <th scope="col">Payment Method</th>
+                  <th>#User ID</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Password</th>
+                  <th scope="col">Contact No</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Role</th>
                   <th scope="col" class="text-end">
                     {" "}
                     Action{" "}
