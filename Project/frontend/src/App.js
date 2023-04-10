@@ -36,6 +36,6 @@ export default function App() {
           <Route path="/seller/*" element={<SellerRoutes />} />
         )}
       </Routes>
-    </div>
-  );
+    </div>
+  );
 }
