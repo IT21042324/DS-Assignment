@@ -15,16 +15,17 @@ export default function Item(props) {
 
   const [selectedItem, setSelectedItem] = useState(0);
 
-  //to print details everytime the info is changed.. later remove it
-  useEffect(() => {}, [info]);
-
   function addItemToCart(data) {
-    if (selectedItem + 1 > props.details.quantity) {
-      alert("There are no more available items");
+    if (info.length !== 0 && info[0].storeID !== data.storeID) {
+      alert("You cannot Select Items from different Stores");
     } else {
-      setSelectedItem((prev) => prev + 1);
-      dispatch({ type: "UpdateCart", payload: data });
-      alert("Item Added To Cart");
+      if (selectedItem + 1 > props.details.quantity) {
+        alert("There are no more available items");
+      } else {
+        setSelectedItem((prev) => prev + 1);
+        dispatch({ type: "UpdateCart", payload: data });
+        alert("Item Added To Cart");
+      }
     }
   }
 
@@ -60,8 +61,9 @@ export default function Item(props) {
               style={{ height: "200px", width: "200px" }}
             />
           </div>
-          <h5>{props.details.itemName}</h5>
-          <span>{props.details.storename}</span>
+          <span>{props.details.itemName}</span>
+          <h5>Store - {props.details.storeName}</h5>
+
           <h4>Rs. {props.details.price}</h4>
           {props.details.quantity ? (
             <span>{props.details.quantity} Available</span>
@@ -86,6 +88,7 @@ export default function Item(props) {
                       itemPrice: props.details.price,
                       itemQuantity: selectedItem + 1,
                       itemImage: props.details.image,
+                      storeID: props.details.storeID,
                     });
                   }}
                 >

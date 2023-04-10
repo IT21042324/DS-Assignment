@@ -1,26 +1,32 @@
+// Importing the Payment model
 let Payment = require("../models/Payment");
 
+// This function creates a new payment and saves it to the database
 const createPayment = async (req, res) => {
   const amount = Number(req.body.amount);
-  const { itemList, userID } = req.body;
+  const { itemList, userID, storeID } = req.body;
 
+  // Creating a new payment object
   const newPayment = new Payment({
     amount,
     itemList,
     userID,
+    storeID,
   });
 
-  const data = newPayment
-    .save()
-    .then(() => {
-      res.json(data);
-      console.log(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  // Saving the payment object to the database
+
+  try {
+    const data = await newPayment.save();
+    res.json(data);
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+    res.send(err.message);
+  }
 };
 
+// This function retrieves all payments from the database
 const getAllPayment = async (req, res) => {
   await Payment.find()
     .then((payment) => {
@@ -31,19 +37,23 @@ const getAllPayment = async (req, res) => {
     });
 };
 
+// This function updates a payment's status
 const updatePayment = async (req, res) => {
   const { paymentID, status } = req.body;
 
+  // Creating an object to update the payment's status
   const updatePayment = {
     status,
   };
 
+  // Finding and updating the payment object in the database
   const update = await Payment.findOneAndUpdate(
     { _id: paymentID },
-    updatePayment
+    updatePayment,
+    { new: true }
   )
     .then(() => {
-      res.status(200).send({ status: "Payment Updated" });
+      res.status(200).json(update);
     })
     .catch((err) => {
       console.log(err);
@@ -51,9 +61,11 @@ const updatePayment = async (req, res) => {
     });
 };
 
+// This function deletes a payment from the database
 const deletePayment = async (req, res) => {
   const { paymentID } = req.body;
 
+  // Finding and deleting the payment object from the database
   await Payment.findByIdAndDelete(paymentID)
     .then(() => {
       res.status(200).send({ status: "Payment Deleted" });
@@ -64,9 +76,43 @@ const deletePayment = async (req, res) => {
     });
 };
 
+// This function calculates the total payment amount for a particular store and the number of orders
+const getTotalPaymentPerStore = async (req, res) => {
+  const storeID = req.params.id;
+  try {
+    const results = await Payment.aggregate([
+      { $match: { "itemList.storeID": storeID } },
+      { $unwind: "$itemList" },
+      { $match: { "itemList.storeID": storeID } },
+      {
+        $group: {
+          _id: null,
+          totalAmount: {
+            $sum: {
+              $multiply: ["$itemList.itemPrice", "$itemList.itemQuantity"],
+            },
+          },
+        },
+      },
+    ]);
+
+    if (results.length > 0) {
+      const { totalAmount } = results[0];
+      res.send({ total: totalAmount, orderCount: results.length });
+    } else {
+      res.send({ total: 0, orderCount: 0 });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
+};
+
+// Exporting the functions to be used in other modules
 module.exports = {
   createPayment,
   getAllPayment,
   updatePayment,
   deletePayment,
+  getTotalPaymentPerStore,
 };

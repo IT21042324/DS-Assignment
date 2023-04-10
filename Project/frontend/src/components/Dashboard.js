@@ -1,15 +1,11 @@
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBox,
   faDollarSign,
   faTruck,
   faMoneyCheckDollar,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseUserContext } from "../context/useUserContext";
-import { colors } from "@material-ui/core";
-import "./Dashboard.css";
 
 function Dashboard() {
   const { logoutUser } = UseUserContext();
@@ -29,7 +25,7 @@ function Dashboard() {
         <div>
           <h2
             style={{
-              color: "white",
+              color: "Black",
               fontWeight: "bold",
             }}
           >
@@ -37,7 +33,7 @@ function Dashboard() {
           </h2>
           <p
             style={{
-              color: "white",
+              color: "black",
             }}
           >
             Whole data about your business here
@@ -88,7 +84,7 @@ function Dashboard() {
                 <FontAwesomeIcon icon={faUserGroup} />
               </span>
               <div class="text">
-                <h6 class="mb-2 card-title">Users</h6> <span></span>
+                <h6 class="mb-2 card-title">Users</h6> <span>4</span>
                 <span class="text-sm">Have 5 members</span>
               </div>
             </article>

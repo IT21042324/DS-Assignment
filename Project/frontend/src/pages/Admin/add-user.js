@@ -50,7 +50,7 @@ export default function AddUser() {
                     type="text"
                     class="form-control"
                     id="validationCustom01"
-                    placeholder="Type here"
+                    placeholder="Enter the password"
                     required
                   />
                   <div class="valid-feedback">Looks good!</div>
@@ -63,7 +63,7 @@ export default function AddUser() {
                     type="text"
                     class="form-control"
                     id="validationCustom01"
-                    placeholder="Type here"
+                    placeholder="Enter the contact Number"
                     required
                   />
                   <div class="valid-feedback">Looks good!</div>
@@ -74,7 +74,7 @@ export default function AddUser() {
                     type="number"
                     class="form-control"
                     id="validationCustom01"
-                    placeholder="0"
+                    placeholder="Enter the address"
                     required
                   />
                   <div class="valid-feedback">Looks good!</div>
@@ -85,7 +85,7 @@ export default function AddUser() {
                     type="file"
                     class="form-control"
                     id="validationCustom01"
-                    placeholder="0.00"
+                    placeholder=""
                     required
                   />
                   <div class="valid-feedback">Looks good!</div>
@@ -98,7 +98,7 @@ export default function AddUser() {
                     type="text"
                     class="form-control"
                     id="validationCustom01"
-                    placeholder="0.00"
+                    placeholder="Enter the Role"
                     required
                   />
                 </div>

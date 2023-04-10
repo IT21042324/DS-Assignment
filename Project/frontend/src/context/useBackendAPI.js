@@ -3,10 +3,13 @@ import { UseUserContext } from "./useUserContext";
 import { useNavigate } from "react-router-dom";
 import { SendEmail } from "../components/SendEmail";
 import { useCartContext } from "./useCartContext";
+import { UseStoreContext } from "./useStoreContext";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
+  const cartDispatch = useCartContext().dispatch;
   const { dispatch, user1, setStore } = UseUserContext();
+  const storeDispatch = UseStoreContext().dispatch;
 
   const navigate = useNavigate();
 
@@ -34,7 +37,7 @@ export function useBackendAPI() {
 
         alert("Account Created Successfully");
 
-        if (data.role === "Buyer") navigate("/product");
+        if (data.role === "Buyer") navigate("/buyer/product");
         else if (data.role === "Merchant") navigate("/seller/store");
       } catch (err) {
         alert("Ooops.. There seems to be an error. Try again later");
@@ -96,32 +99,43 @@ export function useBackendAPI() {
       }
     },
 
-    purchaseItem: async function (data) {
+    purchaseItem: async function (details) {
       //To create a new payment record
       try {
-        await axios.post("http://localhost:8083/api/payment/add/", {
-          amount: data.total,
-          itemList: info,
+        const { data } = await axios.post(
+          "http://localhost:8083/api/payment/add/",
+          {
+            amount: details.total,
+            itemList: info,
+            userID: user1[0]._id,
+          }
+        );
+
+        //To create a new Order record
+        await axios.post("http://localhost:8082/api/order/add/", {
           userID: user1[0]._id,
+          paymentID: data._id,
+          address: user1[0].address,
+          storeID: info[0].storeID,
+          itemList: info,
         });
 
         //To update the itemCount once the purchase is done
-        try {
-          await info.map((rec) => {
-            return axios.patch(
-              "http://localhost:8081/api/product/updateItem/",
-              {
-                itemID: rec.itemID,
-                redQuantity: rec.itemQuantity,
-              }
-            );
+        const status = await info.map((rec) => {
+          return axios.patch("http://localhost:8081/api/product/updateItem/", {
+            itemID: rec.itemID,
+            redQuantity: rec.itemQuantity,
           });
-        } catch (err) {
-          console.log(err);
-          return err.message;
+        });
+
+        if (status) {
+          alert("Payment Successful");
+          cartDispatch({ type: "ClearCart" });
+          navigate("/");
         }
       } catch (err) {
         console.log(err);
+        alert(err.message);
         return err.message;
       }
     },
@@ -146,6 +160,132 @@ export function useBackendAPI() {
         return true;
       } catch (err) {
         return false;
+      }
+    },
+
+    getTotalSalesAmount: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8083/api/payment/getStoreTotal/" + storeID
+        );
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    getStoreItemCount: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/store/getStoreItemCount/" + storeID
+        );
+        return data.itemCount;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    getStoreName: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/store/get/" + storeID
+        );
+        return data.storeName;
+      } catch (err) {
+        alert(
+          "There seems to be an error. Store Name cannot be fethched at the moment"
+        );
+      }
+    },
+    getProductsOfStore: async function () {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/store/get/" + user1[0].storeID
+        );
+
+        const { storeItem } = data;
+
+        return storeItem;
+      } catch (err) {
+        alert(
+          "There seems to be an error. Store Name cannot be fethched at the moment"
+        );
+      }
+    },
+
+    saveProduct: async function (product) {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:8081/api/product/addItem/",
+          product
+        );
+
+        await axios.patch("http://localhost:8082/api/store/updateItem/", {
+          storeID: user1[0].storeID,
+          item: data,
+        });
+
+        storeDispatch({ type: "AddItem", payload: product });
+
+        alert("Item Added Successfully");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be uploaded at the moment"
+        );
+      }
+    },
+
+    removeItem: async function (itemID) {
+      try {
+        await axios.delete(
+          "http://localhost:8081/api/product/deleteItem/" + itemID
+        );
+
+        await axios.patch("http://localhost:8082/api/store/deleteStoreItem/", {
+          storeID: user1[0].storeID,
+          itemID,
+        });
+
+        storeDispatch({ type: "DeleteItem", payload: { _id: itemID } });
+
+        alert("Item Removed from the store");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be removed at the moment"
+        );
+      }
+    },
+
+    updateItem: async function (product) {
+      try {
+        const { data } = await axios.patch(
+          "http://localhost:8081/api/product/updateItem/",
+          product
+        );
+
+        await axios.patch("http://localhost:8082/api/store/modifyItem/", {
+          storeID: user1[0].storeID,
+          item: data,
+        });
+
+        storeDispatch({ type: "ModifyItem", payload: data });
+
+        alert("Item details updated");
+      } catch (err) {
+        alert(
+          "There seems to be an error. Item cannot be modified at the moment"
+        );
+      }
+    },
+    getAllItemsFromOneStore: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/order/getStoreOrder/" + storeID
+        );
+
+        return data;
+      } catch (err) {
+        console.log(err);
       }
     },
   };

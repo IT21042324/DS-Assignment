@@ -3,13 +3,14 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { ItemMapperHome } from "../../components/ItemMappers";
 import React from "react";
-import { HomeBanner, ActionBanner } from "../../components/Banner";
+import { ActionBanner } from "../../components/Banner";
+import { Slider } from "../../components/Slider";
 
 export default function Home() {
   return (
     <div>
       <Header />
-      <HomeBanner />
+      <Slider />
       <Features />
       <ActionBanner />
       <ItemMapperHome />
