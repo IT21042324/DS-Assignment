@@ -165,6 +165,7 @@ header nav div.active {
 
 #feature .fe-box{
   width: 180px;
+  height: 200px;
   text-align: center;
   background-color: white;
   padding: 25px 15px;
@@ -189,7 +190,7 @@ header nav div.active {
   line-height: 1;
   border-radius: 5px;
   color: #088178;
-  background-color: #fddde4;
+  background-color: #fdbf90;
 }
 
 #productCard {
