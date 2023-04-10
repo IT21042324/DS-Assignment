@@ -10,7 +10,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f2f6f1;
+   background-color: #f2f6f1;
+ 
 }
 
 code {
@@ -564,7 +565,7 @@ h3 {
 }
 
 .sideMenu .items .li:hover {
-  background-color: white;
+  background-color:white;
   padding: 4px;
   border-radius: 5px;
 }
@@ -581,6 +582,7 @@ h3 {
 
 .card {
   margin: 20px;
+
 }
 
 .icontext {
@@ -590,6 +592,7 @@ h3 {
   -webkit-box-align: top;
       -ms-flex-align: top;
           align-items: top;
+         
 }
 
 .icontext .icon {
@@ -611,10 +614,48 @@ h3 {
   font-size: 22px;
   font-weight: 600;
   display: block;
+  
 }
 
 .icontext span.text-sm {
   font-size: 12px;
   font-weight: 400;
   color: #6c757d;
+}
+.sideList {
+  position: fixed;
+  background-color: #021410;
+  max-width: 300px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.sideList .items {
+  padding: 40px 0;
+  margin: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.sideList .items .li:hover {
+  background-color:white;
+  padding: 4px;
+  border-radius: 5px;
+}
+.main-dashboard{
+
+  margin-left: 300px;
+  position: relative;
+  height: 500%;
+}
+.content {
+  padding: 30px 3%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.col-lg-3.card{
+  background-color: #088178;
+
 }

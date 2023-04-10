@@ -33,7 +33,7 @@ export const ItemMapper = () => {
               key={dat._id}
               style={{ flexBasis: `${100 / Math.min(items.length, 8)}%` }}
             >
-              <Item details={dat} />
+              <Item details={dat} key={dat._id} />
             </div>
           ))
           .sort(() => 0.5 - Math.random())}

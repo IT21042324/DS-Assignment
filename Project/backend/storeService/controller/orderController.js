@@ -1,33 +1,34 @@
 let Order = require("../models/Order");
 
 const createOrder = async (req, res) => {
-  const { userID, merchantID, storeID, paymentID, address } = req.body;
+  const { userID, storeID, paymentID, address, itemList } = req.body;
 
   const newOrder = new Order({
     userID,
-    merchantID,
-    storeID,
     paymentID,
     address,
+    storeID,
+    itemList,
   });
-  await newOrder
-    .save()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  try {
+    const data = await newOrder.save();
+    console.log(data);
+    res.json(data);
+  } catch (err) {
+    console.log(err.message);
+    res.json(err.message);
+  }
 };
 
 const getAllOrder = async (req, res) => {
-  await Order.find()
-    .then((order) => {
-      res.json(order);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const data = await Order.find();
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.send(err.message);
+  }
 };
 
 const updateOrder = async (req, res) => {
@@ -60,9 +61,21 @@ const getOneOrder = async (req, res) => {
     });
 };
 
+const getAllOrderPerStore = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const data = await Order.find({ storeID: id });
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrder,
   updateOrder,
   getOneOrder,
+  getAllOrderPerStore,
 };

@@ -7,6 +7,7 @@ import { UseStoreContext } from "./useStoreContext";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
+  const cartDispatch = useCartContext().dispatch;
   const { dispatch, user1, setStore } = UseUserContext();
   const storeDispatch = UseStoreContext().dispatch;
 
@@ -36,7 +37,7 @@ export function useBackendAPI() {
 
         alert("Account Created Successfully");
 
-        if (data.role === "Buyer") navigate("/product");
+        if (data.role === "Buyer") navigate("/buyer/product");
         else if (data.role === "Merchant") navigate("/seller/store");
       } catch (err) {
         alert("Ooops.. There seems to be an error. Try again later");
@@ -98,32 +99,43 @@ export function useBackendAPI() {
       }
     },
 
-    purchaseItem: async function (data) {
+    purchaseItem: async function (details) {
       //To create a new payment record
       try {
-        await axios.post("http://localhost:8083/api/payment/add/", {
-          amount: data.total,
-          itemList: info,
+        const { data } = await axios.post(
+          "http://localhost:8083/api/payment/add/",
+          {
+            amount: details.total,
+            itemList: info,
+            userID: user1[0]._id,
+          }
+        );
+
+        //To create a new Order record
+        await axios.post("http://localhost:8082/api/order/add/", {
           userID: user1[0]._id,
+          paymentID: data._id,
+          address: user1[0].address,
+          storeID: info[0].storeID,
+          itemList: info,
         });
 
         //To update the itemCount once the purchase is done
-        try {
-          await info.map((rec) => {
-            return axios.patch(
-              "http://localhost:8081/api/product/updateItem/",
-              {
-                itemID: rec.itemID,
-                redQuantity: rec.itemQuantity,
-              }
-            );
+        const status = await info.map((rec) => {
+          return axios.patch("http://localhost:8081/api/product/updateItem/", {
+            itemID: rec.itemID,
+            redQuantity: rec.itemQuantity,
           });
-        } catch (err) {
-          console.log(err);
-          return err.message;
+        });
+
+        if (status) {
+          alert("Payment Successful");
+          cartDispatch({ type: "ClearCart" });
+          navigate("/");
         }
       } catch (err) {
         console.log(err);
+        alert(err.message);
         return err.message;
       }
     },
@@ -150,17 +162,18 @@ export function useBackendAPI() {
         return false;
       }
     },
+
     getTotalSalesAmount: async function (storeID) {
       try {
         const { data } = await axios.get(
-          "http://localhost:8083/api/payment/getStoreTotal/",
-          { storeID }
+          "http://localhost:8083/api/payment/getStoreTotal/" + storeID
         );
         return data;
       } catch (err) {
         console.log(err);
       }
     },
+
     getStoreItemCount: async function (storeID) {
       try {
         const { data } = await axios.get(
@@ -250,13 +263,10 @@ export function useBackendAPI() {
           product
         );
 
-        const res = await axios.patch(
-          "http://localhost:8082/api/store/modifyItem/",
-          {
-            storeID: user1[0].storeID,
-            item: data,
-          }
-        );
+        await axios.patch("http://localhost:8082/api/store/modifyItem/", {
+          storeID: user1[0].storeID,
+          item: data,
+        });
 
         storeDispatch({ type: "ModifyItem", payload: data });
 
@@ -265,6 +275,17 @@ export function useBackendAPI() {
         alert(
           "There seems to be an error. Item cannot be modified at the moment"
         );
+      }
+    },
+    getAllItemsFromOneStore: async function (storeID) {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/order/getStoreOrder/" + storeID
+        );
+
+        return data;
+      } catch (err) {
+        console.log(err);
       }
     },
   };
