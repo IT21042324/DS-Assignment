@@ -27,7 +27,7 @@ export default function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin" element={<AdminRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
 
         {(user1[0]?.role === "Buyer" || !user1[0]) && (
           <Route path="/buyer/*" element={<BuyerRoutes />} />
