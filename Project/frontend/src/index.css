@@ -107,10 +107,9 @@ header nav div.active {
   transform: translateY(-50%);
   text-align: left;
   left: 0;
-  padding: 0 80px;
+  padding: 0 150px;
 }
 .carousel-caption button {
-  width: 10%;
   padding: 8px;
   border-radius: 25px;
   background-color: #fb7f21;
