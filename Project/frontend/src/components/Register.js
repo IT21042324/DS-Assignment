@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
+import pic from "../assets/register.png";
 import { useState, useRef } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
 import avatar from "../assets/profilePic.png";
@@ -48,97 +49,98 @@ export default function Register() {
   return (
     <div>
       <Header />
-      <div className="login-c">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            registerMerchant();
-          }}
-        >
-          <h3 className="text-center mb-4">Sign Up</h3>
-
-          <div
-            className="mb-3"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+      <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", alignItems: "center" }}>
+        <div>
+          <img src={pic} alt="" style={{width: 300, height: 300}}/>
+        </div>
+        <div className="login-c">
+          <form 
+            style={{minWidth: 400}}
+            onSubmit={(e) => {
+              e.preventDefault();
+              registerMerchant();
             }}
           >
-            <label htmlFor="avatar">
-              {profilePic ? (
-                <img
-                  src={profilePic}
-                  style={{
-                    width: "170px",
-                    height: "170px",
-                  }}
-                />
-              ) : (
-                <img
-                  src={avatar}
-                  style={{
-                    width: "170px",
-                    height: "170px",
-                  }}
-                />
-              )}
-            </label>
-            <input
-              id="avatar"
-              type="file"
-              className="form-control"
-              onChange={(e) => convertToBase64(e)}
-              style={{ display: "none" }}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Username</label>
-            <input
-              type="email"
-              className="form-control"
-              placeholder="example@example.com"
-              ref={userName}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label>Create Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="password"
-              ref={password}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label>Contact Number</label>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="+94 123 456 789"
-              ref={contact}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label>Address</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="123 Main St"
-              ref={address}
-              required
-            />
-          </div>
-          <div className="d-grid">
-            <input type="submit" className="btn btn-primary" value="Sign Up" />
-          </div>
-          <p className="forgot-password text-center">
-            Already a member? <Link to={"/login"}>Login</Link>
-          </p>
-        </form>
+            <h3 className="text-center mb-4">Sign Up</h3>
+
+            <div
+              className="mb-3"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <label htmlFor="avatar">
+                {profilePic ? (
+                  <img src={profilePic} alt="" style={{ width: "170px", height: "170px" }} /> 
+                  ) : (
+                  <img src={avatar} alt="" style={{ width: "170px", height: "170px" }} /> 
+                  )}
+              </label>
+              <input
+                id="avatar"
+                type="file"
+                className="form-control"
+                onChange={(e) => convertToBase64(e)}
+                style={{ display: "none" }}
+              />
+            </div>
+            <div className="mb-3">
+              <label>Username</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="example@gmail.com"
+                ref={userName}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label>Create Password</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="password"
+                ref={password}
+                minLength="6"
+                maxLength="20"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label>Contact Number</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="+94 123 456 789"
+                ref={contact}
+                pattern="[0-9]{10}"
+                title="Please enter a 10-digit phone number"
+                minLength="10"
+                maxLength="10"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label>Address</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="123 Main St"
+                ref={address}
+                required
+              />
+            </div>
+            <div className="d-grid">
+              <input type="submit" className="btn btn-primary" value="Sign Up" />
+            </div>
+            <p className="forgot-password text-center">
+              Already a member? <Link to={"/login"}>Login</Link>
+            </p>
+          </form>
+        </div>
       </div>
       <Footer />
     </div>
