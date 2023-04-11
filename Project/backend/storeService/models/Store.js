@@ -17,6 +17,9 @@ const storesSchema = new Schema({
   storeItem: {
     type: Array,
   },
+  description: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Store", storesSchema);
