@@ -11,11 +11,10 @@ const createStore = async (req, res) => {
   await newStore
     .save()
     .then(() => {
-      console.log(newStore);
       res.json(newStore);
     })
     .catch((err) => {
-      console.log(err.message);
+      res.send(err.message);
     });
 };
 
@@ -25,7 +24,7 @@ const getAllStore = async (req, res) => {
       res.json(store);
     })
     .catch((err) => {
-      console.log(err.message);
+      res.send(err.message);
     });
 };
 
@@ -59,7 +58,6 @@ const deleteStore = async (req, res) => {
       res.send({ status: "Store deleted" });
     })
     .catch((err) => {
-      console.log(err.message);
       res.send(err.message);
     });
 };
@@ -69,10 +67,8 @@ const getOneStore = async (req, res) => {
 
   try {
     const data = await Store.findById(id);
-    console.log(data);
     res.json(data);
   } catch (err) {
-    console.log(err.message);
     res.send(err.message);
   }
 };
@@ -105,7 +101,6 @@ const addStoreItem = async (req, res) => {
       { new: true }
     );
 
-    console.log(updatedStore);
     res.send(updatedStore);
   } catch (err) {
     res.send(err.message);
@@ -136,7 +131,6 @@ const modifyStoreItem = async (req, res) => {
       { new: true }
     );
 
-    console.log(updatedStore);
     res.send(updatedStore);
   } catch (err) {
     res.send(err.message);
@@ -159,7 +153,6 @@ const deleteStoreItem = async (req, res) => {
       { new: true }
     );
 
-    console.log(updatedStore);
     res.send(updatedStore);
   } catch (err) {
     res.send(err.message);

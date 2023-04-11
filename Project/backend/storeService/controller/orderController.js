@@ -13,10 +13,8 @@ const createOrder = async (req, res) => {
 
   try {
     const data = await newOrder.save();
-    console.log(data);
     res.json(data);
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 };
@@ -26,7 +24,6 @@ const getAllOrder = async (req, res) => {
     const data = await Order.find();
     res.json(data);
   } catch (err) {
-    console.log(err);
     res.send(err.message);
   }
 };
@@ -47,14 +44,11 @@ const updateOrder = async (req, res) => {
 };
 
 const getOneOrder = async (req, res) => {
-  const { orderID } = req.body;
-
-  await Order.findById(orderID)
+  await Order.findById(req.params.id)
     .then((order) => {
       res.status(200).send(order);
     })
     .catch((err) => {
-      console.log(err.message);
       res
         .status(500)
         .send({ status: "Error Fetching Order", error: err.message });
@@ -62,10 +56,32 @@ const getOneOrder = async (req, res) => {
 };
 
 const getAllOrderPerStore = async (req, res) => {
-  const id = req.params.id;
+  try {
+    const orders = await Order.find({ storeID: req.params.id });
+
+    const result = orders.map((order) => ({
+      ...order.toObject(),
+      totalAmount: order.itemList.reduce(
+        (total, item) => total + item.itemPrice * item.itemQuantity,
+        0
+      ),
+    }));
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get orders for store" });
+  }
+};
+
+const updateOrderStatus = async (req, res) => {
+  const { orderID, status } = req.body;
 
   try {
-    const data = await Order.find({ storeID: id });
+    const data = await Order.findByIdAndUpdate(
+      orderID,
+      { status },
+      { new: true }
+    );
     res.json(data);
   } catch (err) {
     res.send(err.message);
@@ -78,4 +94,5 @@ module.exports = {
   updateOrder,
   getOneOrder,
   getAllOrderPerStore,
+  updateOrderStatus,
 };

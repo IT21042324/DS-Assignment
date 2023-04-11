@@ -6,6 +6,7 @@ const {
   deletePayment,
   updatePayment,
   getTotalPaymentPerStore,
+  updatePaymentStatus,
 } = require("../controller/paymentController"); // Importing the controller functions from '../controller/paymentController'
 
 //create a new payment
@@ -22,5 +23,7 @@ router.delete("/delete/", deletePayment); // Handles DELETE requests to delete a
 
 //To get the total payments done to a certain store
 router.get("/getStoreTotal/:id", getTotalPaymentPerStore); // Handles GET requests to get the total payments made to a specific store using the getTotalPaymentPerStore() function
+
+router.patch("/updatePaymentStatus", updatePaymentStatus); //Handles updating of payment status
 
 module.exports = router; // Exports the router instance for use in the app.

@@ -288,5 +288,27 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
+    updateOrderAndPaymentStatus: async function (orderID, status) {
+      try {
+        const { data } = await axios.patch(
+          "http://localhost:8082/api/order/updateOrderStatus/",
+          { orderID, status }
+        );
+
+        const response = await axios.patch(
+          "http://localhost:8083/api/payment/updatePaymentStatus/",
+          { paymentID: data.paymentID, status }
+        );
+
+        if (response) alert(`Order status changed to ${status}`);
+        else {
+          alert(
+            "There seems to be a error in the order service.. please try later"
+          );
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
   };
 }

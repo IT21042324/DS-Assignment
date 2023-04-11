@@ -19,9 +19,7 @@ const createPayment = async (req, res) => {
   try {
     const data = await newPayment.save();
     res.json(data);
-    console.log(data);
   } catch (err) {
-    console.log(err);
     res.send(err.message);
   }
 };
@@ -33,7 +31,7 @@ const getAllPayment = async (req, res) => {
       res.json(payment);
     })
     .catch((err) => {
-      console.log(err);
+      res.send(err.message);
     });
 };
 
@@ -56,7 +54,6 @@ const updatePayment = async (req, res) => {
       res.status(200).json(update);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({ status: "Error updating data" });
     });
 };
@@ -71,7 +68,6 @@ const deletePayment = async (req, res) => {
       res.status(200).send({ status: "Payment Deleted" });
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send({ status: "Error...." });
     });
 };
@@ -103,8 +99,22 @@ const getTotalPaymentPerStore = async (req, res) => {
       res.send({ total: 0, orderCount: 0 });
     }
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
+  }
+};
+
+const updatePaymentStatus = async (req, res) => {
+  const { paymentID, status } = req.body;
+
+  try {
+    const data = await Payment.findByIdAndUpdate(
+      paymentID,
+      { status },
+      { new: true }
+    );
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
   }
 };
 
@@ -115,4 +125,5 @@ module.exports = {
   updatePayment,
   deletePayment,
   getTotalPaymentPerStore,
+  updatePaymentStatus,
 };
