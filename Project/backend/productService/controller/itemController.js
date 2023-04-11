@@ -5,7 +5,7 @@ const getAllItems = async (req, res) => {
     const data = await itemModel.find();
     res.json(data);
   } catch (err) {
-    console.log(err.message);
+    res.send(err.message);
   }
 };
 
@@ -42,7 +42,6 @@ const postItem = async (req, res) => {
     const data = await ItemModel.save();
     res.json(data);
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 };
@@ -53,10 +52,8 @@ const getOneItem = async (req, res) => {
   try {
     const fetchedItem = itemModel.findOne({ _id: itemID });
 
-    console.log(fetchedItem);
     res.json(fetchedItem);
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 };
@@ -93,10 +90,8 @@ const updateItem = async (req, res) => {
       );
     }
 
-    console.log(updatedInfo);
     return res.json(updatedInfo);
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 };
@@ -106,10 +101,8 @@ const deleteItem = async (req, res) => {
 
   try {
     const deletedRecord = await itemModel.findByIdAndDelete(id);
-    console.log(deletedRecord);
     res.json(deletedRecord);
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 };
@@ -121,7 +114,6 @@ const addReview = async (req, res) => {
   try {
     const insertReview = async (callback) => {
       const item = await itemModel.findOne({ _id: itemID });
-      console.log(item);
       if (item) await callback(item.reviews); //item.reviews is an array
     };
 
@@ -131,17 +123,14 @@ const addReview = async (req, res) => {
       //an array is passed in the parameter
 
       descArr.push({ userID, userName, rating, review });
-      console.log(descArr);
 
       const data = await itemModel.findOneAndUpdate(
         { _id: itemID },
         { reviews: descArr }
       );
-      // console.log(data);
       res.json({ updatedInfo: data });
     }
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 };
@@ -153,13 +142,11 @@ const modifyReview = async (req, res) => {
   try {
     const removeReview = async (callback) => {
       const item = await itemModel.findOne({ _id: itemID });
-      console.log(item);
       if (item) await callBack(item.reviews); //item.reviews is an array
     };
 
     removeReview();
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 
@@ -171,13 +158,11 @@ const modifyReview = async (req, res) => {
     });
 
     descArr.push({ userID, userName, rating, review });
-    console.log(descArr);
 
     const data = await itemModel.findOneAndUpdate(
       { _id: itemID },
       { reviews: descArr }
     );
-    console.log(data);
     res.json({ updatedInfo: data });
   }
 };
@@ -194,7 +179,6 @@ const deleteReview = (req, res) => {
 
     removeReview();
   } catch (err) {
-    console.log(err.message);
     res.json(err.message);
   }
 
@@ -209,7 +193,6 @@ const deleteReview = (req, res) => {
       { _id: itemID },
       { reviews: descArr }
     );
-    console.log(data);
     res.json({ updatedInfo: data });
   }
 };

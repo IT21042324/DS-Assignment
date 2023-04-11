@@ -14,8 +14,12 @@ import { Navigate } from "react-router-dom";
 function DashWrapper() {
   // Access necessary functions and variables from custom hooks
   const { logoutUser, getUser } = UseUserContext();
-  const { getTotalSalesAmount, getStoreItemCount, getAllItemsFromOneStore } =
-    useBackendAPI();
+  const {
+    getTotalSalesAmount,
+    getStoreItemCount,
+    getAllItemsFromOneStore,
+    updateOrderAndPaymentStatus,
+  } = useBackendAPI();
 
   // Get user information from the context
   const user = getUser();
@@ -68,6 +72,11 @@ function DashWrapper() {
 
     // Show an alert to confirm the logout
     alert("Logged Out");
+  };
+
+  //To change the status of the order
+  const changeOrderStatus = async (orderID, status) => {
+    await updateOrderAndPaymentStatus(orderID, status);
   };
 
   return (
@@ -145,8 +154,8 @@ function DashWrapper() {
                   <thead>
                     <tr>
                       <th>#ID</th>
-                      <th scope="col">Customer</th>
-                      <th scope="col">Date</th>
+                      <th scope="col">Customer ID</th>
+                      <th scope="col">Order Date</th>
                       <th scope="col">Total Price</th>
                       <th scope="col">Order Status</th>
                       <th scope="col" className="text-end">
@@ -157,14 +166,18 @@ function DashWrapper() {
                   {storeDetails.map((data) => {
                     return (
                       <tr key={data._id}>
-                        <td scope="col">{data._id}</td>
-                        <td>{data.userID}</td>
-                        <td>{data.orderedDate}</td>
-                        <td>find it out</td>
+                        <td scope="col">{data._id.slice(-4)}</td>
+                        <td>{data.userID.slice(-4)}</td>
+                        <td>{data.orderedDate.substring(0, 10)}</td>
+                        <td>{data.totalAmount}</td>
                         <td>{data.status}</td>
                         <td scope="col">
                           <button
                             style={{ border: "none", background: "none" }}
+                            name="Confirm Order"
+                            onClick={(e) =>
+                              changeOrderStatus(data._id, "Confirmed")
+                            }
                           >
                             <FontAwesomeIcon icon={faSquareCheck} />
                           </button>
