@@ -73,6 +73,15 @@ const getOneStore = async (req, res) => {
   }
 };
 
+const getStoreDescription = async (req, res) => {
+  try {
+    const data = await Store.findById(req.params.id, { description });
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 const getStoreItemCount = async (req, res) => {
   const storeID = req.params.id;
 

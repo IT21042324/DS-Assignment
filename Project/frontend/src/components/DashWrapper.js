@@ -172,15 +172,19 @@ function DashWrapper() {
                         <td>{data.totalAmount}</td>
                         <td>{data.status}</td>
                         <td scope="col">
-                          <button
-                            style={{ border: "none", background: "none" }}
-                            name="Confirm Order"
-                            onClick={(e) =>
-                              changeOrderStatus(data._id, "Confirmed")
-                            }
-                          >
-                            <FontAwesomeIcon icon={faSquareCheck} />
-                          </button>
+                          {data.status === "Pending" ? (
+                            <button
+                              style={{ border: "none", background: "none" }}
+                              name="Confirm Order"
+                              onClick={(e) =>
+                                changeOrderStatus(data._id, "Confirmed")
+                              }
+                            >
+                              <FontAwesomeIcon icon={faSquareCheck} />
+                            </button>
+                          ) : (
+                            "Order Approved"
+                          )}
                         </td>
                       </tr>
                     );

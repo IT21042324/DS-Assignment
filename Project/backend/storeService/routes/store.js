@@ -10,6 +10,7 @@ const {
   deleteStoreItem,
   getStoreItemCount,
   modifyStoreItem,
+  getStoreDescription,
 } = require("../controller/storeController");
 //create store
 router.post("/add", createStore);
