@@ -56,7 +56,7 @@ function SideList() {
         </div>
         <div className="li">
           <Link
-            to={""}
+            to={"/admin/orders"}
             style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
           >
             <FontAwesomeIcon icon={faListSquares} />
