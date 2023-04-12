@@ -24,13 +24,10 @@ export default function Register() {
   function convertToBase64(e) {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      setProfilePic(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("error: ", error);
-    };
+    reader.onload = () => setProfilePic(reader.result);
+    reader.onerror = (error) => console.log("error: ", error);
   }
+
   const { registerUser } = useBackendAPI();
 
   //To register Merchant

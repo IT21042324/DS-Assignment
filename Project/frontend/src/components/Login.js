@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import pic from "../assets/login.png";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
 export default function Login() {
@@ -10,6 +10,10 @@ export default function Login() {
   const { selectedUserRole } = UseUserContext();
   const userName = useRef();
   const password = useRef();
+
+  const { getUserRole, dispatch } = UseUserContext();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [existUserRole, setExistUserRole] = useState("");
 
   const { login } = useBackendAPI();
 
@@ -22,6 +26,10 @@ export default function Login() {
     }
   };
 
+  useEffect(() => {
+    setExistUserRole(selectedUserRole);
+  }, []);
+
   const loginHandler = async (e) => {
     e.preventDefault();
 
@@ -32,13 +40,29 @@ export default function Login() {
     }
 
     //Using the login function provided by the backendAPI component to verify the user
+
+    var role;
+    if (isAdmin) role = "Admin";
+    else role = existUserRole || selectedUserRole;
+
     const info = await login({
       userName: userName.current.value,
       password: password.current.value,
-      role: selectedUserRole,
+      role,
     });
     if (info) alert(info);
   };
+
+  function setAdminFunction() {
+    if (!existUserRole) setExistUserRole(selectedUserRole);
+    console.log(existUserRole);
+
+    dispatch({
+      type: "SetUserRole",
+      userRole: "Admin",
+    });
+    setIsAdmin(true);
+  }
 
   return (
     <div>
@@ -77,19 +101,6 @@ export default function Login() {
               />
             </div>
 
-            <div className="mb-3">
-              <div className="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  className="custom-control-input"
-                  id="customCheck1"
-                />
-                <label className="custom-control-label" htmlFor="customCheck1">
-                  Remember me
-                </label>
-              </div>
-            </div>
-
             <div className="d-grid">
               <input
                 type="submit"
@@ -98,10 +109,40 @@ export default function Login() {
               />
             </div>
 
-            <p className="forgot-password text-center">
-              Don't have an account yet?
-              <Link to={"/register"}>Register Now</Link>
-            </p>
+            {!isAdmin ? (
+              <>
+                <p className="forgot-password text-center">
+                  Don't have an account yet?
+                  <Link
+                    to={"/register"}
+                    onClick={(e) => {
+                      dispatch({
+                        type: "SetUserRole",
+                        userRole: existUserRole,
+                      });
+                    }}
+                  >
+                    Register Now
+                  </Link>
+                </p>
+                <p className="forgot-password text-center">
+                  <Link onClick={(e) => setAdminFunction()}>admin?</Link>
+                </p>
+              </>
+            ) : (
+              <Link
+                onClick={(e) => {
+                  dispatch({
+                    type: "SetUserRole",
+                    userRole: existUserRole,
+                  });
+                  console.log(existUserRole);
+                  setIsAdmin(false);
+                }}
+              >
+                user?
+              </Link>
+            )}
           </form>
         </div>
         <div>
