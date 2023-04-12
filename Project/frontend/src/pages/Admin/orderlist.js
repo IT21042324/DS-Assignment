@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import SideList from "../../components/SideList";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useBackendAPI } from "../../context/useBackendAPI";
 
 export default function Orderlist() {
@@ -10,6 +8,8 @@ export default function Orderlist() {
 
   // Define state variables to store data
   const [allOrder, setAllOrders] = useState([]);
+
+  const isMounted = useRef(false);
 
   // Use useEffect to get sales data and store item count when user changes
   useEffect(() => {
@@ -20,13 +20,25 @@ export default function Orderlist() {
       setAllOrders(data);
     }
 
-    // Call the getData function when user changes
-    getData();
+    if (!isMounted.current) {
+      getData();
+      isMounted.current = true;
+    }
   }, []);
 
   //To change the status of the order
   const changeOrderStatus = async (orderID, status) => {
     await updateOrderAndPaymentStatus(orderID, status);
+
+    setAllOrders((prev) =>
+      prev.map((dat) => {
+        if (dat._id === orderID) {
+          return { ...dat, status: "Confirmed" };
+        } else {
+          return dat;
+        }
+      })
+    );
   };
 
   return (
