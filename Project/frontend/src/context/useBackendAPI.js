@@ -311,5 +311,51 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
+
+    getUserCountForAdmin: async function () {
+      try {
+        const { data } = await axios.get("http://localhost:8080/api/user/");
+
+        const adminRevenue = await axios.get(
+          "http://localhost:8083/api/payment/getAdminTotal"
+        );
+
+        const adminTotalOrders = await axios.get(
+          "http://localhost:8082/api/order/getOrderCountForAdmin/"
+        );
+
+        return {
+          userCount: data.userCount,
+          orderCount: adminTotalOrders.data.orderCount,
+          amountForStore: adminRevenue.data.amountForStore,
+          users: data.users,
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    deleteUser: async function (userID) {
+      try {
+        const { data } = await axios.delete(
+          "http://localhost:8080/api/user/deleteUser/" + userID
+        );
+
+        return data;
+      } catch (err) {
+        console.log(err);
+        return err;
+      }
+    },
+    getAllStoreOrders: async function () {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:8082/api/order/getAllStoreOrders/"
+        );
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   };
 }

@@ -24,8 +24,8 @@ export default function UserList() {
           </div>
         </div>
 
-        <div class="card mb-4">
-          <header class="card-header">
+        <div className="card mb-4">
+          <header className="card-header">
             <h4>User</h4>
             <div>
               <Link className="btn btn-success" to={"/admin/add-user"}>
@@ -33,10 +33,10 @@ export default function UserList() {
               </Link>
             </div>
           </header>
-          <div class="card-body">
+          <div className="card-body">
             {/* <ItemMapper /> */}
-            <div class="table-responsive">
-              <table class="table table-hover">
+            <div className="table-responsive">
+              <table className="table table-hover">
                 <thead>
                   <tr>
                     <th>#User ID</th>
@@ -47,7 +47,7 @@ export default function UserList() {
                     <th scope="col">Image</th>
                     <th scope="col">Role</th>
 
-                    <th scope="col" class="text-end">
+                    <th scope="col" className="text-end">
                       {" "}
                       Action{" "}
                     </th>

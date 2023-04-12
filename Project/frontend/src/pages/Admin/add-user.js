@@ -21,8 +21,8 @@ export default function AddUser() {
           </div>
         </div>
 
-        <div class="card mb-4">
-          <header class="card-header">
+        <div className="card mb-4">
+          <header className="card-header">
             <h4>User</h4>
             <div>
               <Link className="btn btn-success" to={"/add-user"}>
@@ -37,23 +37,23 @@ export default function AddUser() {
                   <label for="validationCustom01">User Name</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Type here"
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
                   <label for="validationCustom01">Password</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Enter the password"
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
               </div>
               <div className="row">
@@ -61,34 +61,34 @@ export default function AddUser() {
                   <label for="validationCustom01">Contact No</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Enter the contact Number"
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
                   <label for="validationCustom01">Address</label>
                   <input
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Enter the address"
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
                   <label for="validationCustom01">Image</label>
                   <input
                     type="file"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder=""
                     required
                   />
-                  <div class="valid-feedback">Looks good!</div>
+                  <div className="valid-feedback">Looks good!</div>
                 </div>
               </div>
               <div className="row">
@@ -96,7 +96,7 @@ export default function AddUser() {
                   <label for="validationCustom01">Role</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="validationCustom01"
                     placeholder="Enter the Role"
                     required

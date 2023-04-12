@@ -1,8 +1,34 @@
 import { Link } from "react-router-dom";
 import SideList from "../../components/SideList";
-// import { ItemMapper } from "../Buyer/ItemMapper";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
+import { useBackendAPI } from "../../context/useBackendAPI";
 
 export default function Orderlist() {
+  const { getAllStoreOrders, updateOrderAndPaymentStatus } = useBackendAPI();
+
+  // Define state variables to store data
+  const [allOrder, setAllOrders] = useState([]);
+
+  // Use useEffect to get sales data and store item count when user changes
+  useEffect(() => {
+    async function getData() {
+      const data = await getAllStoreOrders();
+
+      // Update state variable with fetched data
+      setAllOrders(data);
+    }
+
+    // Call the getData function when user changes
+    getData();
+  }, []);
+
+  //To change the status of the order
+  const changeOrderStatus = async (orderID, status) => {
+    await updateOrderAndPaymentStatus(orderID, status);
+  };
+
   return (
     <div>
       <SideList />
@@ -22,28 +48,75 @@ export default function Orderlist() {
           </div>
         </div>
 
-        <div class="card mb-4">
-          <header class="card-header">
+        <div className="card mb-4">
+          <header className="card-header">
             <h4>Orders</h4>
           </header>
-          <div class="card-body">
-            {/* <ItemMapper /> */}
-            <div class="table-responsive">
-              {" "}
-              <table class="table table-hover">
+          <div className="card-body">
+            <div className="table-responsive">
+              <table
+                className="table table-hover"
+                style={{ borderSpacing: "0 50px" }}
+              >
                 <thead>
                   <tr>
-                    <th>#User ID</th>
+                    <th scope="col">Order ID</th>
                     <th scope="col">Payment ID</th>
-                    <th scope="col">Address</th>
                     <th scope="col">Store ID</th>
+                    <th scope="col">Address</th>
                     <th scope="col">Item List</th>
-                    <th scope="col" class="text-end">
-                      {" "}
-                      Action{" "}
+                    <th scope="col">Order Status</th>
+                    <th scope="col" className="text-end">
+                      Action
                     </th>
                   </tr>
                 </thead>
+                {allOrder.map((data) => {
+                  return (
+                    <tr key={data._id} style={{ height: "50px" }}>
+                      <td scope="col">{data._id.slice(-4)}</td>
+                      <td>{data.paymentID.slice(-4)}</td>
+                      <td>{data.storeID.slice(-4)}</td>
+                      <td>{data.address}</td>
+                      <td>
+                        {data.itemList.map((itm) => itm.itemName).join(", ")}
+                      </td>
+                      <td>{data.status}</td>
+                      <td scope="col">
+                        {data.status === "Pending" ? (
+                          <button
+                            style={{
+                              padding: "8px 12px",
+                              borderRadius: "4px",
+                              border: "none",
+                              fontSize: "16px",
+                              fontFamily: "sans-serif",
+                              cursor: "pointer",
+                              backgroundColor: "#fff",
+                              color: "green",
+                              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                              transition: "all 0.2s ease-in-out",
+                            }}
+                            name="Confirm Order"
+                            onClick={(e) =>
+                              changeOrderStatus(data._id, "Confirmed")
+                            }
+                            onMouseEnter={(e) =>
+                              (e.target.style.backgroundColor = "#f1f1f1")
+                            }
+                            onMouseLeave={(e) =>
+                              (e.target.style.backgroundColor = "#fff")
+                            }
+                          >
+                            Confirm Order
+                          </button>
+                        ) : (
+                          "Order Approved"
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </table>
             </div>
           </div>
