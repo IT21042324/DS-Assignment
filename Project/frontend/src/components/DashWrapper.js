@@ -84,11 +84,23 @@ function DashWrapper() {
     if (data.status === "Confirmed") {
       return (
         <button
-          style={{ border: "none", background: "none" }}
           name="Confirm Order"
           onClick={(e) => changeOrderStatus(data._id, "Dispatched")}
+          style={{
+            padding: "8px 12px",
+            borderRadius: "4px",
+            border: "none",
+            fontSize: "16px",
+            fontFamily: "sans-serif",
+            cursor: "pointer",
+            backgroundColor: "#fff",
+            color: "green",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#fff")}
         >
-          <FontAwesomeIcon icon={faSquareCheck} />
+          Dispatch Order
         </button>
       );
     } else if (data.status === "Pending") {
@@ -173,13 +185,25 @@ function DashWrapper() {
               <div className="table-responsive">
                 <table className="table table-hover">
                   <thead>
-                    <tr>
-                      <th>#ID</th>
-                      <th scope="col">Customer ID</th>
-                      <th scope="col">Order Date</th>
-                      <th scope="col">Total Price</th>
-                      <th scope="col">Order Status</th>
-                      <th scope="col" className="text-end">
+                    <tr style={{ textAlign: "center" }}>
+                      <th style={{ textAlign: "center" }}>#ID</th>
+                      <th style={{ textAlign: "center" }} scope="col">
+                        Customer ID
+                      </th>
+                      <th style={{ textAlign: "center" }} scope="col">
+                        Order Date
+                      </th>
+                      <th style={{ textAlign: "center" }} scope="col">
+                        Total Price
+                      </th>
+                      <th style={{ textAlign: "center" }} scope="col">
+                        Order Status
+                      </th>
+                      <th
+                        style={{ textAlign: "center" }}
+                        scope="col"
+                        className="text-end"
+                      >
                         Action
                       </th>
                     </tr>
@@ -187,12 +211,22 @@ function DashWrapper() {
                   {storeDetails.map((data) => {
                     return (
                       <tr key={data._id}>
-                        <td scope="col">{data._id.slice(-4)}</td>
-                        <td>{data.userID.slice(-4)}</td>
-                        <td>{data.orderedDate.substring(0, 10)}</td>
-                        <td>{data.totalAmount}</td>
-                        <td>{data.status}</td>
-                        <td>{getOrderStatus(data)}</td>
+                        <td style={{ textAlign: "center" }} scope="col">
+                          {data._id.slice(-4)}
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          {data.userID.slice(-4)}
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          {data.orderedDate.substring(0, 10)}
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          {data.totalAmount}
+                        </td>
+                        <td style={{ textAlign: "center" }}>{data.status}</td>
+                        <td style={{ float: "right", color: "blue" }}>
+                          {getOrderStatus(data)}
+                        </td>
                       </tr>
                     );
                   })}
