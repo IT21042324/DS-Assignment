@@ -84,11 +84,23 @@ function DashWrapper() {
     if (data.status === "Confirmed") {
       return (
         <button
-          style={{ border: "none", background: "none" }}
           name="Confirm Order"
           onClick={(e) => changeOrderStatus(data._id, "Dispatched")}
+          style={{
+            padding: "8px 12px",
+            borderRadius: "4px",
+            border: "none",
+            fontSize: "16px",
+            fontFamily: "sans-serif",
+            cursor: "pointer",
+            backgroundColor: "#fff",
+            color: "green",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#f1f1f1")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#fff")}
         >
-          <FontAwesomeIcon icon={faSquareCheck} />
+          Dispatch Order
         </button>
       );
     } else if (data.status === "Pending") {
@@ -193,7 +205,9 @@ function DashWrapper() {
                           <td>{data.orderedDate.substring(0, 10)}</td>
                           <td>{data.totalAmount}</td>
                           <td>{data.status}</td>
-                          <td className="text-center">{getOrderStatus(data)}</td>
+                          <td className="text-center" style={{ color: "blue" }}>
+                            {getOrderStatus(data)}
+                          </td>
                         </tr>
                       );
                     })}

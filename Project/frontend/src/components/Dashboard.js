@@ -147,13 +147,25 @@ function Dashboard() {
           <div className="table-responsive">
             <table className="table table-hover">
               <thead>
-                <tr>
+                <tr style={{ textAlign: "center", height: "50px" }}>
                   <th>#User ID</th>
-                  <th scope="col">User Name</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Contact No</th>
-                  <th scope="col">Address</th>
-                  <th scope="col" className="text-end">
+                  <th scope="col" style={{ textAlign: "center" }}>
+                    User Name
+                  </th>
+                  <th scope="col" style={{ textAlign: "center" }}>
+                    Role
+                  </th>
+                  <th scope="col" style={{ textAlign: "center" }}>
+                    Contact No
+                  </th>
+                  <th scope="col" style={{ textAlign: "center" }}>
+                    Address
+                  </th>
+                  <th
+                    scope="col"
+                    className="text-end"
+                    style={{ textAlign: "center" }}
+                  >
                     Action
                   </th>
                 </tr>
@@ -162,14 +174,18 @@ function Dashboard() {
                 .filter((usr) => userRole === "" || usr.role === userRole)
                 .map((usr) => {
                   return (
-                    <tr key={usr._id}>
-                      <td>{usr._id.slice(-4)}</td>
-                      <td>{usr.userName}</td>
-                      <td>{usr.role}</td>
-                      <td>{usr.contact}</td>
-                      <td>{usr.address}</td>
-                      <td>
-                        {" "}
+                    <tr
+                      key={usr._id}
+                      style={{ textAlign: "center", height: "50px" }}
+                    >
+                      <td style={{ textAlign: "center" }}>
+                        {usr._id.slice(-4)}
+                      </td>
+                      <td style={{ textAlign: "center" }}>{usr.userName}</td>
+                      <td style={{ textAlign: "center" }}>{usr.role}</td>
+                      <td style={{ textAlign: "center" }}>{usr.contact}</td>
+                      <td style={{ textAlign: "center" }}>{usr.address}</td>
+                      <td style={{ textAlign: "center" }}>
                         <button
                           onClick={(e) => removeUser(e, usr._id, usr.userName)}
                           style={{
@@ -182,6 +198,7 @@ function Dashboard() {
                             backgroundColor: "#fff",
                             color: "#ff4d4f",
                             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                            float: "right",
                           }}
                           onMouseEnter={(e) =>
                             (e.target.style.backgroundColor = "#f1f1f1")
