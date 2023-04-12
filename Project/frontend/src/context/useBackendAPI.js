@@ -8,7 +8,7 @@ import { UseStoreContext } from "./useStoreContext";
 export function useBackendAPI() {
   const { info } = useCartContext();
   const cartDispatch = useCartContext().dispatch;
-  const { dispatch, user1, setStore } = UseUserContext();
+  const { dispatch, user1, setStore, getUser } = UseUserContext();
   const storeDispatch = UseStoreContext().dispatch;
 
   const navigate = useNavigate();
@@ -21,10 +21,6 @@ export function useBackendAPI() {
           userDetails
         );
 
-        // Check if a user object is stored in the local storage
-        if (localStorage.getItem("user")) {
-          localStorage.removeItem("user");
-        }
         localStorage.setItem("user", JSON.stringify(data));
 
         dispatch({ type: "SetUser", payload: [data] });
@@ -51,18 +47,24 @@ export function useBackendAPI() {
           userDetails
         );
 
-        localStorage.setItem("user", JSON.stringify(data));
+        async function configureUser() {
+          localStorage.setItem("user", JSON.stringify(data));
 
-        dispatch({ type: "SetUser", payload: [data] });
+          dispatch({ type: "SetUser", payload: [data] });
+        }
+        await configureUser();
+
+        const user = getUser();
+        console.log(user);
 
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
-
-        if (user1[0].role === "Buyer") navigate("/buyer/product");
-        else if (user1[0].role === "Merchant") {
-          user1[0]?.storeID ? navigate("/seller") : navigate("/seller/store");
+        if (user.role === "Buyer") navigate("/buyer/product");
+        else if (user.role === "Merchant") {
+          user.storeID ? navigate("/seller") : navigate("/seller/store");
         }
       } catch (err) {
-        console.log(err.response.data.err);
+        console.log(err);
+        alert(err.response.data.err);
         return err.response.data.err;
       }
     },
@@ -77,23 +79,12 @@ export function useBackendAPI() {
           }
         );
 
-        const obj = await axios.get(
-          "http://localhost:8080/api/user/" + data._id
-        );
+        localStorage.setItem("user", JSON.stringify(data));
 
-        async function updateLocalStorage(data) {
-          // Check if a user object is stored in the local storage
-          if (localStorage.getItem("user")) {
-            localStorage.setItem("user", JSON.stringify(obj.data[0]));
-
-            dispatch({
-              type: "SetUser",
-              payload: obj.data,
-            });
-          }
-        }
-
-        await updateLocalStorage(data);
+        dispatch({
+          type: "SetUser",
+          payload: data,
+        });
       } catch (err) {
         return err.message;
       }

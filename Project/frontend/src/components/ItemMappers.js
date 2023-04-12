@@ -35,8 +35,7 @@ export const ItemMapper = () => {
             >
               <Item details={dat} key={dat._id} />
             </div>
-          ))
-          .sort(() => 0.5 - Math.random())}
+          ))}
       </div>
     </div>
   );

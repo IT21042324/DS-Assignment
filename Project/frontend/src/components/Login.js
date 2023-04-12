@@ -14,16 +14,13 @@ export default function Login() {
   const { login } = useBackendAPI();
 
   const validateForm = () => {
-    if (userName.current.value.trim() === '') {
-      return 'Username is required';
+    if (userName.current.value.trim() === "") {
+      return "Username is required";
     }
-    if (password.current.value.trim() === '') {
-      return 'Password is required';
+    if (password.current.value.trim() === "") {
+      return "Password is required";
     }
-    if (password.current.value.length < 6 || password.current.value.length > 20) {
-      return 'Password must be between 6 and 20 characters';
-    }
-  }
+  };
 
   const loginHandler = async (e) => {
     e.preventDefault();
@@ -46,7 +43,14 @@ export default function Login() {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", justifyContent: "center", flexDirection: "row", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
         <div className="login-c">
           <form onSubmit={loginHandler}>
             <h3 className="text-center mb-4">Sign In</h3>
@@ -69,8 +73,6 @@ export default function Login() {
                 type="password"
                 className="form-control"
                 placeholder="password"
-                minLength="6"
-                maxLength="20"
                 ref={password}
               />
             </div>
@@ -89,7 +91,11 @@ export default function Login() {
             </div>
 
             <div className="d-grid">
-              <input type="submit" className="btn btn-primary" value="Sign In" />
+              <input
+                type="submit"
+                className="btn btn-primary"
+                value="Sign In"
+              />
             </div>
 
             <p className="forgot-password text-center">
@@ -99,7 +105,7 @@ export default function Login() {
           </form>
         </div>
         <div>
-          <img src={pic} alt="" style={{width: 300, height: 300}}/>
+          <img src={pic} alt="" style={{ width: 300, height: 300 }} />
         </div>
       </div>
       <Footer />

@@ -3,15 +3,14 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import NavBar from "./Navbar";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
 import { UseUserContext } from "../context/useUserContext";
-import profileImg from "../assets/profileImg.jpg";
 
 // Defining the Header function
 function Header() {
   // Destructuring variables from the useUserContext hook
-  const { user1, logoutUser, dispatch } = UseUserContext();
+  const { user1, logoutUser, dispatch, getUser } = UseUserContext();
 
   // Setting initial state for showing the user profile popup
   const [showPopup, setShowPopup] = useState(false);
@@ -31,6 +30,17 @@ function Header() {
 
   // Setting initial state for the user profile picture as an empty string
   const [profilePic, setProfilePic] = useState("");
+
+  useEffect(() => {
+    setProfilePic(user1[0]?.image);
+  }, [user1]);
+
+  useEffect(() => {
+    async function setProfilePicture() {
+      if (user1[0]?.image) setProfilePic(user1[0].image);
+    }
+    setProfilePicture();
+  }, []);
 
   // Function for converting the selected image file to base64 format
   function convertToBase64(e) {
@@ -69,25 +79,11 @@ function Header() {
                   <h6 style={{ float: "right", color: "red" }}>Logout</h6>
                 </Link>
               </div>
-
-              {/* Displaying the user profile picture, or a default image if the user has not set a profile picture */}
-              {profilePic ? (
+              &nbsp;&nbsp;&nbsp;
+              {/* Displaying the user profile picture*/}
+              {profilePic && (
                 <img
                   src={profilePic}
-                  alt={user1[0].userName}
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    borderRadius: "40px",
-                    marginTop: "10px",
-                  }}
-                  onClick={(e) => {
-                    setShowPopup(true);
-                  }}
-                />
-              ) : (
-                <img
-                  src={user1[0].image || profileImg}
                   alt={user1[0].userName}
                   style={{
                     width: "25px",
@@ -125,7 +121,7 @@ function Header() {
       {showPopup && (
         <div
           className="popup"
-          style={{ display: showPopup ? "flex" : "none" }}
+          style={{ display: showPopup ? "flex" : "none", zIndex: "100" }}
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               handleClosePopup();
@@ -133,9 +129,9 @@ function Header() {
           }}
         >
           <div className="popup-content">
-            {!user1[0].image ? (
+            {profilePic && (
               <img
-                src={profileImg}
+                src={profilePic}
                 style={{
                   backgroundColor: "white",
                   width: "200px",
@@ -144,24 +140,6 @@ function Header() {
                   border: "1px solid black",
                 }}
                 alt={user1[0].userName}
-              />
-            ) : profilePic ? (
-              <img
-                src={profilePic}
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "100%",
-                }}
-              />
-            ) : (
-              <img
-                src={user1[0].image}
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  borderRadius: "100%",
-                }}
               />
             )}
 

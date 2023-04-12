@@ -18,6 +18,11 @@ export const UserContextProvider = (props) => {
           user1: action.payload,
           selectedUserRole: state.selectedUserRole,
         };
+      case "UpdateUser": {
+        return {
+          user1: action.payload,
+        };
+      }
       case "Logout":
         return { user1: [], selectedUserRole: "" };
       case "SetUserRole":
