@@ -105,7 +105,7 @@ export default function ProductList() {
                     <th>Quantity</th>
                     <th>Unit Price</th>
                     <th>Discounted Price</th>
-                    <th className="text-end">Action</th>
+                    <th className="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,7 +125,7 @@ export default function ProductList() {
                         <td>{dat.quantity}</td>
                         <td>{dat.price}</td>
                         <td>{dat.totalPrice}</td>
-                        <td className="text-end">
+                        <td className="text-center">
                           <button
                             style={{ border: "none", background: "none" }}
                             onClick={(e) => handleEditButtonClick(dat._id)}

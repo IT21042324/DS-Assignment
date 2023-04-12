@@ -69,7 +69,7 @@ function Dashboard() {
               color: "black",
             }}
           >
-            Whole data about your business here
+            Whole data about site here
           </p>
         </div>
         <div>

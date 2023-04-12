@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExpand,
   faCartPlus,
-  faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
@@ -58,7 +57,7 @@ export default function Item(props) {
           <div>
             <img
               src={props.details.image}
-              style={{ height: "200px", width: "200px" }}
+              style={{ height: "200px", width: "200px" }} alt=""
             />
           </div>
           <span>{props.details.itemName}</span>

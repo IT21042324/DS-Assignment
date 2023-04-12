@@ -185,51 +185,33 @@ function DashWrapper() {
               <div className="table-responsive">
                 <table className="table table-hover">
                   <thead>
-                    <tr style={{ textAlign: "center" }}>
-                      <th style={{ textAlign: "center" }}>#ID</th>
-                      <th style={{ textAlign: "center" }} scope="col">
-                        Customer ID
-                      </th>
-                      <th style={{ textAlign: "center" }} scope="col">
-                        Order Date
-                      </th>
-                      <th style={{ textAlign: "center" }} scope="col">
-                        Total Price
-                      </th>
-                      <th style={{ textAlign: "center" }} scope="col">
-                        Order Status
-                      </th>
-                      <th
-                        style={{ textAlign: "center" }}
-                        scope="col"
-                        className="text-end"
-                      >
+                    <tr>
+                      <th>#ID</th>
+                      <th scope="col">Customer ID</th>
+                      <th scope="col">Order Date</th>
+                      <th scope="col">Total Price</th>
+                      <th scope="col">Order Status</th>
+                      <th scope="col" className="text-center">
                         Action
                       </th>
                     </tr>
                   </thead>
-                  {storeDetails.map((data) => {
-                    return (
-                      <tr key={data._id}>
-                        <td style={{ textAlign: "center" }} scope="col">
-                          {data._id.slice(-4)}
-                        </td>
-                        <td style={{ textAlign: "center" }}>
-                          {data.userID.slice(-4)}
-                        </td>
-                        <td style={{ textAlign: "center" }}>
-                          {data.orderedDate.substring(0, 10)}
-                        </td>
-                        <td style={{ textAlign: "center" }}>
-                          {data.totalAmount}
-                        </td>
-                        <td style={{ textAlign: "center" }}>{data.status}</td>
-                        <td style={{ float: "right", color: "blue" }}>
-                          {getOrderStatus(data)}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <tbody>
+                    {storeDetails.map((data) => {
+                      return (
+                        <tr key={data._id}>
+                          <td scope="col">{data._id.slice(-4)}</td>
+                          <td>{data.userID.slice(-4)}</td>
+                          <td>{data.orderedDate.substring(0, 10)}</td>
+                          <td>{data.totalAmount}</td>
+                          <td>{data.status}</td>
+                          <td className="text-center">
+                            {getOrderStatus(data)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               </div>
             </div>

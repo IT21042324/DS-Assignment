@@ -42,7 +42,7 @@ export default function AdminProfile() {
               </div>
               <div className="col-xl col-lg">
                 <h3>Admin Name</h3> {/* change the name */}
-                <p>Admin location</p> {/* change the location */}
+                <p>designation</p> {/* change the location */}
               </div>
               <div className="col-xl-4 text-md-end">
                 <Link className="btn btn-success" to={"/admin/edit-profile"}>
