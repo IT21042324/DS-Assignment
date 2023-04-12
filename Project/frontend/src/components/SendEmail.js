@@ -1,28 +1,34 @@
 import emailjs from "emailjs-com";
 
+// Function to send email using emailjs
 export const SendEmail = (email) => {
-  //Setting the message for registration
+  // Variable to store the message for registration
   var message;
 
+  // Setting the default template ID
+  var template = "template_hkvdita";
+
+  // Checking the role and setting the message accordingly
   if (email.role === "Buyer")
     message =
       "Start browsing with RB&MS and stand a chance to win exclusive rewards and offers.";
-  else if (email.for === "purchase") {
-    message =
-      "Your Order has been approved. You will be notified on further status";
-  } else
+  else if (email.role === "Seller")
     message =
       "Hurrayy!! Now you are a part of the RB&NS Merchant Community. Start selling your products and set a new height among your peers";
+  else if (email.role === "purchase") {
+    message =
+      "Keep in touch with RB&NS and look at other different products we offer..";
 
-  // Object with the data to send
-  const emailData = {
-    user_name: email.user_name,
-    role: email.role,
-    message,
-  };
+    // Setting a different template ID for purchase role
+    template = "template_3wg309d";
+  }
 
+  // Adding the message to the email object
+  email.message = message;
+
+  // Sending the email using emailjs and returning the result
   return emailjs
-    .send("service_gonv5lf", "template_hkvdita", emailData, "IO-tHKTjIpByN9aF9")
+    .send("service_gonv5lf", template, email, "IO-tHKTjIpByN9aF9")
     .then(
       (result) => {
         console.log(result.text);
