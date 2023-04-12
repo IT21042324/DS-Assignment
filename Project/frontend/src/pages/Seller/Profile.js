@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import SideMenu from "../../components/SideMenu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import pic from "../../assets/f1.png";
 
 export default function Profile() {
   return (
@@ -22,36 +25,38 @@ export default function Profile() {
         </div>
 
         <div className="card mb-4">
-          <header className="card-header">
-            <h4>General</h4>
-          </header>
+          <div class="card-header bg-primary" style={{height:150}}></div>
           <div className="card-body">
-            {/* <h5 className="card-title"></h5> */}
-            <div className="mt-4">
-              <div className="text-muted font-size-14">
-                <p>
-                  Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-                  amet, consectetur, adipisci velit, sed quia non numquam eius
-                  modi tempora incidunt ut labore et dolore magnam enim ad
-                  minima veniam quis
-                </p>
-                <p className="mb-4">
-                  Ut enim ad minima veniam, quis nostrum exercitationem ullam
-                  corporis suscipit laboriosam, nisi ut aliquid ex ea
-                  reprehenderit qui in ea voluptate velit esse quam nihil
-                  molestiae consequatur, vel illum qui dolorem eum fugiat quo
-                  voluptas nulla pariatur? At vero eos et accusamus et iusto
-                  odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                  deleniti atque corrupti quos dolores et quas molestias
-                  excepturi sint occaecati cupiditate non provident, similique
-                  sunt
-                </p>
-                <p>
-                  Itaque earum rerum hic tenetur a sapiente delectus, ut aut
-                  reiciendis voluptatibus maiores alias consequatur aut
-                  perferendis doloribus asperiores repellat. Sed ut perspiciatis
-                  unde omnis iste natus error sit
-                </p>
+            <div class="row">
+              <div class="col-xl col-lg flex-grow-0" style={{flexBasis: 230}}>
+                <div class="img-thumbnail shadow w-100 bg-white position-relative text-center" 
+                  style={{height:190, width:200, marginTop:-120}}>
+                  <img src={pic} class="center-xy img-fluid" alt=""/>
+                </div>
+              </div>
+              <div class="col-xl col-lg">
+                <h3>Shop Name</h3>
+                <p>location</p>
+              </div>
+              <div class="col-xl-4 text-md-end">
+                <Link className="btn btn-success" to={"/seller/edit-profile"}>
+                  <FontAwesomeIcon icon={faPenToSquare} /> Edit
+                </Link>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <div class="row g-4">
+              <div class="col-sm-6 col-lg-4 col-xl-3">
+                <h4>Contacts</h4>
+                <p>Manager: Name <br/></p>
+                <p>example@gmail.com <br/></p>
+                <p>012 345 6789</p>
+              </div>
+              <div class="col-sm-6 col-lg-4 col-xl-3">
+                <h4>Address</h4>
+                <p>Country: Sri Lanka <br/></p>
+                <p>Address: Street, City <br/></p>
+                <p>Postal code: 62639</p>
               </div>
             </div>
           </div>

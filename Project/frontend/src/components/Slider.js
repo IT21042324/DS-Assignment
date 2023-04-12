@@ -74,7 +74,7 @@ export function Slider() {
                         <h2>{slide.caption.h2}</h2>
                         <h1>{slide.caption.h1}</h1>
                         <p>{slide.caption.p}</p>
-                        <Link to={"./product"} style={{ textDecoration: "none" }}>
+                        <Link to={"./buyer/product"} style={{ textDecoration: "none" }}>
                             <button>{slide.button}</button>
                         </Link>
                     </div>
