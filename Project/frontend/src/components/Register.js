@@ -5,6 +5,7 @@ import pic from "../assets/register.png";
 import { useState, useRef } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
 import avatar from "../assets/profilePic.png";
+import { EncodedFile } from "../assets/encodedImage";
 import { UseUserContext } from "../context/useUserContext";
 
 export default function Register() {
@@ -34,6 +35,10 @@ export default function Register() {
 
   //To register Merchant
   async function registerMerchant() {
+    var image;
+    if (profilePic) image = profilePic;
+    else image = EncodedFile().image;
+
     const dataToSave = {
       userName: userName.current.value,
       password: password.current.value,

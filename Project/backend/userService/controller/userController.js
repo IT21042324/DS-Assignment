@@ -45,19 +45,14 @@ const userSignUp = async function (req, res) {
 
 const updateUser = async function (req, res) {
   const { userId, userName, image } = req.body;
-  var user;
 
   try {
-    if (userName && image) {
-      user = await userModel.findOneAndUpdate(
-        { _id: userId },
-        { userName, image }
-      );
-    } else if (image) {
-      user = await userModel.findOneAndUpdate({ _id: userId }, { image });
-    } else if (userName) {
-      user = await userModel.findOneAndUpdate({ _id: userId }, { userName });
-    }
+    const user = await userModel.findOneAndUpdate(
+      { _id: userId },
+      { userName, image },
+      { new: true }
+    );
+
     console.log(user);
     return res.status(200).json(user);
   } catch (err) {
