@@ -107,10 +107,9 @@ header nav div.active {
   transform: translateY(-50%);
   text-align: left;
   left: 0;
-  padding: 0 80px;
+  padding: 0 150px;
 }
 .carousel-caption button {
-  width: 10%;
   padding: 8px;
   border-radius: 25px;
   background-color: #fb7f21;
@@ -251,20 +250,23 @@ header nav div.active {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-image: url("./assets/b2.jpg");
+  background-image: url("./assets/sbanner.png");
   width: 100%;
   height: 50vh;
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 #action h4 {
-  color: white;
   font-size: 16px;
+  background-color: #cffaee;
+  padding: 3px;
+  border-radius: 10px;
 }
 
 #action h2 {
-  color: white;
   font-size: 30px;
   padding: 10px 0;
 }
@@ -278,10 +280,10 @@ header nav div.active {
   font-weight: 600;
   padding: 15px 30px;
   color: black;
-  background-color: white;
-  border-radius: 5px;
+  background-color: #cffaee;
+  border-radius: 15px;
   cursor: pointer;
-  border: none;
+  border: 1px solid #14c3a2;
   outline: none;
   transition: 0.2s;
 }
@@ -289,6 +291,7 @@ header nav div.active {
 #action button:hover {
   background: #fb7f21;
   color: white;
+  border: none;
 }
 
 #sm-banner {
@@ -417,7 +420,8 @@ form {
 .login-c {
   padding: 40px 80px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
 }
 
 footer {
