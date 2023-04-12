@@ -7,6 +7,7 @@ import { ItemContextProvider } from "./context/itemContext";
 import { CartContextProvider } from "./context/cartContext";
 import { UserContextProvider } from "./context/userContext";
 import { StoreContextProvider } from "./context/storeContext";
+import { SellerOrderContextProvider } from "./context/sellerOrderContext";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,9 +22,11 @@ root.render(
         <UserContextProvider>
           <ItemContextProvider>
             <StoreContextProvider>
-              <CartContextProvider>
-                <App />
-              </CartContextProvider>
+              <SellerOrderContextProvider>
+                <CartContextProvider>
+                  <App />
+                </CartContextProvider>
+              </SellerOrderContextProvider>
             </StoreContextProvider>
           </ItemContextProvider>
         </UserContextProvider>

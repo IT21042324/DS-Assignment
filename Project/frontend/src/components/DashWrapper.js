@@ -10,14 +10,16 @@ import { UseUserContext } from "../context/useUserContext";
 import { useBackendAPI } from "../context/useBackendAPI";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useSellerOrderContext } from "../context/useSellerOrderContext";
 
 function DashWrapper() {
+  const { orders, dispatch } = useSellerOrderContext();
+
   // Access necessary functions and variables from custom hooks
   const { logoutUser, getUser } = UseUserContext();
   const {
     getTotalSalesAmount,
     getStoreItemCount,
-    getAllItemsFromOneStore,
     updateOrderAndPaymentStatus,
   } = useBackendAPI();
 
@@ -28,7 +30,6 @@ function DashWrapper() {
   const [salesTotal, setSalesTotal] = useState(0);
   const [salesOrderCount, setOrderCount] = useState(0);
   const [storeItemCount, setStoreItemCount] = useState(0);
-  const [storeDetails, setStoreDetails] = useState([]);
 
   // Define a state variable to track merchant's login status
   const [mechantIsLoggedIn, setMerchantIsLoggedIn] = useState(true);
@@ -42,13 +43,10 @@ function DashWrapper() {
       // Get store item count
       const itemCount = await getStoreItemCount(user.storeID);
 
-      const data = await getAllItemsFromOneStore(user.storeID);
-
       // Update state variables with fetched data
       setSalesTotal(total);
       setOrderCount(orderCount);
       setStoreItemCount(itemCount);
-      setStoreDetails(data);
     }
 
     // Call the getSalesData function when user changes
@@ -74,7 +72,12 @@ function DashWrapper() {
 
   //To change the status of the order
   const changeOrderStatus = async (orderID, status) => {
-    await updateOrderAndPaymentStatus(orderID, status);
+    const data = await updateOrderAndPaymentStatus(orderID, status);
+
+    dispatch({
+      type: "DispatchOrder",
+      payload: data,
+    });
   };
 
   //To display th status of the order
@@ -104,9 +107,9 @@ function DashWrapper() {
     } else if (data.status === "Pending") {
       return "Order awaiting Admin Approval";
     } else if (data.status === "Dispatched") {
-      return "Order Approved for dispatch";
+      return "Order Dispatched";
     } else {
-      return "Delivery Confirmed";
+      return "Delivered";
     }
   }
 
@@ -195,7 +198,7 @@ function DashWrapper() {
                     </tr>
                   </thead>
                   <tbody>
-                    {storeDetails.map((data) => {
+                    {orders.map((data) => {
                       return (
                         <tr key={data._id}>
                           <td scope="col">{data._id.slice(-4)}</td>
