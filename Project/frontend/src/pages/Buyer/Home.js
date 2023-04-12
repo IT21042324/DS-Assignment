@@ -13,6 +13,10 @@ export default function Home() {
       <Slider />
       <Features />
       <ActionBanner />
+      <div style={{ marginLeft: 90 }}>
+        <h2>Featured Products</h2>
+        <p>Discover a wide range of herbal products</p>
+      </div>
       <ItemMapperHome />
       <Footer />
     </div>

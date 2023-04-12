@@ -2,6 +2,7 @@ import {
   faBox,
   faDashboard,
   faGear,
+  faList,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -42,6 +43,15 @@ function SideMenu() {
           >
             <FontAwesomeIcon icon={faUser} />
             &nbsp;&nbsp;Profile
+          </Link>
+        </div>
+        <div className="li">
+          <Link
+            to="/seller/order"
+            style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
+          >
+            <FontAwesomeIcon icon={faList} />
+            &nbsp;&nbsp;Orders
           </Link>
         </div>
         <div className="li">
