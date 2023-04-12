@@ -79,6 +79,27 @@ function DashWrapper() {
     await updateOrderAndPaymentStatus(orderID, status);
   };
 
+  //To display th status of the order
+  function getOrderStatus(data) {
+    if (data.status === "Confirmed") {
+      return (
+        <button
+          style={{ border: "none", background: "none" }}
+          name="Confirm Order"
+          onClick={(e) => changeOrderStatus(data._id, "Dispatched")}
+        >
+          <FontAwesomeIcon icon={faSquareCheck} />
+        </button>
+      );
+    } else if (data.status === "Pending") {
+      return "Order awaiting Admin Approval";
+    } else if (data.status === "Dispatched") {
+      return "Order Approved for dispatch";
+    } else {
+      return "Delivery Confirmed";
+    }
+  }
+
   return (
     <section className="main-wrap">
       {/* If the merchant is logged in, display the dashboard */}
@@ -123,7 +144,7 @@ function DashWrapper() {
                     <FontAwesomeIcon icon={faTruck} />
                   </span>
                   <div className="text">
-                    <h6 className="mb-1 card-title">Orders</h6>{" "}
+                    <h6 className="mb-1 card-title">Orders</h6>
                     <span>{salesOrderCount}</span>
                   </div>
                 </article>
@@ -163,34 +184,18 @@ function DashWrapper() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {storeDetails.map((data) => {
-                      return (
-                        <tr key={data._id}>
-                          <td scope="col">{data._id.slice(-4)}</td>
-                          <td>{data.userID.slice(-4)}</td>
-                          <td>{data.orderedDate.substring(0, 10)}</td>
-                          <td>{data.totalAmount}</td>
-                          <td>{data.status}</td>
-                          <td scope="col">
-                            {data.status === "Pending" ? (
-                              <button
-                                style={{ border: "none", background: "none" }}
-                                name="Confirm Order"
-                                onClick={(e) =>
-                                  changeOrderStatus(data._id, "Confirmed")
-                                }
-                              >
-                                <FontAwesomeIcon icon={faSquareCheck} />
-                              </button>
-                            ) : (
-                              "Order Approved"
-                            )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                  {storeDetails.map((data) => {
+                    return (
+                      <tr key={data._id}>
+                        <td scope="col">{data._id.slice(-4)}</td>
+                        <td>{data.userID.slice(-4)}</td>
+                        <td>{data.orderedDate.substring(0, 10)}</td>
+                        <td>{data.totalAmount}</td>
+                        <td>{data.status}</td>
+                        <td>{getOrderStatus(data)}</td>
+                      </tr>
+                    );
+                  })}
                 </table>
               </div>
             </div>

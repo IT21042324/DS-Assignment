@@ -43,6 +43,15 @@ const userSignUp = async function (req, res) {
   }
 };
 
+const getAllUsers = async function (req, res) {
+  try {
+    const users = await userModel.find();
+    res.json({ users, userCount: users.length });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 const updateUser = async function (req, res) {
   const { userId, userName, image } = req.body;
 
@@ -57,6 +66,17 @@ const updateUser = async function (req, res) {
     return res.status(200).json(user);
   } catch (err) {
     console.log(err.message);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const data = await userModel.findByIdAndDelete(req.params.id);
+
+    res.json(data);
+  } catch (err) {
+    console.log(err.message);
+    res.send(err.message);
   }
 };
 
@@ -89,10 +109,23 @@ const updateUserStore = async (req, res) => {
   }
 };
 
+const getUserCount = async (req, res) => {
+  try {
+    const data = await userModel.find();
+
+    res.json({ userCount: data.length });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 module.exports = {
   userSignUp,
   userLogin,
+  getAllUsers,
   updateUser,
+  deleteUser,
   getOneUser,
   updateUserStore,
+  getUserCount,
 };

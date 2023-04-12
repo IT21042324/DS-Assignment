@@ -25,30 +25,33 @@ export default function Profile() {
         </div>
 
         <div className="card mb-4">
-          <div class="card-header bg-primary" style={{ height: 150 }}></div>
+          <div className="card-header bg-primary" style={{ height: 150 }}></div>
           <div className="card-body">
-            <div class="row">
-              <div class="col-xl col-lg flex-grow-0" style={{ flexBasis: 230 }}>
+            <div className="row">
+              <div
+                className="col-xl col-lg flex-grow-0"
+                style={{ flexBasis: 230 }}
+              >
                 <div
-                  class="img-thumbnail shadow w-100 bg-white position-relative text-center"
+                  className="img-thumbnail shadow w-100 bg-white position-relative text-center"
                   style={{ height: 190, width: 200, marginTop: -120 }}
                 >
-                  <img src={pic} class="center-xy img-fluid" alt="" />
+                  <img src={pic} className="center-xy img-fluid" alt="" />
                 </div>
               </div>
-              <div class="col-xl col-lg">
+              <div className="col-xl col-lg">
                 <h3>Shop Name</h3>
                 <p>location</p>
               </div>
-              <div class="col-xl-4 text-md-end">
+              <div className="col-xl-4 text-md-end">
                 <Link className="btn btn-success" to={"/seller/edit-profile"}>
                   <FontAwesomeIcon icon={faPenToSquare} /> Edit
                 </Link>
               </div>
             </div>
-            <hr class="my-4" />
-            <div class="row g-4">
-              <div class="col-sm-6 col-lg-4 col-xl-3">
+            <hr className="my-4" />
+            <div className="row g-4">
+              <div className="col-sm-6 col-lg-4 col-xl-3">
                 <h4>Contacts</h4>
                 <p>
                   Manager: Name <br />
@@ -58,7 +61,7 @@ export default function Profile() {
                 </p>
                 <p>012 345 6789</p>
               </div>
-              <div class="col-sm-6 col-lg-4 col-xl-3">
+              <div className="col-sm-6 col-lg-4 col-xl-3">
                 <h4>Address</h4>
                 <p>
                   Country: Sri Lanka <br />

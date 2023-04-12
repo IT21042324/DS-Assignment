@@ -82,7 +82,7 @@ const getTotalPaymentPerStore = async (req, res) => {
       { $match: { "itemList.storeID": storeID } },
       {
         $group: {
-          _id: null,
+          _id: "$_id",
           totalAmount: {
             $sum: {
               $multiply: ["$itemList.itemPrice", "$itemList.itemQuantity"],
@@ -90,11 +90,18 @@ const getTotalPaymentPerStore = async (req, res) => {
           },
         },
       },
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$totalAmount" },
+          orderCount: { $sum: 1 },
+        },
+      },
     ]);
 
     if (results.length > 0) {
-      const { totalAmount } = results[0];
-      res.send({ total: totalAmount, orderCount: results.length });
+      const { totalAmount, orderCount } = results[0];
+      res.send({ total: totalAmount, orderCount });
     } else {
       res.send({ total: 0, orderCount: 0 });
     }
@@ -118,6 +125,18 @@ const updatePaymentStatus = async (req, res) => {
   }
 };
 
+const getTotalPaymentForAdmin = async (req, res) => {
+  try {
+    const data = await Payment.find();
+    const amountForStore =
+      data.reduce((acc, dat) => acc + dat.amount, 0) * 0.15;
+
+    res.json({ amountForStore });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 // Exporting the functions to be used in other modules
 module.exports = {
   createPayment,
@@ -126,4 +145,5 @@ module.exports = {
   deletePayment,
   getTotalPaymentPerStore,
   updatePaymentStatus,
+  getTotalPaymentForAdmin,
 };
