@@ -184,18 +184,20 @@ function DashWrapper() {
                       </th>
                     </tr>
                   </thead>
-                  {storeDetails.map((data) => {
-                    return (
-                      <tr key={data._id}>
-                        <td scope="col">{data._id.slice(-4)}</td>
-                        <td>{data.userID.slice(-4)}</td>
-                        <td>{data.orderedDate.substring(0, 10)}</td>
-                        <td>{data.totalAmount}</td>
-                        <td>{data.status}</td>
-                        <td>{getOrderStatus(data)}</td>
-                      </tr>
-                    );
-                  })}
+                  <tbody>
+                    {storeDetails.map((data) => {
+                      return (
+                        <tr key={data._id}>
+                          <td scope="col">{data._id.slice(-4)}</td>
+                          <td>{data.userID.slice(-4)}</td>
+                          <td>{data.orderedDate.substring(0, 10)}</td>
+                          <td>{data.totalAmount}</td>
+                          <td>{data.status}</td>
+                          <td>{getOrderStatus(data)}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               </div>
             </div>
