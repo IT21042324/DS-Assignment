@@ -8,6 +8,8 @@ const {
   getOneOrder,
   getAllOrderPerStore,
   updateOrderStatus,
+  getOrderCountForAdmin,
+  getAllStoreOrders,
 } = require("../controller/orderController");
 
 // Route for creating a new order
@@ -27,5 +29,11 @@ router.get("/getStoreOrder/:id", getAllOrderPerStore);
 
 // Route for updating the status of an existing order
 router.patch("/updateOrderStatus", updateOrderStatus);
+
+//Route for getting the total order count to display in the admin dashboard
+router.get("/getOrderCountForAdmin", getOrderCountForAdmin);
+
+//Route for getting all the orders
+router.get("/getAllStoreOrders", getAllStoreOrders);
 
 module.exports = router;

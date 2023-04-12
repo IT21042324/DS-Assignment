@@ -36,26 +36,7 @@ function SideList() {
             &nbsp;&nbsp;Dashboard
           </Link>
         </div>
-        <div className="li">
-          <Link
 
-            to={"/admin/adminprofile"}
-            style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
-          >
-            <FontAwesomeIcon icon={faUser} />
-            &nbsp;&nbsp;Profile
-          </Link>
-        </div>
-        <div className="li">
-          <Link
-
-            to={"/admin/user"}
-            style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
-          >
-            <FontAwesomeIcon icon={faUsers} />
-            &nbsp;&nbsp;Users
-          </Link>
-        </div>
         <div className="li">
           <Link
             to={"/admin/orders"}

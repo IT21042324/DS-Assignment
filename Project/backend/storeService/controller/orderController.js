@@ -88,11 +88,31 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+const getOrderCountForAdmin = async (req, res) => {
+  try {
+    const orderCount = await Order.countDocuments();
+    res.json({ orderCount });
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
+const getAllStoreOrders = async (req, res) => {
+  try {
+    const data = await Order.find();
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrder,
   updateOrder,
   getOneOrder,
+  getAllStoreOrders,
   getAllOrderPerStore,
   updateOrderStatus,
+  getOrderCountForAdmin,
 };
