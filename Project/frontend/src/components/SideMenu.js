@@ -53,15 +53,6 @@ function SideMenu() {
             &nbsp;&nbsp;Products
           </Link>
         </div>
-        <div className="li">
-          <Link
-            to="/seller"
-            style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
-          >
-            <FontAwesomeIcon icon={faGear} />
-            &nbsp;&nbsp;Settings
-          </Link>
-        </div>
       </div>
     </section>
   );
