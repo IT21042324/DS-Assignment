@@ -106,8 +106,9 @@ export default function Register() {
               <input
                 type="email"
                 className="form-control"
-                placeholder="example@example.com"
+                placeholder="example@gmail.com"
                 ref={userName}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
                 required
               />
             </div>
@@ -118,6 +119,8 @@ export default function Register() {
                 className="form-control"
                 placeholder="password"
                 ref={password}
+                minLength="6"
+                maxLength="20"
                 required
               />
             </div>
