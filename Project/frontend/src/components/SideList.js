@@ -38,7 +38,7 @@ function SideList() {
         </div>
         <div className="li">
           <Link
-            to={"/admin/profile"}
+            to={"/admin/adminprofile"}
             style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
           >
             <FontAwesomeIcon icon={faUser} />
