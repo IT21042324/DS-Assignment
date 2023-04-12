@@ -158,37 +158,39 @@ function DashWrapper() {
                       <th scope="col">Order Date</th>
                       <th scope="col">Total Price</th>
                       <th scope="col">Order Status</th>
-                      <th scope="col" className="text-end">
+                      <th scope="col" className="text-center">
                         Action
                       </th>
                     </tr>
                   </thead>
-                  {storeDetails.map((data) => {
-                    return (
-                      <tr key={data._id}>
-                        <td scope="col">{data._id.slice(-4)}</td>
-                        <td>{data.userID.slice(-4)}</td>
-                        <td>{data.orderedDate.substring(0, 10)}</td>
-                        <td>{data.totalAmount}</td>
-                        <td>{data.status}</td>
-                        <td scope="col">
-                          {data.status === "Pending" ? (
-                            <button
-                              style={{ border: "none", background: "none" }}
-                              name="Confirm Order"
-                              onClick={(e) =>
-                                changeOrderStatus(data._id, "Confirmed")
-                              }
-                            >
-                              <FontAwesomeIcon icon={faSquareCheck} />
-                            </button>
-                          ) : (
-                            "Order Approved"
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <tbody>
+                    {storeDetails.map((data) => {
+                      return (
+                        <tr key={data._id}>
+                          <td scope="col">{data._id.slice(-4)}</td>
+                          <td>{data.userID.slice(-4)}</td>
+                          <td>{data.orderedDate.substring(0, 10)}</td>
+                          <td>{data.totalAmount}</td>
+                          <td>{data.status}</td>
+                          <td scope="col">
+                            {data.status === "Pending" ? (
+                              <button
+                                style={{ border: "none", background: "none" }}
+                                name="Confirm Order"
+                                onClick={(e) =>
+                                  changeOrderStatus(data._id, "Confirmed")
+                                }
+                              >
+                                <FontAwesomeIcon icon={faSquareCheck} />
+                              </button>
+                            ) : (
+                              "Order Approved"
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               </div>
             </div>

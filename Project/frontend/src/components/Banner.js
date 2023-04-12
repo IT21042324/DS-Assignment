@@ -82,3 +82,11 @@ export function SmallBanner() {
     </section>
   );
 }
+
+export function PageHeader() {
+  return (
+    <section id="page-header">
+      <h2>#stay healthy</h2>
+    </section>
+  )
+}
