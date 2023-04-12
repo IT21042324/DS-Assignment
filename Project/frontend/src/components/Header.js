@@ -12,6 +12,8 @@ function Header() {
   // Destructuring variables from the useUserContext hook
   const { user1, logoutUser, dispatch, getUser } = UseUserContext();
 
+  const user = getUser();
+
   // Setting initial state for showing the user profile popup
   const [showPopup, setShowPopup] = useState(false);
 
@@ -32,12 +34,12 @@ function Header() {
   const [profilePic, setProfilePic] = useState("");
 
   useEffect(() => {
-    setProfilePic(user1[0]?.image);
+    setProfilePic(user?.image);
   }, [user1]);
 
   useEffect(() => {
     async function setProfilePicture() {
-      if (user1[0]?.image) setProfilePic(user1[0].image);
+      if (user?.image) setProfilePic(user.image);
     }
     setProfilePicture();
   }, []);
@@ -58,7 +60,7 @@ function Header() {
     e.preventDefault();
 
     await updateUser({
-      userId: user1[0]._id,
+      userId: user._id,
       userName: userName.current.value,
       image: profilePic,
     });
@@ -71,10 +73,10 @@ function Header() {
       <NavBar />
       <div className="navbar-icons">
         <div>
-          {user1[0] ? (
+          {user ? (
             <div style={{ display: "flex" }}>
               <div style={{ marginTop: "5px" }}>
-                <h6>{user1[0].userName}</h6>
+                <h6>{user.userName}</h6>
                 <Link to="/" onClick={logoutFunction}>
                   <h6 style={{ float: "right", color: "red" }}>Logout</h6>
                 </Link>
@@ -84,7 +86,7 @@ function Header() {
               {profilePic && (
                 <img
                   src={profilePic}
-                  alt={user1[0].userName}
+                  alt={user.userName}
                   style={{
                     width: "25px",
                     height: "25px",
@@ -109,7 +111,7 @@ function Header() {
             </Link>
           )}
         </div>
-        {(user1[0]?.role === "Buyer" || !user1[0]) && (
+        {(user?.role === "Buyer" || !user) && (
           <Link to="/buyer/Cart">
             <div className="cart">
               <FontAwesomeIcon icon={faShoppingCart} />
@@ -139,14 +141,14 @@ function Header() {
                   borderRadius: "100%",
                   border: "1px solid black",
                 }}
-                alt={user1[0].userName}
+                alt={user.userName}
               />
             )}
 
             <h4 style={{ color: "black" }}>
               <input
                 type="text"
-                defaultValue={user1[0].userName}
+                defaultValue={user.userName}
                 style={{ border: "none", outline: "none", textAlign: "center" }}
                 onFocus={(event) => {
                   event.target.style.outline = "2px dashed black";
