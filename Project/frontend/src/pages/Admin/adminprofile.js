@@ -1,31 +1,32 @@
 import { Link } from "react-router-dom";
-import SideMenu from "../../components/SideMenu";
+import SideList from "../../components/SideList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import pic from "../../assets/f1.png";
+import pic from "../../assets/ad.jpg";
 
-export default function Profile() {
+export default function AdminProfile() {
+  // change the component name to AdminProfile
   return (
     <div>
-      <SideMenu />
+      <SideList />
       <section className="main-wrap">
         <div
           className="content-main"
           style={{ display: "flex", justifyContent: "space-between" }}
         >
           <div>
-            <h2>Seller Profile</h2>
-            <p>Manage seller profile here</p>
+            <h2>Admin Profile</h2> {/* change the heading */}
+            <p>Manage admin profile here</p> {/* change the description */}
           </div>
           <div>
-            <Link className="btn btn-primary" to={"/seller"}>
+            <Link className="btn btn-primary" to={"/admin"}>
               Back
             </Link>
           </div>
         </div>
 
         <div className="card mb-4">
-          <div class="card-header bg-primary" style={{ height: 150 }}></div>
+          <div class="card-header bg-danger" style={{ height: 150 }}></div>
           <div className="card-body">
             <div class="row">
               <div class="col-xl col-lg flex-grow-0" style={{ flexBasis: 230 }}>
@@ -37,11 +38,11 @@ export default function Profile() {
                 </div>
               </div>
               <div class="col-xl col-lg">
-                <h3>Shop Name</h3>
-                <p>location</p>
+                <h3>Admin Name</h3> {/* change the name */}
+                <p>Admin location</p> {/* change the location */}
               </div>
               <div class="col-xl-4 text-md-end">
-                <Link className="btn btn-success" to={"/seller/edit-profile"}>
+                <Link className="btn btn-success" to={"/admin/edit-profile"}>
                   <FontAwesomeIcon icon={faPenToSquare} /> Edit
                 </Link>
               </div>
@@ -51,12 +52,14 @@ export default function Profile() {
               <div class="col-sm-6 col-lg-4 col-xl-3">
                 <h4>Contacts</h4>
                 <p>
-                  Manager: Name <br />
-                </p>
+                  Manager: Admin Name <br />
+                </p>{" "}
+                {/* change the name */}
                 <p>
-                  example@gmail.com <br />
-                </p>
-                <p>012 345 6789</p>
+                  admin@example.com <br />
+                </p>{" "}
+                {/* change the email */}
+                <p>012 345 6789</p> {/* change the phone number */}
               </div>
               <div class="col-sm-6 col-lg-4 col-xl-3">
                 <h4>Address</h4>
@@ -64,8 +67,9 @@ export default function Profile() {
                   Country: Sri Lanka <br />
                 </p>
                 <p>
-                  Address: Street, City <br />
-                </p>
+                  Address: Admin Street, Admin City <br />
+                </p>{" "}
+                {/* change the address */}
                 <p>Postal code: 62639</p>
               </div>
             </div>
