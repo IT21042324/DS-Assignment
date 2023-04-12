@@ -57,7 +57,7 @@ export function useBackendAPI() {
 
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
 
-        if (user1[0].role === "Buyer") navigate("/product");
+        if (user1[0].role === "Buyer") navigate("/buyer/product");
         else if (user1[0].role === "Merchant") {
           user1[0]?.storeID ? navigate("/seller") : navigate("/seller/store");
         }
@@ -112,13 +112,16 @@ export function useBackendAPI() {
         );
 
         //To create a new Order record
-        await axios.post("http://localhost:8082/api/order/add/", {
-          userID: user1[0]._id,
-          paymentID: data._id,
-          address: user1[0].address,
-          storeID: info[0].storeID,
-          itemList: info,
-        });
+        const orderDetails = await axios.post(
+          "http://localhost:8082/api/order/add/",
+          {
+            userID: user1[0]._id,
+            paymentID: data._id,
+            address: user1[0].address,
+            storeID: info[0].storeID,
+            itemList: info,
+          }
+        );
 
         //To update the itemCount once the purchase is done
         const status = await info.map((rec) => {
@@ -129,6 +132,13 @@ export function useBackendAPI() {
         });
 
         if (status) {
+          SendEmail({
+            user_name: user1[0].userName,
+            role: "purchase",
+            paymentID: data._id,
+            orderID: orderDetails.data._id,
+            amount: details.total,
+          });
           alert("Payment Successful");
           cartDispatch({ type: "ClearCart" });
           navigate("/");

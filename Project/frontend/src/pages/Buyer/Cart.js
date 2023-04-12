@@ -4,14 +4,17 @@ import { useCartContext } from "../../context/useCartContext";
 import { UseUserContext } from "../../context/useUserContext";
 import CartItem from "../../components/CartItem";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import "../Cart.css";
 import { ShippingEstimate } from "../../components/ShippingService";
 
 // Define a functional component named Cart
 export default function Cart() {
+  const navigate = useNavigate();
+
   // Use the useUserContext and useCartContext hooks to access user and cart data
-  const { user1 } = UseUserContext();
+  const { user1, dispatch } = UseUserContext();
   const { info } = useCartContext();
 
   // Define a state variable to handle showing the shipping estimate popup
@@ -30,14 +33,19 @@ export default function Cart() {
 
   // Define a function to handle proceeding to checkout
   const proceedToCheckout = () => {
-    if (info.length === 0) {
-      alert("Please add items to cart");
-      return;
-    }
-    console.log(info);
+    if (user1[0]?.role === "Buyer") {
+      if (info.length === 0) {
+        alert("Please add items to cart");
+        return;
+      }
+      console.log(info);
 
-    if (user1[0] && checkoutPrice !== 0) {
-      setShowPopup(true);
+      if (user1[0] && checkoutPrice !== 0) {
+        setShowPopup(true);
+      }
+    } else {
+      dispatch({ type: "SetUserRole", userRole: "Buyer" });
+      navigate("/login");
     }
   };
 
@@ -60,12 +68,11 @@ export default function Cart() {
             <p>Subtotal items</p>
             <p>${checkoutPrice}</p>
           </div>
-          {user1[0]?.role === "Buyer" && (
-            <div>
-              {/* Render a button to proceed to checkout */}
-              <button onClick={proceedToCheckout}>Proceed To Checkout</button>
-            </div>
-          )}
+
+          <div>
+            {/* Render a button to proceed to checkout */}
+            <button onClick={proceedToCheckout}>Proceed To Checkout</button>
+          </div>
         </div>
       </div>
       {/* Render a popup for the shipping estimate */}
