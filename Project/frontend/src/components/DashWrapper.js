@@ -193,7 +193,7 @@ function DashWrapper() {
                           <td>{data.orderedDate.substring(0, 10)}</td>
                           <td>{data.totalAmount}</td>
                           <td>{data.status}</td>
-                          <td>{getOrderStatus(data)}</td>
+                          <td className="text-center">{getOrderStatus(data)}</td>
                         </tr>
                       );
                     })}

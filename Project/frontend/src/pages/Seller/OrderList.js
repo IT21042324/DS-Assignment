@@ -111,7 +111,7 @@ export default function Orderlist() {
                                             <td>{data.orderedDate.substring(0, 10)}</td>
                                             <td>{data.totalAmount}</td>
                                             <td>{data.status}</td>
-                                            <td scope="col">
+                                            <td scope="col" className="text-center">
                                                 {data.status === 'Pending' ? (
                                                     <button
                                                         style={{ border: "none", background: "none" }}
