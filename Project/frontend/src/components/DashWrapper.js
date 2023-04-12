@@ -205,7 +205,7 @@ function DashWrapper() {
                           <td>{data.orderedDate.substring(0, 10)}</td>
                           <td>{data.totalAmount}</td>
                           <td>{data.status}</td>
-                          <td className="text-center">
+                          <td className="text-center" style={{ color: "blue" }}>
                             {getOrderStatus(data)}
                           </td>
                         </tr>
