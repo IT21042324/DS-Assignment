@@ -300,8 +300,10 @@ export function useBackendAPI() {
           { paymentID: data.paymentID, status }
         );
 
-        if (response) alert(`Order status changed to ${status}`);
-        else {
+        if (response) {
+          alert(`Order status changed to ${status}`);
+          return data;
+        } else {
           alert(
             "There seems to be a error in the order service.. please try later"
           );
