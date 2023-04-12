@@ -55,13 +55,12 @@ export function useBackendAPI() {
         await configureUser();
 
         const user = getUser();
-        console.log(user);
 
         //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
         if (user.role === "Buyer") navigate("/buyer/product");
-        else if (user.role === "Merchant") {
+        else if (user.role === "Merchant")
           user.storeID ? navigate("/seller") : navigate("/seller/store");
-        }
+        else if (user.role === "Admin") navigate("/admin");
       } catch (err) {
         console.log(err);
         alert(err.response.data.err);

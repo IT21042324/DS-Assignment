@@ -57,8 +57,6 @@ function DashWrapper() {
 
   // Use useEffect to logout user if merchantIsLoggedIn state changes
   useEffect(() => {
-    console.log(mechantIsLoggedIn);
-
     if (!mechantIsLoggedIn) {
       // Call the logoutUser function from the context
       logoutUser();
