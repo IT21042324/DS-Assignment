@@ -45,15 +45,7 @@ function SideMenu() {
             &nbsp;&nbsp;Profile
           </Link>
         </div>
-        <div className="li">
-          <Link
-            to="/seller/order"
-            style={{ textDecoration: "none", color: "gray", lineHeight: 2 }}
-          >
-            <FontAwesomeIcon icon={faList} />
-            &nbsp;&nbsp;Orders
-          </Link>
-        </div>
+
         <div className="li">
           <Link
             to="/seller/product"
