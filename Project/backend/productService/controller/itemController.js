@@ -197,6 +197,15 @@ const deleteReview = (req, res) => {
   }
 };
 
+const deleteAllItemsFromStore = async function (req, res) {
+  try {
+    const data = await itemModel.deleteMany({ storeID: req.params.id });
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 module.exports = {
   postItem,
   addReview,
@@ -206,4 +215,5 @@ module.exports = {
   modifyReview,
   deleteReview,
   updateItem,
+  deleteAllItemsFromStore,
 };

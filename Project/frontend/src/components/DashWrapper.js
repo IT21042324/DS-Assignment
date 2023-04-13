@@ -4,7 +4,6 @@ import {
   faBox,
   faDollarSign,
   faTruck,
-  faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseUserContext } from "../context/useUserContext";
 import { useBackendAPI } from "../context/useBackendAPI";
@@ -21,9 +20,6 @@ function DashWrapper() {
   // Access necessary functions and variables from custom hooks
   const { logoutUser, getUser } = UseUserContext();
   const { updateOrderAndPaymentStatus } = useBackendAPI();
-
-  // Get user information from the context
-  const user = getUser();
 
   // Define a state variable to track merchant's login status
   const [mechantIsLoggedIn, setMerchantIsLoggedIn] = useState(true);
@@ -46,13 +42,19 @@ function DashWrapper() {
   };
 
   //To change the status of the order
-  const changeOrderStatus = async (orderID, status) => {
+  const changeOrderStatus = async (e, orderID, status) => {
+    e.preventDefault();
+
     const data = await updateOrderAndPaymentStatus(orderID, status);
 
-    dispatch({
-      type: "DispatchOrder",
-      payload: data,
-    });
+    if (data) {
+      alert(`Order status changed to ${status}`);
+
+      dispatch({
+        type: "DispatchOrder",
+        payload: { _id: orderID },
+      });
+    }
   };
 
   //To display th status of the order
@@ -61,7 +63,7 @@ function DashWrapper() {
       return (
         <button
           name="Confirm Order"
-          onClick={(e) => changeOrderStatus(data._id, "Dispatched")}
+          onClick={(e) => changeOrderStatus(e, data._id, "Dispatched")}
           style={{
             padding: "8px 12px",
             borderRadius: "4px",
@@ -179,7 +181,7 @@ function DashWrapper() {
                           <td scope="col">{data._id.slice(-4)}</td>
                           <td>{data.userID.slice(-4)}</td>
                           <td>{data.orderedDate.substring(0, 10)}</td>
-                          <td>{data.totalAmount}</td>
+                          <td>Rs. {data.totalAmount} </td>
                           <td>{data.status}</td>
                           <td className="text-center" style={{ color: "blue" }}>
                             {getOrderStatus(data)}

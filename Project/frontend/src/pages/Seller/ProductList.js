@@ -13,6 +13,9 @@ export default function ProductList() {
   const [showPopup, setShowPopup] = useState(false);
   const [itemID, setItemID] = useState("");
 
+  // Get the items from the StoreContext
+  const { items } = UseStoreContext();
+
   //Declaring all varibale with ref
   const itemName = useRef(),
     description = useRef(),
@@ -27,9 +30,12 @@ export default function ProductList() {
     setShowPopup(false);
   };
 
+  const [item, setItem] = useState({});
+
   // Define a function to open popup form
-  const handleEditButtonClick = (itemID) => {
+  const handleEditButtonClick = (itemID, obj) => {
     setItemID(itemID);
+    setItem(obj);
     setShowPopup(true);
   };
 
@@ -47,9 +53,6 @@ export default function ProductList() {
 
     setShowPopup(false);
   };
-
-  // Get the items from the StoreContext
-  const { items } = UseStoreContext();
 
   //To delete an item
   const deleteItem = async (id) => {
@@ -130,7 +133,7 @@ export default function ProductList() {
                   {items.map((dat) => {
                     return (
                       <tr key={dat._id}>
-                        <td>1</td>
+                        <td>{dat._id.slice(-4)}</td>
                         <td>
                           <img
                             src={dat.image}
@@ -140,12 +143,20 @@ export default function ProductList() {
                         </td>
                         <td>{dat.itemName}</td>
                         <td>{dat.quantity}</td>
-                        <td>{dat.price}</td>
-                        <td>{dat.totalPrice}</td>
+                        <td>Rs. {dat.price}</td>
+                        <td>Rs. {dat.totalPrice}</td>
                         <td className="text-center">
                           <button
                             style={{ border: "none", background: "none" }}
-                            onClick={(e) => handleEditButtonClick(dat._id)}
+                            onClick={(e) =>
+                              handleEditButtonClick(dat._id, {
+                                itemName: dat.itemName,
+                                quantity: dat.quantity,
+                                description: dat.description,
+                                price: dat.price,
+                                discount: dat.discount,
+                              })
+                            }
                           >
                             <FontAwesomeIcon icon={faPenToSquare} />
                           </button>
@@ -197,6 +208,7 @@ export default function ProductList() {
                             id="validationCustom01"
                             placeholder="Type here"
                             ref={itemName}
+                            defaultValue={item.itemName}
                             required
                           />
                         </div>
@@ -210,6 +222,7 @@ export default function ProductList() {
                             id="validationCustom01"
                             placeholder="Type here"
                             ref={description}
+                            defaultValue={item.description}
                             required
                           />
                         </div>
@@ -223,6 +236,7 @@ export default function ProductList() {
                             id="validationCustom01"
                             placeholder="0"
                             ref={quantity}
+                            defaultValue={item.quantity}
                             required
                           />
                         </div>
@@ -236,8 +250,10 @@ export default function ProductList() {
                             id="validationCustom01"
                             placeholder="0.00"
                             ref={price}
+                            defaultValue={item.price}
                             required
                           />
+
                           <div className="valid-feedback">Looks good!</div>
                         </div>
                         <div className="col-md-4 mb-3">
@@ -248,6 +264,7 @@ export default function ProductList() {
                             id="validationCustom01"
                             placeholder="0.00"
                             ref={discount}
+                            defaultValue={item.discount}
                             required
                           />
                           <div className="valid-feedback">Looks good!</div>
