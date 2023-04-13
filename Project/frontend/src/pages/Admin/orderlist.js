@@ -78,9 +78,7 @@ export default function Orderlist() {
                     <th scope="col">Address</th>
                     <th scope="col">Item List</th>
                     <th scope="col">Order Status</th>
-                    <th scope="col" className="text-end">
-                      Action
-                    </th>
+                    <th scope="col" className="text-center">Action</th>
                   </tr>
                 </thead>
                 {allOrder.map((data) => {

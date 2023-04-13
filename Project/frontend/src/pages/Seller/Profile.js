@@ -1,13 +1,34 @@
 import { Link } from "react-router-dom";
 import SideMenu from "../../components/SideMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faBox, faDashboard, faPenToSquare, faUser } from "@fortawesome/free-solid-svg-icons";
 import pic from "../../assets/f1.png";
 
 export default function Profile() {
   return (
     <div>
-      <SideMenu />
+      <section className="sideMenu">
+        <div className="logo">
+          <Link
+            to="/seller"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              fontSize: 50,
+              paddingTop: 20,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            RB&NS
+          </Link>
+        </div>
+        <div className="items">
+          <SideMenu to="/seller" icon={faDashboard} label="Dashboard" />
+          <SideMenu to="/seller/profile" icon={faUser} label="Profile" />
+          <SideMenu to="/seller/product" icon={faBox} label="Products" />
+        </div>
+      </section>
       <section className="main-wrap">
         <div
           className="content-main"
