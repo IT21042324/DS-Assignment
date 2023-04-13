@@ -8,30 +8,18 @@ import { UseUserContext } from "../context/useUserContext";
 import { useBackendAPI } from "../context/useBackendAPI";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAdminContext } from "../context/useAdminContext";
 
 function Dashboard() {
   const { logoutUser } = UseUserContext();
-  const { getUserCountForAdmin, deleteUser } = useBackendAPI();
+  const { deleteUser } = useBackendAPI();
+  const { content, dispatch } = useAdminContext();
 
-  const [amount, setAmount] = useState();
-  const [orderCount, setOrderCount] = useState();
-  const [userCount, setUserCount] = useState();
-  const [allUsers, setAllUsers] = useState([]);
+  //Destructuring necessary commponents from the admin context
+  const { users, dashBoardDetails } = content;
+  const { amount, orderCount, userCount } = dashBoardDetails;
+
   const [userRole, setUserRole] = useState("");
-
-  useEffect(() => {
-    const getAdminInfo = async () => {
-      const { amountForStore, orderCount, userCount, users } =
-        await getUserCountForAdmin();
-
-      setAmount(amountForStore);
-      setOrderCount(orderCount);
-      setUserCount(userCount);
-      setAllUsers(users);
-    };
-
-    getAdminInfo();
-  }, []);
 
   // Define a state variable to track admin's login status
   const [adminIsLoggedIn, setAdminIsLoggedIn] = useState(true);
@@ -50,13 +38,14 @@ function Dashboard() {
     }
   }, [adminIsLoggedIn]);
 
-  const removeUser = async (event, userID, userName) => {
-    event.preventDefault();
+  const removeUser = async (e, userID, userName) => {
+    e.preventDefault();
 
     const data = await deleteUser(userID);
+    console.log(data);
 
     if (data) {
-      setAllUsers((prev) => prev.filter((dat) => dat._id !== userID));
+      dispatch({ type: "DeleteUser", payload: { _id: data._id } });
       alert(`${userName} deleted`);
     } else alert("Ooops.. There seems to be an error deleting the user");
   };
@@ -184,8 +173,12 @@ function Dashboard() {
                       </th>
                     </tr>
                   </thead>
-                  {allUsers
-                    .filter((usr) => userRole === "" || usr.role === userRole)
+                  {users
+                    .filter(
+                      (usr) =>
+                        (userRole === "" || usr.role === userRole) &&
+                        usr.role !== "Admin"
+                    )
                     .map((usr) => {
                       return (
                         <tr

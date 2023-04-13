@@ -27,7 +27,6 @@ export const StoreContextProvider = (props) => {
             }
           }),
         };
-
       case "DeleteItem":
         return {
           items: state.items.filter((data) => {

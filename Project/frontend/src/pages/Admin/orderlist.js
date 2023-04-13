@@ -1,44 +1,30 @@
 import { Link } from "react-router-dom";
 import SideList from "../../components/SideList";
-import { useState, useEffect, useRef } from "react";
 import { useBackendAPI } from "../../context/useBackendAPI";
+import { useAdminContext } from "../../context/useAdminContext";
 
 export default function Orderlist() {
-  const { getAllStoreOrders, updateOrderAndPaymentStatus } = useBackendAPI();
+  const { updateOrderAndPaymentStatus } = useBackendAPI();
 
-  // Define state variables to store data
-  const [allOrder, setAllOrders] = useState([]);
+  const { content, dispatch } = useAdminContext();
 
-  const isMounted = useRef(false);
-
-  // Use useEffect to get sales data and store item count when user changes
-  useEffect(() => {
-    async function getData() {
-      const data = await getAllStoreOrders();
-
-      // Update state variable with fetched data
-      setAllOrders(data);
-    }
-
-    if (!isMounted.current) {
-      getData();
-      isMounted.current = true;
-    }
-  }, []);
+  //Destructuring necessary commponents from the admin context
+  const { orders } = content;
 
   //To change the status of the order
-  const changeOrderStatus = async (orderID, status) => {
-    await updateOrderAndPaymentStatus(orderID, status);
+  const changeOrderStatus = async (e, orderID, status) => {
+    e.preventDefault();
 
-    setAllOrders((prev) =>
-      prev.map((dat) => {
-        if (dat._id === orderID) {
-          return { ...dat, status: "Confirmed" };
-        } else {
-          return dat;
-        }
-      })
-    );
+    const data = await updateOrderAndPaymentStatus(orderID, status);
+
+    if (data) {
+      alert(`Order status changed to ${status}`);
+
+      dispatch({
+        type: "ConfirmOrder",
+        payload: { _id: orderID },
+      });
+    }
   };
 
   return (
@@ -83,7 +69,7 @@ export default function Orderlist() {
                     </th>
                   </tr>
                 </thead>
-                {allOrder.map((data) => {
+                {orders.map((data) => {
                   return (
                     <tr key={data._id} style={{ height: "50px" }}>
                       <td scope="col">{data._id.slice(-4)}</td>
@@ -111,7 +97,7 @@ export default function Orderlist() {
                             }}
                             name="Confirm Order"
                             onClick={(e) =>
-                              changeOrderStatus(data._id, "Confirmed")
+                              changeOrderStatus(e, data._id, "Confirmed")
                             }
                             onMouseEnter={(e) =>
                               (e.target.style.backgroundColor = "#f1f1f1")
