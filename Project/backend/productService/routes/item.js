@@ -8,6 +8,7 @@ const {
   updateItem,
   getOneItem,
   deleteItem,
+  deleteAllItemsFromStore,
 } = require("../controller/itemController");
 
 router.post("/addItem", postItem);
@@ -18,5 +19,6 @@ router.delete("/deleteItem/:id", deleteItem);
 router.get("/", getAllItems);
 router.get("/findOne", getOneItem);
 router.patch("/updateItem", updateItem);
+router.delete("/deleteStoreItems/:id", deleteAllItemsFromStore);
 
 module.exports = router;

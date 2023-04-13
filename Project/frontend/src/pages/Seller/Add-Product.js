@@ -3,6 +3,7 @@ import SideMenu from "../../components/SideMenu";
 import { useRef, useState } from "react";
 import { useBackendAPI } from "../../context/useBackendAPI";
 import { UseUserContext } from "../../context/useUserContext";
+import { UseStoreContext } from "../../context/useStoreContext";
 
 export default function AddProduct() {
   const { user1 } = UseUserContext();
@@ -30,8 +31,8 @@ export default function AddProduct() {
     event.preventDefault();
 
     const storeName = await getStoreName(user1[0].storeID);
-    console.log(storeName);
-    await saveProduct({
+
+    const data = await saveProduct({
       itemName: itemName.current.value,
       description: description.current.value,
       storeName,

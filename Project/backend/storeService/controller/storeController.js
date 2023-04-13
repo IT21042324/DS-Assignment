@@ -51,15 +51,12 @@ const updateStore = async (req, res) => {
 };
 
 const deleteStore = async (req, res) => {
-  const { storeID } = req.body;
-
-  await Store.findOneAndDelete({ _id: storeID })
-    .then(() => {
-      res.send({ status: "Store deleted" });
-    })
-    .catch((err) => {
-      res.send(err.message);
-    });
+  try {
+    const data = await Store.findByIdAndDelete(req.params.id);
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
 };
 
 const getOneStore = async (req, res) => {

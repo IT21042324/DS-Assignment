@@ -62,8 +62,7 @@ const updateUser = async function (req, res) {
       { new: true }
     );
 
-    console.log(user);
-    return res.status(200).json(user);
+    return res.json(user);
   } catch (err) {
     console.log(err.message);
   }
@@ -73,6 +72,7 @@ const deleteUser = async (req, res) => {
   try {
     const data = await userModel.findByIdAndDelete(req.params.id);
 
+    console.log(data);
     res.json(data);
   } catch (err) {
     console.log(err.message);

@@ -21,7 +21,7 @@ router.get("/getStoreItemCount/:id", getStoreItemCount);
 //update
 router.put("/update/", updateStore);
 
-router.delete("/delete/", deleteStore);
+router.delete("/delete/:id", deleteStore);
 
 router.get("/get/:id", getOneStore);
 
