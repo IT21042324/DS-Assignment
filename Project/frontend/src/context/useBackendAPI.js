@@ -225,9 +225,10 @@ export function useBackendAPI() {
           item: data,
         });
 
-        storeDispatch({ type: "AddItem", payload: product });
+        storeDispatch({ type: "AddItem", payload: data });
 
         alert("Item Added Successfully");
+        return data;
       } catch (err) {
         alert(
           "There seems to be an error. Item cannot be uploaded at the moment"
@@ -301,7 +302,6 @@ export function useBackendAPI() {
         );
 
         if (response) {
-          alert(`Order status changed to ${status}`);
           return data;
         } else {
           alert(
@@ -338,9 +338,24 @@ export function useBackendAPI() {
 
     deleteUser: async function (userID) {
       try {
+        //To delete the user
         const { data } = await axios.delete(
           "http://localhost:8080/api/user/deleteUser/" + userID
         );
+
+        console.log(data);
+
+        if (data.storeID) {
+          //To delete his store
+          await axios.delete(
+            "http://localhost:8082/api/store/delete/" + data.storeID
+          );
+
+          //To delete the items of his store
+          await axios.delete(
+            "http://localhost:8081/api/product/deleteStoreItems/" + data.storeID
+          );
+        }
 
         return data;
       } catch (err) {
@@ -353,6 +368,7 @@ export function useBackendAPI() {
         const { data } = await axios.get(
           "http://localhost:8082/api/order/getAllStoreOrders/"
         );
+
         return data;
       } catch (err) {
         console.log(err);

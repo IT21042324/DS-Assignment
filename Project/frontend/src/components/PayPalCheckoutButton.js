@@ -11,9 +11,10 @@ export function PayPalCheckoutButton(props) {
 
   const navigate = useNavigate();
 
+  const usdAmount = parseFloat((product.price / 319.67).toFixed(2));
+
   const handleApprove = async (orderId) => {
     //To convert the lkr to usd
-    const usdAmount = parseFloat((product.price / 319.67).toFixed(2));
 
     await purchaseItem({ total: usdAmount });
     console.log(orderId);
@@ -31,7 +32,7 @@ export function PayPalCheckoutButton(props) {
               {
                 description: product.description,
                 amount: {
-                  value: product.price,
+                  value: parseFloat((product.price / 319.67).toFixed(2)),
                 },
               },
             ],
