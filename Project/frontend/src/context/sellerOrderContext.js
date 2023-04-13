@@ -6,29 +6,33 @@ export const SellerOrderContext = createContext();
 export const SellerOrderContextProvider = (props) => {
   const [order, dispatch] = useReducer(reducer, {
     orders: [],
+    dashBoardDetails: {},
   });
 
   function reducer(state, action) {
     switch (action.type) {
       case "AddOrder":
         return {
-          orders: action.payload,
+          orders: action.payload.data,
+          dashBoardDetails: action.payload.dashBoardDetails,
         };
       case "DispatchOrder":
         return {
+          ...state,
           orders: state.orders.map((ord) =>
             ord._id === action.payload._id
               ? { ...ord, status: "Dispatched" }
               : ord
           ),
         };
+
       default:
         return state;
     }
   }
 
   return (
-    <SellerOrderContext.Provider value={{ ...order, dispatch }}>
+    <SellerOrderContext.Provider value={{ order, dispatch }}>
       {props.children}
     </SellerOrderContext.Provider>
   );

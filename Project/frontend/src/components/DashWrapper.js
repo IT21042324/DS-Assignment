@@ -13,45 +13,20 @@ import { Navigate } from "react-router-dom";
 import { useSellerOrderContext } from "../context/useSellerOrderContext";
 
 function DashWrapper() {
-  const { orders, dispatch } = useSellerOrderContext();
+  const { order, dispatch } = useSellerOrderContext();
+  const { orders } = order;
+  const { dashBoardDetails } = order;
+  const { total, orderCount, itemCount } = dashBoardDetails;
 
   // Access necessary functions and variables from custom hooks
   const { logoutUser, getUser } = UseUserContext();
-  const {
-    getTotalSalesAmount,
-    getStoreItemCount,
-    updateOrderAndPaymentStatus,
-  } = useBackendAPI();
+  const { updateOrderAndPaymentStatus } = useBackendAPI();
 
   // Get user information from the context
   const user = getUser();
 
-  // Define state variables to store data
-  const [salesTotal, setSalesTotal] = useState(0);
-  const [salesOrderCount, setOrderCount] = useState(0);
-  const [storeItemCount, setStoreItemCount] = useState(0);
-
   // Define a state variable to track merchant's login status
   const [mechantIsLoggedIn, setMerchantIsLoggedIn] = useState(true);
-
-  // Use useEffect to get sales data and store item count when user changes
-  useEffect(() => {
-    async function getSalesData() {
-      // Get total sales amount and order count
-      const { total, orderCount } = await getTotalSalesAmount(user.storeID);
-
-      // Get store item count
-      const itemCount = await getStoreItemCount(user.storeID);
-
-      // Update state variables with fetched data
-      setSalesTotal(total);
-      setOrderCount(orderCount);
-      setStoreItemCount(itemCount);
-    }
-
-    // Call the getSalesData function when user changes
-    getSalesData();
-  }, [user]);
 
   // Use useEffect to logout user if merchantIsLoggedIn state changes
   useEffect(() => {
@@ -145,7 +120,7 @@ function DashWrapper() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Revenue</h6>
-                    <span>${salesTotal}</span>
+                    <span>${total}</span>
                   </div>
                 </article>
               </div>
@@ -158,7 +133,7 @@ function DashWrapper() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Orders</h6>
-                    <span>{salesOrderCount}</span>
+                    <span>{orderCount}</span>
                   </div>
                 </article>
               </div>
@@ -171,7 +146,7 @@ function DashWrapper() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Products</h6>{" "}
-                    <span>{storeItemCount}</span>
+                    <span>{itemCount}</span>
                   </div>
                 </article>
               </div>

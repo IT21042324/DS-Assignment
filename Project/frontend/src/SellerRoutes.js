@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Seller from "./pages/Seller/Seller";
 import Profile from "./pages/Seller/Profile";
-import OrderList from "./pages/Seller/OrderList";
 import ProductList from "./pages/Seller/ProductList";
 import AddProduct from "./pages/Seller/Add-Product";
 import Store from "./pages/Seller/Store";
@@ -17,7 +16,6 @@ export function SellerRoutes() {
       <Routes>
         <Route path="/" element={<Seller />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/order" element={<OrderList />} />
         <Route path="/product" element={<ProductList />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route
