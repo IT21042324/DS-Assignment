@@ -42,11 +42,9 @@ function Dashboard() {
     e.preventDefault();
 
     const data = await deleteUser(userID);
-    console.log(data);
 
     if (data) {
       dispatch({ type: "DeleteUser", payload: { _id: data._id } });
-      alert(`${userName} deleted`);
     } else alert("Ooops.. There seems to be an error deleting the user");
   };
 

@@ -10,7 +10,6 @@ export function AdminRoutes() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Admin />} />
-
         <Route path="/user" element={<UserList />} />
         <Route path="/add-user" element={<AddUser />} />
         <Route path="/orders" element={<Orderlist />} />
