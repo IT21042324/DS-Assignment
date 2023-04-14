@@ -1,23 +1,22 @@
 const userModel = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+//To generate a token
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET, { expiresIn: "3d" });
+  //1st argument->object for payload
+  //2nd argument-> secret string only know for our server (.env file)
+  //3rd argument
 };
 
 const userLogin = async (req, res) => {
-  const { userName, password, role } = req.body;
-
   try {
+    const { userName, password, role } = req.body;
     const user = await userModel.login(userName, password, role);
-
-    const token = createToken(user._id);
-    user.token = token;
-
-    res.status(200).json(user);
+    res.json({ ...user.toObject(), token: createToken(user._id) });
   } catch (err) {
     console.log(err.message);
-    res.status(400).json({ err: err.message });
+    res.json({ err: err.message });
   }
 };
 
@@ -33,13 +32,13 @@ const userSignUp = async function (req, res) {
       image,
       role
     );
-    const token = createToken(user._id);
-    user.token = token;
 
-    res.status(200).json(user);
+    const token = createToken(user._id);
+
+    res.json({ ...user.toObject(), token });
   } catch (err) {
     console.log(err.message);
-    res.status(400).json({ err: err.message });
+    res.json({ err: err.message });
   }
 };
 
@@ -81,12 +80,10 @@ const deleteUser = async (req, res) => {
 };
 
 const getOneUser = async function (req, res) {
-  const id = req.params.id;
-  const { role } = req.body;
+  const { id, role } = req.params;
 
   try {
     const user = await userModel.find({ _id: id, role });
-    console.log(user);
     res.status(200).json(user);
   } catch (err) {
     console.log(err.message);

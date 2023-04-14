@@ -14,6 +14,7 @@ const createStore = async (req, res) => {
       res.json(newStore);
     })
     .catch((err) => {
+      console.log(err.message);
       res.send(err.message);
     });
 };

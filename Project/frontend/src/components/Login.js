@@ -11,7 +11,7 @@ export default function Login() {
   const userName = useRef();
   const password = useRef();
 
-  const { getUserRole, dispatch } = UseUserContext();
+  const { dispatch } = UseUserContext();
   const [isAdmin, setIsAdmin] = useState(false);
   const [existUserRole, setExistUserRole] = useState("");
 
@@ -40,7 +40,6 @@ export default function Login() {
     }
 
     //Using the login function provided by the backendAPI component to verify the user
-
     var role;
     if (isAdmin) role = "Admin";
     else role = existUserRole || selectedUserRole;
