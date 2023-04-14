@@ -47,20 +47,24 @@ export function useBackendAPI() {
           userDetails
         );
 
-        async function configureUser() {
-          localStorage.setItem("user", JSON.stringify(data));
+        if (data.role) {
+          async function configureUser() {
+            localStorage.setItem("user", JSON.stringify(data));
 
-          dispatch({ type: "SetUser", payload: [data] });
+            dispatch({ type: "SetUser", payload: [data] });
+          }
+          await configureUser();
+
+          const user = getUser();
+
+          //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
+          if (user.role === "Buyer") navigate("/buyer/product");
+          else if (user.role === "Merchant")
+            user.storeID ? navigate("/seller") : navigate("/seller/store");
+          else if (user.role === "Admin") navigate("/admin");
+        } else {
+          alert(data.err);
         }
-        await configureUser();
-
-        const user = getUser();
-
-        //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
-        if (user.role === "Buyer") navigate("/buyer/product");
-        else if (user.role === "Merchant")
-          user.storeID ? navigate("/seller") : navigate("/seller/store");
-        else if (user.role === "Admin") navigate("/admin");
       } catch (err) {
         console.log(err);
         alert(err.response.data.err);
@@ -101,6 +105,8 @@ export function useBackendAPI() {
           }
         );
 
+        const user = getUser();
+
         //To create a new Order record
         const orderDetails = await axios.post(
           "http://localhost:8082/api/order/add/",
@@ -110,6 +116,11 @@ export function useBackendAPI() {
             address: user1[0].address,
             storeID: info[0].storeID,
             itemList: info,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
           }
         );
 
@@ -142,10 +153,17 @@ export function useBackendAPI() {
     createStore: async function (store) {
       store.merchantID = user1[0]._id;
 
+      const user = getUser();
+
       try {
         const { data } = await axios.post(
           "http://localhost:8082/api/store/add/",
-          store
+          store,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
 
         await axios.patch("http://localhost:8080/api/user/updateUserStore/", {
@@ -176,8 +194,15 @@ export function useBackendAPI() {
 
     getStoreItemCount: async function (storeID) {
       try {
+        const user = getUser();
+
         const { data } = await axios.get(
-          "http://localhost:8082/api/store/getStoreItemCount/" + storeID
+          "http://localhost:8082/api/store/getStoreItemCount/" + storeID,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         return data.itemCount;
       } catch (err) {
@@ -187,8 +212,15 @@ export function useBackendAPI() {
 
     getStoreName: async function (storeID) {
       try {
+        const user = getUser();
+
         const { data } = await axios.get(
-          "http://localhost:8082/api/store/get/" + storeID
+          "http://localhost:8082/api/store/get/" + storeID,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         return data.storeName;
       } catch (err) {
@@ -198,9 +230,16 @@ export function useBackendAPI() {
       }
     },
     getProductsOfStore: async function () {
+      const user = getUser();
+
       try {
         const { data } = await axios.get(
-          "http://localhost:8082/api/store/get/" + user1[0].storeID
+          "http://localhost:8082/api/store/get/" + user1[0].storeID,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
 
         const { storeItem } = data;
@@ -215,15 +254,25 @@ export function useBackendAPI() {
 
     saveProduct: async function (product) {
       try {
+        const user = getUser();
+
         const { data } = await axios.post(
           "http://localhost:8081/api/product/addItem/",
           product
         );
 
-        await axios.patch("http://localhost:8082/api/store/updateItem/", {
-          storeID: user1[0].storeID,
-          item: data,
-        });
+        await axios.patch(
+          "http://localhost:8082/api/store/updateItem/",
+          {
+            storeID: user1[0].storeID,
+            item: data,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
 
         storeDispatch({ type: "AddItem", payload: data });
 
@@ -238,14 +287,24 @@ export function useBackendAPI() {
 
     removeItem: async function (itemID) {
       try {
+        const user = getUser();
+
         await axios.delete(
           "http://localhost:8081/api/product/deleteItem/" + itemID
         );
 
-        await axios.patch("http://localhost:8082/api/store/deleteStoreItem/", {
-          storeID: user1[0].storeID,
-          itemID,
-        });
+        await axios.patch(
+          "http://localhost:8082/api/store/deleteStoreItem/",
+          {
+            storeID: user1[0].storeID,
+            itemID,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
 
         storeDispatch({ type: "DeleteItem", payload: { _id: itemID } });
 
@@ -259,15 +318,25 @@ export function useBackendAPI() {
 
     updateItem: async function (product) {
       try {
+        const user = getUser();
+
         const { data } = await axios.patch(
           "http://localhost:8081/api/product/updateItem/",
           product
         );
 
-        await axios.patch("http://localhost:8082/api/store/modifyItem/", {
-          storeID: user1[0].storeID,
-          item: data,
-        });
+        await axios.patch(
+          "http://localhost:8082/api/store/modifyItem/",
+          {
+            storeID: user1[0].storeID,
+            item: data,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
 
         storeDispatch({ type: "ModifyItem", payload: data });
 
@@ -289,11 +358,19 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
+
     updateOrderAndPaymentStatus: async function (orderID, status) {
       try {
+        const user = getUser();
+
         const { data } = await axios.patch(
           "http://localhost:8082/api/order/updateOrderStatus/",
-          { orderID, status }
+          { orderID, status },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
 
         const response = await axios.patch(
@@ -321,8 +398,15 @@ export function useBackendAPI() {
           "http://localhost:8083/api/payment/getAdminTotal"
         );
 
+        const user = getUser();
+
         const adminTotalOrders = await axios.get(
-          "http://localhost:8082/api/order/getOrderCountForAdmin/"
+          "http://localhost:8082/api/order/getOrderCountForAdmin/",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
 
         return {
@@ -346,9 +430,16 @@ export function useBackendAPI() {
         console.log(data);
 
         if (data.storeID) {
+          const user = getUser();
+
           //To delete his store
           await axios.delete(
-            "http://localhost:8082/api/store/delete/" + data.storeID
+            "http://localhost:8082/api/store/delete/" + data.storeID,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
           );
 
           //To delete the items of his store
@@ -357,16 +448,26 @@ export function useBackendAPI() {
           );
         }
 
-        return data;
+        if (data) {
+          alert(`User deleted`);
+          return data;
+        }
       } catch (err) {
         console.log(err);
         return err;
       }
     },
     getAllStoreOrders: async function () {
+      const user = getUser();
+
       try {
         const { data } = await axios.get(
-          "http://localhost:8082/api/order/getAllStoreOrders/"
+          "http://localhost:8082/api/order/getAllStoreOrders/",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
 
         return data;

@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const requireAuth = require("../middleware/requireAuth");
 
 const {
   createStore,
@@ -12,6 +13,8 @@ const {
   modifyStoreItem,
   getStoreDescription,
 } = require("../controller/storeController");
+
+router.use(requireAuth);
 //create store
 router.post("/add", createStore);
 //display
