@@ -15,6 +15,19 @@
     background: #fff;
     padding: 1rem;
   }
+
+  .btnClear {
+    padding: 10px 17px;
+    width: 100%;
+    background: #171717;
+    color: #f4f4f4;
+    border: 1px solid #171717;
+    cursor: pointer;
+  }
+ 
+  .btnClear:hover {
+    opacity: 0.9;
+  }
   
   .cart__right {
     flex: 0.3;
