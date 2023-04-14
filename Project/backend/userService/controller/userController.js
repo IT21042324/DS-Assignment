@@ -35,10 +35,7 @@ const userSignUp = async function (req, res) {
 
     const token = createToken(user._id);
 
-    //to add the token to the user object
-    user.token = token;
-
-    res.json(user);
+    res.json({ ...user.toObject(), token });
   } catch (err) {
     console.log(err.message);
     res.json({ err: err.message });
@@ -83,12 +80,10 @@ const deleteUser = async (req, res) => {
 };
 
 const getOneUser = async function (req, res) {
-  const id = req.params.id;
-  const { role } = req.body;
+  const { id, role } = req.params;
 
   try {
     const user = await userModel.find({ _id: id, role });
-    console.log(user);
     res.status(200).json(user);
   } catch (err) {
     console.log(err.message);

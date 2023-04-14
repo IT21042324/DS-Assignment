@@ -1,23 +1,24 @@
 const jwt = require("jsonwebtoken");
-const fetch = require("node-fetch");
+const axios = require("axios");
 
 const requireAuth = async (req, res, next) => {
-  const { authorization } = req.headers;
+  const { authorization, role } = req.headers;
 
   if (!authorization) {
-    return res.status(401).json({ error: "Authorizeation token not found" });
+    return res.status(401).json({ error: "Authorization token not found" });
   }
 
   const token = authorization.split(" ")[1];
 
   try {
-    const { _id } = jwt.verify(token, process.env.SECRET);
+    const { id } = jwt.verify(token, process.env.SECRET);
+    const { data } = await axios.get(
+      `http://localhost:8080/api/user/${id}/${role}`
+    );
 
-    const response = await fetch("http://localhost:8080/api/user/" + _id);
-    const user = await response.json();
+    req.user = data;
 
-    req.user = user;
-
+    console.log(req);
     next();
   } catch (error) {
     console.log(error);

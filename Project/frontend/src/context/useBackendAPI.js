@@ -120,6 +120,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -162,6 +163,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -201,6 +203,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -219,6 +222,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -238,6 +242,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -270,6 +275,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -302,6 +308,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -334,6 +341,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -348,9 +356,16 @@ export function useBackendAPI() {
       }
     },
     getAllItemsFromOneStore: async function (storeID) {
+      const user = getUser();
       try {
         const { data } = await axios.get(
-          "http://localhost:8082/api/order/getStoreOrder/" + storeID
+          "http://localhost:8082/api/order/getStoreOrder/" + storeID,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
         );
 
         return data;
@@ -369,6 +384,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -405,6 +421,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );
@@ -427,8 +444,6 @@ export function useBackendAPI() {
           "http://localhost:8080/api/user/deleteUser/" + userID
         );
 
-        console.log(data);
-
         if (data.storeID) {
           const user = getUser();
 
@@ -438,6 +453,7 @@ export function useBackendAPI() {
             {
               headers: {
                 Authorization: `Bearer ${user.token}`,
+                role: user.role,
               },
             }
           );
@@ -466,6 +482,7 @@ export function useBackendAPI() {
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
+              role: user.role,
             },
           }
         );

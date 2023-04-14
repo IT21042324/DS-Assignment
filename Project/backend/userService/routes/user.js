@@ -25,7 +25,7 @@ router.get("/", getAllUsers);
 router.patch("/update", updateUser);
 
 // Get one user by ID route
-router.get("/:id", getOneUser);
+router.get("/:id/:role", getOneUser);
 
 // Update user store route
 router.patch("/updateUserStore", updateUserStore);

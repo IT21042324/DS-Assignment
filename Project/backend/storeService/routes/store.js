@@ -11,7 +11,6 @@ const {
   deleteStoreItem,
   getStoreItemCount,
   modifyStoreItem,
-  getStoreDescription,
 } = require("../controller/storeController");
 
 router.use(requireAuth);
