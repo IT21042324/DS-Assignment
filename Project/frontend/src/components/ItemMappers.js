@@ -1,7 +1,7 @@
 import Item from "./Item";
 import { UseItemContext } from "../context/useItemContext";
 import { React, useState } from "react";
-import SeachBar from "./SearchComponent";
+import { SearchBar } from "./SearchComponent";
 
 export const ItemMapper = () => {
   const { items } = UseItemContext();
@@ -13,7 +13,7 @@ export const ItemMapper = () => {
 
   return (
     <div>
-      <SeachBar functionSearch={getSearchValue} />
+      <SearchBar functionSearch={getSearchValue} />
       <div
         style={{
           display: "flex",
@@ -25,7 +25,7 @@ export const ItemMapper = () => {
           .filter((dat) => {
             return (
               dat.itemName.toLowerCase().includes(search.toLowerCase()) ||
-              dat.storename.toLowerCase().includes(search.toLowerCase())
+              dat.storeName.toLowerCase().includes(search.toLowerCase())
             );
           })
           .map((dat) => (

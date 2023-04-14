@@ -11,6 +11,7 @@ const {
   updateOrderStatus,
   getOrderCountForAdmin,
   getAllStoreOrders,
+  getAllUserOrders,
 } = require("../controller/orderController");
 
 router.use(requireAuth);
@@ -38,5 +39,8 @@ router.get("/getOrderCountForAdmin", getOrderCountForAdmin);
 
 //Route for getting all the orders
 router.get("/getAllStoreOrders", getAllStoreOrders);
+
+//Route for getting all the orders for a particular user
+router.get("/getAllStoreOrders/:id", getAllUserOrders);
 
 module.exports = router;

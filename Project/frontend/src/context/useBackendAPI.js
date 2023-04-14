@@ -403,6 +403,9 @@ export function useBackendAPI() {
         }
       } catch (err) {
         console.log(err);
+        alert(
+          "There seems to be a error in the order service.. please try later"
+        );
       }
     },
 
@@ -479,6 +482,25 @@ export function useBackendAPI() {
       try {
         const { data } = await axios.get(
           "http://localhost:8082/api/order/getAllStoreOrders/",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
+        );
+
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    getAllUserOrders: async function (userID) {
+      try {
+        const user = getUser();
+
+        const { data } = await axios.get(
+          `http://localhost:8082/api/order/getAllStoreOrders/${userID}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,

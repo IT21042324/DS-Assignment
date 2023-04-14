@@ -1,4 +1,4 @@
-export default function SeachBar(props) {
+export function SearchBar(props) {
   return (
     <div>
       <div

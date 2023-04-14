@@ -22,6 +22,8 @@ function NavBar() {
       setSelection("Seller");
     } else if (path === "/seller/store") {
       setSelection("Store");
+    } else if (path === "/buyer") {
+      setSelection("TrackOrders");
     }
   }, []);
 
@@ -40,6 +42,17 @@ function NavBar() {
               Products
             </div>
           </Link>
+
+          {user1[0]?.role === "Buyer" && (
+            <Link
+              to="/buyer"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <div className={selection === "TrackOrders" ? "active" : ""}>
+                Track Orders
+              </div>
+            </Link>
+          )}
         </>
       )}
 
