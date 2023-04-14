@@ -106,11 +106,21 @@ const getAllStoreOrders = async (req, res) => {
   }
 };
 
+const getAllUserOrders = async (req, res) => {
+  try {
+    const data = await Order.find({ userID: req.params.id });
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrder,
   updateOrder,
   getOneOrder,
+  getAllUserOrders,
   getAllStoreOrders,
   getAllOrderPerStore,
   updateOrderStatus,

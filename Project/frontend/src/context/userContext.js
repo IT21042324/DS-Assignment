@@ -1,5 +1,4 @@
-import { createContext, useReducer } from "react";
-import React from "react";
+import React, { createContext, useReducer } from "react";
 
 export const UserContext = createContext();
 
@@ -9,44 +8,66 @@ export const UserContextProvider = (props) => {
   const [user, dispatch] = useReducer(reducer, {
     user1: [],
     selectedUserRole: "",
+    orders: [],
   });
 
   function reducer(state, action) {
     switch (action.type) {
       case "SetUser":
         return {
+          ...state,
           user1: action.payload,
-          selectedUserRole: state.selectedUserRole,
         };
+
       case "UpdateUser": {
         return {
+          ...state,
           user1: action.payload,
         };
       }
+
       case "Logout":
         return { user1: [], selectedUserRole: "" };
+
       case "SetUserRole":
-        return { user1: state.user1, selectedUserRole: action.userRole };
+        return { ...state, selectedUserRole: action.userRole };
+
       case "ClearUserRole":
         return {
-          user1: state.user1,
+          ...state,
           selectedUserRole: "",
         };
+
       case "SetStore":
-        return { user1: (state.user1[0].storeID = action.payload) };
+        return { ...state, user1: (state.user1[0].storeID = action.payload) };
+
+      case "SetOrders": {
+        return {
+          ...state,
+          orders: action.payload,
+        };
+      }
+
+      case "ConfirmDelivery": {
+        return {
+          ...state,
+          orders: state.orders.map((ord) => {
+            if (ord._id === action.payload._id) {
+              return { ...ord, status: "Delivered" };
+            } else {
+              return ord;
+            }
+          }),
+        };
+      }
+
       default:
         return state;
     }
   }
 
   return (
-    <UserContext.Provider
-      value={{
-        user1: user.user1,
-        selectedUserRole: user.selectedUserRole,
-        dispatch,
-      }}
-    >
+    <UserContext.Provider value={{ ...user, dispatch }}>
       {props.children}
     </UserContext.Provider>
   );
