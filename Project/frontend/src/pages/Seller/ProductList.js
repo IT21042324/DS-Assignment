@@ -2,11 +2,7 @@
 import { Link } from "react-router-dom";
 import SideMenu from "../../components/SideMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faPenToSquare,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPenToSquare, faTrash, faDashboard, faUser, faBox,} from "@fortawesome/free-solid-svg-icons";
 import { UseStoreContext } from "../../context/useStoreContext";
 import { useBackendAPI } from "../../context/useBackendAPI";
 import { useRef, useState } from "react";
@@ -67,7 +63,28 @@ export default function ProductList() {
   return (
     <div>
       {/* Render the SideMenu component */}
-      <SideMenu />{" "}
+      <section className="sideMenu">
+        <div className="logo">
+          <Link
+            to="/seller"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              fontSize: 50,
+              paddingTop: 20,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            RB&NS
+          </Link>
+        </div>
+        <div className="items">
+          <SideMenu to="/seller" icon={faDashboard} label="Dashboard" />
+          <SideMenu to="/seller/profile" icon={faUser} label="Profile" />
+          <SideMenu to="/seller/product" icon={faBox} label="Products" />
+        </div>
+      </section>{" "}
       <section className="main-wrap">
         <div
           className="content-main"

@@ -11,7 +11,7 @@ export function ActionBanner() {
       <h2>
         Join with us <span>Create your store in 3 steps</span>
       </h2>
-      <h2 style={{ color: "purple", backgroundColor: "#ffcc00" }}>
+      <h2>
         Create Seller Account {">>"} Upload Your Products {">>"} Start Selling
       </h2>
       <Link
