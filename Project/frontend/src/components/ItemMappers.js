@@ -18,7 +18,7 @@ export const ItemMapper = () => {
         style={{
           display: "flex",
           flexWrap: "wrap",
-          marginLeft: "3px",
+          justifyContent: "space-around"
         }}
       >
         {items
@@ -49,7 +49,7 @@ export const ItemMapperHome = () => {
       style={{
         display: "flex",
         flexWrap: "wrap",
-        marginLeft: "3px",
+        justifyContent: "space-around"
       }}
     >
       {items

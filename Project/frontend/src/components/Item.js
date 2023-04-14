@@ -60,8 +60,8 @@ export default function Item(props) {
               style={{ height: "200px", width: "200px" }} alt=""
             />
           </div>
-          <span>{props.details.itemName}</span>
-          <h5>Store - {props.details.storeName}</h5>
+          <h5>{props.details.itemName}</h5>
+          <span>{props.details.storeName}</span>
 
           <h4>Rs. {props.details.price}</h4>
           {props.details.quantity ? (
