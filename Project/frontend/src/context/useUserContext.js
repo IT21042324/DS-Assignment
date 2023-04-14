@@ -1,18 +1,45 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "./userContext";
+import axios from "axios";
 
 export const UseUserContext = () => {
-  const userContext = useContext(UserContext);
-  const { dispatch, user1, selectedUserRole } = userContext;
+  const { dispatch, user1, selectedUserRole, orders } = useContext(UserContext);
 
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      dispatch({
-        type: "SetUser",
-        payload: [user],
-      });
+    async function getDataForUserContext() {
+      if (localStorage.getItem("user")) {
+        const user = JSON.parse(localStorage.getItem("user"));
+        dispatch({
+          type: "SetUser",
+          payload: [user],
+        });
+
+        const { data } = await axios.get(
+          `http://localhost:8082/api/order/getAllStoreOrders/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
+        );
+
+        //We try to determine the status of order so that we can display the tracking interface accordingly
+        data.forEach((ord) => {
+          if (ord.status === "Pending") ord.statusValue = 0;
+          else if (ord.status === "Confirmed") ord.statusValue = 1;
+          else if (ord.status === "Dispatched") ord.statusValue = 2;
+          else if (ord.status === "Delivered") ord.statusValue = 3;
+        });
+
+        dispatch({
+          type: "SetOrders",
+          payload: data,
+        });
+      }
     }
+
+    getDataForUserContext();
   }, [dispatch]);
 
   function getUser() {
@@ -66,9 +93,9 @@ export const UseUserContext = () => {
   }
 
   return {
-    userContext,
     dispatch,
     user1,
+    orders,
     selectedUserRole,
     setStore,
     getUser,

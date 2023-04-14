@@ -186,8 +186,6 @@ function Header() {
                 handleClosePopup();
               }}
             />
-
-            <h3></h3>
           </div>
         </div>
       )}
