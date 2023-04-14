@@ -16,6 +16,7 @@ export default function Cart() {
   // Use the useUserContext and useCartContext hooks to access user and cart data
   const { user1, dispatch } = UseUserContext();
   const { info } = useCartContext();
+  const cartDispatch = useCartContext().dispatch;
 
   // Define a state variable to handle showing the shipping estimate popup
   const [showPopup, setShowPopup] = useState(false);
@@ -49,6 +50,10 @@ export default function Cart() {
     }
   };
 
+  const clearCart = () => {
+    cartDispatch({ type: "ClearCart"});
+  };
+
   // Render the Cart component
   return (
     <div>
@@ -62,6 +67,11 @@ export default function Cart() {
           {info.map((dat) => (
             <CartItem key={dat.itemID} details={dat} />
           ))}
+          <hr />
+          <div>
+            {/* Render a button to clear cart */}
+            <button onClick={e => clearCart()} className="btnClear">Clear Cart</button>
+          </div>
         </div>{" "}
         <div className="cart__right">
           <div className="cart__info">
