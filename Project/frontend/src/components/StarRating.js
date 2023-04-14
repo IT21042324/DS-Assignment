@@ -5,6 +5,7 @@ import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 
 function StarRating(props) {
   const [rating, setRating] = useState(props.initialRating);
+
   const handleClick = (newRating) => {
     setRating(newRating);
   };
@@ -28,7 +29,11 @@ function StarRating(props) {
         <FontAwesomeIcon
           key={i}
           icon={i <= rating ? solidStar : regularStar}
-          onClick={() => handleClick(i)}
+          onClick={() => {
+            handleClick(i);
+
+            props.enterRating && props.enterRating(i);
+          }}
         />
       );
     }

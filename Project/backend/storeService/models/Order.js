@@ -34,6 +34,7 @@ const ordersSchema = new Schema({
   itemList: {
     type: Array,
   },
+  reviewed: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Order", ordersSchema);

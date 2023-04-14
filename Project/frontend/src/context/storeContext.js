@@ -6,18 +6,18 @@ export const StoreContext = createContext();
 export const StoreContextProvider = (props) => {
   const [store, dispatch] = useReducer(reducer, {
     items: [],
+    reviews: [],
   });
 
   function reducer(state, action) {
     switch (action.type) {
       case "AddItem":
-        return {
-          items: [action.payload, ...state.items],
-        };
+        return { ...state, items: [action.payload, ...state.items] };
       case "SetItems":
-        return { items: action.payload }; //we will anyways send data here as an array using axios
+        return { ...state, items: action.payload }; //we will anyways send data here as an array using axios
       case "ModifyItem":
         return {
+          ...state,
           items: state.items.map((itm) => {
             if (itm._id === action.payload._id)
               return Object.assign({}, itm, action.payload);
@@ -29,9 +29,15 @@ export const StoreContextProvider = (props) => {
         };
       case "DeleteItem":
         return {
+          ...state,
           items: state.items.filter((data) => {
             return data._id !== action.payload._id;
           }),
+        };
+      case "AddReview":
+        return {
+          ...state,
+          reviews: [...state.reviews, action.payload],
         };
       default:
         return state;

@@ -128,7 +128,7 @@ const addReview = async (req, res) => {
         { _id: itemID },
         { reviews: descArr }
       );
-      res.json({ updatedInfo: data });
+      res.json(data);
     }
   } catch (err) {
     res.json(err.message);

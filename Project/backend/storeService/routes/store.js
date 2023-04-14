@@ -11,6 +11,7 @@ const {
   deleteStoreItem,
   getStoreItemCount,
   modifyStoreItem,
+  addReview,
 } = require("../controller/storeController");
 
 router.use(requireAuth);
@@ -22,6 +23,8 @@ router.get("/", getAllStore);
 router.get("/getStoreItemCount/:id", getStoreItemCount);
 //update
 router.put("/update/", updateStore);
+
+router.patch("/addReview", addReview);
 
 router.delete("/delete/:id", deleteStore);
 

@@ -12,9 +12,10 @@ const {
   getOrderCountForAdmin,
   getAllStoreOrders,
   getAllUserOrders,
+  setReviewStatus,
 } = require("../controller/orderController");
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 // Route for creating a new order
 router.post("/add", createOrder);
@@ -42,5 +43,8 @@ router.get("/getAllStoreOrders", getAllStoreOrders);
 
 //Route for getting all the orders for a particular user
 router.get("/getAllStoreOrders/:id", getAllUserOrders);
+
+//Route to set review status as true once user submites a store review
+router.patch("/setReviewStatus/:id", setReviewStatus);
 
 module.exports = router;

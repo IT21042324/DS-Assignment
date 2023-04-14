@@ -514,5 +514,58 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
+    addReviewProduct: async function (details) {
+      try {
+        const user = getUser();
+        const { rating, itemID, review } = details;
+
+        const { data } = await axios.patch(
+          "http://localhost:8081/api/product/addReview/",
+          { userID: user._id, userName: user.userName, rating, itemID, review }
+        );
+
+        return data;
+      } catch (err) {
+        alert("Oops.. We are facing an issue right now. Please try again");
+      }
+    },
+
+    addReviewStore: async function (details) {
+      try {
+        const user = getUser();
+        const { rating, storeID, review, orderID } = details;
+
+        await axios.patch(
+          "http://localhost:8082/api/store/addReview/",
+          {
+            userID: user._id,
+            userName: user.userName,
+            rating,
+            storeID,
+            review,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
+        );
+
+        const orderDetails = await axios.patch(
+          "http://localhost:8082/api/order/setReviewStatus/" + orderID,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
+        );
+
+        return orderDetails;
+      } catch (err) {
+        alert("Oops.. We are facing an issue right now. Please try again");
+      }
+    },
   };
 }

@@ -6,14 +6,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pic from "../../assets/f1.png";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useBackendAPI } from "../../context/useBackendAPI";
 import { UseUserContext } from "../../context/useUserContext";
 import Header from "../../components/Header";
+import StarRating from "../../components/StarRating";
+import { UseStoreContext } from "../../context/useStoreContext";
 
 export default function Buyer() {
-  const { updateOrderAndPaymentStatus } = useBackendAPI();
+  const { updateOrderAndPaymentStatus, addReviewStore } = useBackendAPI();
   const { orders, user1, dispatch } = UseUserContext();
+  const storeDispatch = UseStoreContext().dispatch;
 
   const [statusValue, setStatusValue] = useState(0);
   const [selectedOrderId, setSelectedOrderId] = useState("");
@@ -44,6 +47,34 @@ export default function Buyer() {
         type: "ConfirmDelivery",
         payload: { _id: selectedOrderId },
       });
+    }
+  };
+
+  //To get the rating when the review is submitted
+  const [rating, setRating] = useState(3);
+
+  const getRatingValue = (rating) => {
+    setRating(rating);
+  };
+
+  const reviewDesc = useRef();
+  const [storeID, setStoreID] = useState("");
+
+  const submitStoreReview = async (e) => {
+    e.preventDefault();
+
+    const data = await addReviewStore({
+      orderID: selectedOrderId,
+      storeID,
+      rating,
+      review: reviewDesc.current.value,
+    });
+
+    if (data) {
+      storeDispatch({ type: "AddReview", payload: data.reviews });
+      dispatch({ type: "Reviewed", payload: { _id: selectedOrderId } });
+      handleClosePopup();
+      alert("Review added successfully!");
     }
   };
 
@@ -100,7 +131,7 @@ export default function Buyer() {
                       </tr>
                     </thead>
                     <tbody>
-                      {orders.map((data) => {
+                      {orders?.map((data) => {
                         return (
                           <tr key={data._id} style={{ height: "50px" }}>
                             <td scope="col">{data._id.slice(-4)}</td>
@@ -113,22 +144,45 @@ export default function Buyer() {
                                 .join(", ")}
                             </td>
                             <td>{data.status}</td>
-                            <td>
-                              <button
-                                className="btn btn-warning"
-                                onClick={(e) => {
-                                  if (data.status === "Delivered")
-                                    setStatusValue(3);
-                                  else {
-                                    setStatusValue(data.statusValue);
-                                  }
+                            <td style={{ textAlign: "center" }}>
+                              {data.status !== "Delivered" && (
+                                <button
+                                  className="btn btn-warning"
+                                  onClick={(e) => {
+                                    if (data.status === "Delivered")
+                                      setStatusValue(3);
+                                    else {
+                                      setStatusValue(data.statusValue);
+                                    }
 
-                                  setSelectedOrderId(data._id);
-                                  handleViewItemClick();
-                                }}
-                              >
-                                Track Order
-                              </button>
+                                    setSelectedOrderId(data._id);
+                                    handleViewItemClick();
+                                  }}
+                                >
+                                  Track Order
+                                </button>
+                              )}
+
+                              {data.status === "Delivered" && (
+                                <button
+                                  className="btn btn-success"
+                                  onClick={(e) => {
+                                    setSelectedOrderId(data._id);
+                                    setStoreID(data.storeID);
+                                    if (data.status === "Delivered")
+                                      setStatusValue(3);
+                                    else {
+                                      setStatusValue(data.statusValue);
+                                    }
+                                    handleViewItemClick();
+                                  }}
+                                  disabled={data.reviewed}
+                                >
+                                  {data.reviewed
+                                    ? "Review Added"
+                                    : "Add Seller Review"}
+                                </button>
+                              )}
                             </td>
                           </tr>
                         );
@@ -148,72 +202,95 @@ export default function Buyer() {
                   }}
                 >
                   <div className="popup-content">
-                    <div className="card mb-4">
-                      <header className="card-header">
-                        <h4>Order Tracking</h4>
-                      </header>
-                      <div className="card-body">
-                        <div className="order-tracking mb-100">
-                          <div className="steps d-flex flex-wrap flex-sm-nowrap justify-content-between">
-                            <div className="step completed">
-                              <div className="step-icon-wrap">
-                                <div className="step-icon">
-                                  <FontAwesomeIcon icon={faGears} />
+                    {statusValue < 3 ? (
+                      <div className="card mb-4">
+                        <header className="card-header">
+                          <h4>Order Tracking</h4>
+                        </header>
+                        <div className="card-body">
+                          <div className="order-tracking mb-100">
+                            <div className="steps d-flex flex-wrap flex-sm-nowrap justify-content-between">
+                              <div className="step completed">
+                                <div className="step-icon-wrap">
+                                  <div className="step-icon">
+                                    <FontAwesomeIcon icon={faGears} />
+                                  </div>
                                 </div>
+                                <h4 className="step-title">Processing Order</h4>
                               </div>
-                              <h4 className="step-title">Processing Order</h4>
+                              <div
+                                className={`step ${
+                                  statusValue > 0 ? "completed" : ""
+                                }`}
+                              >
+                                <div className="step-icon-wrap">
+                                  <div className="step-icon">
+                                    <FontAwesomeIcon icon={faCheckCircle} />
+                                  </div>
+                                </div>
+                                <h4 className="step-title">Confirmed Order</h4>
+                              </div>
+                              <div
+                                className={`step ${
+                                  statusValue > 1 ? "completed" : ""
+                                }`}
+                              >
+                                <div className="step-icon-wrap">
+                                  <div className="step-icon">
+                                    <FontAwesomeIcon icon={faTruckFast} />
+                                  </div>
+                                </div>
+                                <h4 className="step-title">Order Dispatched</h4>
+                              </div>{" "}
+                              <div
+                                className={`step ${
+                                  statusValue > 2 ? "completed" : ""
+                                }`}
+                              >
+                                <div className="step-icon-wrap">
+                                  <div className="step-icon">
+                                    <FontAwesomeIcon icon={faThumbsUp} />
+                                  </div>
+                                </div>
+                                <h4 className="step-title">Order Delivered</h4>
+                              </div>
                             </div>
-                            <div
-                              className={`step ${
-                                statusValue > 0 ? "completed" : ""
-                              }`}
-                            >
-                              <div className="step-icon-wrap">
-                                <div className="step-icon">
-                                  <FontAwesomeIcon icon={faCheckCircle} />
-                                </div>
-                              </div>
-                              <h4 className="step-title">Confirmed Order</h4>
-                            </div>
-                            <div
-                              className={`step ${
-                                statusValue > 1 ? "completed" : ""
-                              }`}
-                            >
-                              <div className="step-icon-wrap">
-                                <div className="step-icon">
-                                  <FontAwesomeIcon icon={faTruckFast} />
-                                </div>
-                              </div>
-                              <h4 className="step-title">Order Dispatched</h4>
-                            </div>{" "}
-                            <div
-                              className={`step ${
-                                statusValue > 2 ? "completed" : ""
-                              }`}
-                            >
-                              <div className="step-icon-wrap">
-                                <div className="step-icon">
-                                  <FontAwesomeIcon icon={faThumbsUp} />
-                                </div>
-                              </div>
-                              <h4 className="step-title">Order Delivered</h4>
-                            </div>
+                            {statusValue === 2 && (
+                              <button
+                                className="btn btn-success"
+                                style={{ float: "right" }}
+                                onClick={(e) => {
+                                  confirmOrderReceived(e, "Delivered");
+                                }}
+                              >
+                                Confirm Order Received
+                              </button>
+                            )}
                           </div>
-                          {statusValue === 2 && (
-                            <button
-                              className="btn btn-success"
-                              style={{ float: "right" }}
-                              onClick={(e) => {
-                                confirmOrderReceived(e, "Delivered");
-                              }}
-                            >
-                              Confirm Order Received
-                            </button>
-                          )}
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="card mb-4">
+                        <header className="card-header">
+                          <h4>Seller Review</h4>
+                        </header>
+                        <div className="card-body">
+                          <StarRating
+                            maxRating={5}
+                            initialRating={3}
+                            enterRating={getRatingValue}
+                          />
+                          <textarea ref={reviewDesc}></textarea>
+                          <button
+                            onClick={(e) => {
+                              submitStoreReview(e);
+                            }}
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
