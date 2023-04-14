@@ -20,6 +20,10 @@ const storesSchema = new Schema({
   description: {
     type: String,
   },
+  reviews: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Store", storesSchema);

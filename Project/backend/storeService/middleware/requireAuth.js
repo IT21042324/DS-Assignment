@@ -18,7 +18,6 @@ const requireAuth = async (req, res, next) => {
 
     req.user = data;
 
-    console.log(req);
     next();
   } catch (error) {
     console.log(error);

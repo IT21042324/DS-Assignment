@@ -20,5 +20,13 @@ export const UseItemContext = () => {
     }
     fetchData();
   }, [dispatch]);
-  return { itemContext, dispatch, items };
+
+  function hasUserReviewedItem(itemId, userId) {
+    const item = items.find((item) => item.id === itemId);
+
+    const hasReviewed = item.reviews.some((review) => review.userId === userId);
+
+    return hasReviewed;
+  }
+  return { itemContext, dispatch, items, hasUserReviewedItem };
 };

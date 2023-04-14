@@ -166,10 +166,39 @@ const deleteStoreItem = async (req, res) => {
   }
 };
 
+const addReview = async (req, res) => {
+  //to this data is just passed through the body (all of them)
+  const { review, storeID, userID, userName, rating } = req.body; //_id is userID
+
+  try {
+    const insertReview = async (callback) => {
+      const store = await Store.findOne({ _id: storeID });
+      if (store) await callback(store.reviews); //item.reviews is an array
+    };
+
+    await insertReview(callBack);
+
+    async function callBack(descArr) {
+      //an array is passed in the parameter
+
+      descArr.push({ userID, userName, rating, review });
+
+      const data = await Store.findOneAndUpdate(
+        { _id: storeID },
+        { reviews: descArr }
+      );
+      res.json(data);
+    }
+  } catch (err) {
+    res.json(err.message);
+  }
+};
+
 module.exports = {
   createStore,
   getAllStore,
   updateStore,
+  addReview,
   deleteStore,
   getOneStore,
   getStoreItemCount,

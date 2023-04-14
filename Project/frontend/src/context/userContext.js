@@ -61,6 +61,17 @@ export const UserContextProvider = (props) => {
         };
       }
 
+      case "Reviewed": {
+        return {
+          ...state,
+          orders: state.orders.map((dat) => {
+            if (dat._id === action.payload._id)
+              return { ...dat, reviewed: true };
+            else return dat;
+          }),
+        };
+      }
+
       default:
         return state;
     }

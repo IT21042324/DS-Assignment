@@ -27,5 +27,6 @@ export const UseStoreContext = () => {
     }
     fetchData();
   }, [dispatch, user1]);
+
   return { storeContext, dispatch, items };
 };

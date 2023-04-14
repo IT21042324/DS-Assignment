@@ -115,6 +115,17 @@ const getAllUserOrders = async (req, res) => {
   }
 };
 
+const setReviewStatus = async (req, res) => {
+  try {
+    const data = await Order.findByIdAndUpdate(req.params.id, {
+      reviewed: true,
+    });
+    res.json(data);
+  } catch (err) {
+    res.send(err.message);
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrder,
@@ -124,5 +135,6 @@ module.exports = {
   getAllStoreOrders,
   getAllOrderPerStore,
   updateOrderStatus,
+  setReviewStatus,
   getOrderCountForAdmin,
 };
