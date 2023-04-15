@@ -13,15 +13,16 @@ export const ItemMapper = () => {
     setSearch(searchResult);
   }
 
-  //Here we see if the item has been reviewed by the user by checking if it has been delivered and reviewed accordingly
-  function hasItemBeenReviewed(itemID) {
+  //Here we see if the item has been delivered for the user to review
+  function hasItemBeenDelivered(itemID) {
     const user = getUser();
     const order = orders.find(
-      (order) => order.userID === user._id && order.status === "Delivered"
+      (order) =>
+        order.userID === user._id &&
+        order.status === "Delivered" &&
+        order.itemList.some((item) => item.itemID === itemID)
     );
-    return order
-      ? order.itemList.some((item) => item.itemID === itemID) && order.reviewed
-      : false;
+    return !!order;
   }
 
   return (
@@ -46,7 +47,7 @@ export const ItemMapper = () => {
               style={{ flexBasis: `${100 / Math.min(items.length, 8)}%` }}
               key={dat._id}
             >
-              <Item details={dat} status={hasItemBeenReviewed(dat._id)} />
+              <Item details={dat} status={hasItemBeenDelivered(dat._id)} />
             </div>
           ))}
       </div>

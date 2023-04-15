@@ -55,7 +55,7 @@ export default function Item(props) {
   const { addReviewProduct } = useBackendAPI();
 
   const { getUser } = UseUserContext();
-
+  const user = getUser();
   //To submit the user review
   const submitProductReview = async (e) => {
     e.preventDefault();
@@ -65,8 +65,6 @@ export default function Item(props) {
       rating: addedRating,
       review: reviewDesc.current.value,
     });
-
-    const user = getUser();
 
     if (data) {
       handleClosePopup();
@@ -85,6 +83,20 @@ export default function Item(props) {
     }
   };
 
+  const [userCanReview, setUserCanReview] = useState(false);
+
+  //To check if the user hasnt already submitted a review
+  function canUserReview(item) {
+    if (props.status) {
+      for (const review of item.reviews) {
+        if (review.userID === user._id) {
+          return false;
+        }
+      }
+      return true;
+    } else return false;
+  }
+
   //To get the avg rating of each product based on all the customers rating
   useEffect(() => {
     if (props.details.reviews.length > 0) {
@@ -93,6 +105,8 @@ export default function Item(props) {
         props.details.reviews.length;
       setRating(averageRating);
     }
+    const result = canUserReview(props.details);
+    setUserCanReview(result);
   }, [props.details.reviews]);
 
   return (
@@ -147,7 +161,7 @@ export default function Item(props) {
                   <FontAwesomeIcon icon={faCartPlus} />
                 </button>
                 <br />
-                {props.status === true && (
+                {userCanReview && (
                   <button
                     className="btn btn-primary"
                     onClick={(e) => {
