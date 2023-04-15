@@ -2,7 +2,7 @@ import StarRating from "./StarRating";
 
 export default function ReviewContainer(props) {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <div className="review">
         <div className="review-rating">
           <StarRating initialRating={props.review.rating} fixedRating={true} />

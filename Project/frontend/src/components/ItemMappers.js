@@ -2,13 +2,26 @@ import Item from "./Item";
 import { UseItemContext } from "../context/useItemContext";
 import { React, useState } from "react";
 import { SearchBar } from "./SearchComponent";
+import { UseUserContext } from "../context/useUserContext";
 
 export const ItemMapper = () => {
   const { items } = UseItemContext();
   const [search, setSearch] = useState("");
+  const { orders, getUser } = UseUserContext();
 
   function getSearchValue(searchResult) {
     setSearch(searchResult);
+  }
+
+  //Here we see if the item has been reviewed by the user by checking if it has been delivered and reviewed accordingly
+  function hasItemBeenReviewed(itemID) {
+    const user = getUser();
+    const order = orders.find(
+      (order) => order.userID === user._id && order.status === "Delivered"
+    );
+    return order
+      ? order.itemList.some((item) => item.itemID === itemID) && order.reviewed
+      : false;
   }
 
   return (
@@ -18,7 +31,7 @@ export const ItemMapper = () => {
         style={{
           display: "flex",
           flexWrap: "wrap",
-          justifyContent: "space-around"
+          justifyContent: "space-around",
         }}
       >
         {items
@@ -30,39 +43,13 @@ export const ItemMapper = () => {
           })
           .map((dat) => (
             <div
-              key={dat._id}
               style={{ flexBasis: `${100 / Math.min(items.length, 8)}%` }}
+              key={dat._id}
             >
-              <Item details={dat} key={dat._id} />
+              <Item details={dat} status={hasItemBeenReviewed(dat._id)} />
             </div>
           ))}
       </div>
-    </div>
-  );
-};
-
-export const ItemMapperHome = () => {
-  const { items } = UseItemContext();
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around"
-      }}
-    >
-      {items
-        .sort(() => 0.5 - Math.random())
-        .slice(0, Math.min(items.length, 3))
-        .map((dat) => (
-          <div
-            key={dat._id}
-            style={{ flexBasis: `${100 / Math.min(items.length, 8)}%` }}
-          >
-            <Item details={dat} />
-          </div>
-        ))}
     </div>
   );
 };
