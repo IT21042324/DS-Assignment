@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExpand,
-  faCartPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
 import { useCartContext } from "../context/useCartContext";
+import { UseItemContext } from "../context/useItemContext";
+import { useBackendAPI } from "../context/useBackendAPI";
+import { UseUserContext } from "../context/useUserContext";
 
 export default function Item(props) {
   //importing cartContext,dispath and info from the cartContext
   const { dispatch, info } = useCartContext();
+  const itemDispatch = UseItemContext().dispatch;
 
   const [selectedItem, setSelectedItem] = useState(0);
 
@@ -30,6 +31,7 @@ export default function Item(props) {
 
   const [showPopup, setShowPopup] = useState(false);
 
+  const [handleOpenFrom, setHandleOpenFrom] = useState("");
   const handleViewItemClick = () => {
     setShowPopup(true);
   };
@@ -39,6 +41,49 @@ export default function Item(props) {
   };
 
   const [rating, setRating] = useState(0);
+
+  //To get the rating when the review is submitted by the user
+  const [addedRating, setAddedRating] = useState(3);
+
+  const getRatingValue = (rating) => {
+    setAddedRating(rating);
+  };
+
+  const [selectedItemID, setSelectedItemID] = useState("");
+  const reviewDesc = useRef();
+
+  const { addReviewProduct } = useBackendAPI();
+
+  const { getUser } = UseUserContext();
+
+  //To submit the user review
+  const submitProductReview = async (e) => {
+    e.preventDefault();
+
+    const data = await addReviewProduct({
+      itemID: selectedItemID,
+      rating: addedRating,
+      review: reviewDesc.current.value,
+    });
+
+    const user = getUser();
+
+    if (data) {
+      handleClosePopup();
+      alert("Review added successfully!");
+
+      itemDispatch({
+        type: "AddReview",
+        payload: {
+          _id: data._id,
+          rating: addedRating,
+          review: reviewDesc.current.value,
+          userID: user._id,
+          userName: user.userName,
+        },
+      });
+    }
+  };
 
   //To get the avg rating of each product based on all the customers rating
   useEffect(() => {
@@ -57,7 +102,8 @@ export default function Item(props) {
           <div>
             <img
               src={props.details.image}
-              style={{ height: "200px", width: "200px" }} alt=""
+              style={{ height: "200px", width: "200px" }}
+              alt=""
             />
           </div>
           <h5>{props.details.itemName}</h5>
@@ -75,7 +121,13 @@ export default function Item(props) {
           <div>
             {props.details.quantity ? (
               <>
-                <button title="View Item" onClick={handleViewItemClick}>
+                <button
+                  title="View Item"
+                  onClick={(e) => {
+                    setHandleOpenFrom("View");
+                    handleViewItemClick();
+                  }}
+                >
                   <FontAwesomeIcon icon={faExpand} />
                 </button>
                 <button
@@ -94,6 +146,19 @@ export default function Item(props) {
                   {selectedItem}
                   <FontAwesomeIcon icon={faCartPlus} />
                 </button>
+                <br />
+                {props.status === true && (
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => {
+                      setHandleOpenFrom("Review");
+                      setSelectedItemID(props.details._id);
+                      handleViewItemClick();
+                    }}
+                  >
+                    Add Review
+                  </button>
+                )}
               </>
             ) : null}
           </div>
@@ -111,16 +176,40 @@ export default function Item(props) {
           }}
         >
           <div className="popup-content">
-            <img src={props.details.image} alt={props.details.itemName} />
-            <StarRating initialRating={rating} fixedRating={true} />
-            <h4 style={{ color: "black" }}>{props.details.itemName}</h4>
-
-            <h2 style={{ color: "black" }}>{props.details.storename}</h2>
-
-            <h3>Reviews</h3>
-            {props.details.reviews.map((rev) => {
-              return <ReviewContainer key={rev.userID} review={rev} />;
-            })}
+            {handleOpenFrom === "View" ? (
+              <>
+                <img src={props.details.image} alt={props.details.itemName} />
+                <StarRating initialRating={rating} fixedRating={true} />
+                <h4 style={{ color: "black" }}>{props.details.itemName}</h4>
+                <h2 style={{ color: "black" }}>{props.details.storename}</h2>
+                <h3>Reviews</h3>
+                {props.details.reviews.map((rev) => {
+                  return <ReviewContainer key={rev.userID} review={rev} />;
+                })}{" "}
+              </>
+            ) : (
+              <>
+                <img src={props.details.image} alt={props.details.itemName} />
+                <StarRating initialRating={rating} fixedRating={true} />
+                <h4 style={{ color: "black" }}>{props.details.itemName}</h4>
+                <h2 style={{ color: "black" }}>{props.details.storename}</h2>
+                <div className="card-body">
+                  <StarRating
+                    maxRating={5}
+                    initialRating={3}
+                    enterRating={getRatingValue}
+                  />
+                  <textarea ref={reviewDesc}></textarea>
+                  <button
+                    onClick={(e) => {
+                      submitProductReview(e);
+                    }}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
