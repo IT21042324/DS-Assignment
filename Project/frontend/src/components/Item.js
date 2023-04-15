@@ -162,6 +162,7 @@ export default function Item(props) {
                 </button>
                 {userCanReview && (
                   <button
+                    title="Review Item"
                     onClick={(e) => {
                       setHandleOpenFrom("Review");
                       setSelectedItemID(props.details._id);
