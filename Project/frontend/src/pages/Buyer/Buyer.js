@@ -74,7 +74,7 @@ export default function Buyer() {
       storeDispatch({ type: "AddReview", payload: data.reviews });
       dispatch({ type: "Reviewed", payload: { _id: selectedOrderId } });
       handleClosePopup();
-      alert("Review added successfully!");
+      alert("Thank you for your review!");
     }
   };
 
@@ -272,22 +272,26 @@ export default function Buyer() {
                     ) : (
                       <div className="card mb-4">
                         <header className="card-header">
-                          <h4>Seller Review</h4>
+                          <h4>Write a Review</h4>
                         </header>
                         <div className="card-body">
-                          <StarRating
-                            maxRating={5}
-                            initialRating={3}
-                            enterRating={getRatingValue}
-                          />
-                          <textarea ref={reviewDesc}></textarea>
-                          <button
-                            onClick={(e) => {
-                              submitStoreReview(e);
-                            }}
-                          >
-                            Submit
-                          </button>
+                          <div className="review-box">
+                            <div className="star-rating">
+                              <StarRating
+                                maxRating={5}
+                                initialRating={0}
+                                enterRating={getRatingValue}
+                              />
+                            </div>
+                            <textarea cols={30} placeholder="Describe your experience..." ref={reviewDesc}></textarea>
+                            <button className="btn btn-success"
+                              onClick={(e) => {
+                                submitStoreReview(e);
+                              }}
+                            >
+                              Post
+                            </button>
+                          </div>
                         </div>
                       </div>
                     )}
