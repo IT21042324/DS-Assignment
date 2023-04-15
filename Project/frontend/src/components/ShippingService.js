@@ -56,6 +56,16 @@ export function ShippingEstimate(props) {
 
       <div className={classes.carrier} style={{ color: "green" }}>
         <div>
+          <span>Service Charge (included) : {(total * 15) / 100}</span>
+        </div>
+
+        <div style={{ marginLeft: "200px", color: "green" }}>
+          <span>Rs. {total}</span>
+        </div>
+      </div>
+
+      <div className={classes.carrier} style={{ color: "green" }}>
+        <div>
           <span>Total Price : </span>
         </div>
 

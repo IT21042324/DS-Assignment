@@ -10,7 +10,7 @@ import { UseUserContext } from "../context/useUserContext";
 
 export default function Item(props) {
   //importing cartContext,dispath and info from the cartContext
-  const { dispatch, info } = useCartContext();
+  const { dispatch, info, updateCart } = useCartContext();
   const itemDispatch = UseItemContext().dispatch;
 
   const [selectedItem, setSelectedItem] = useState(0);
@@ -24,6 +24,8 @@ export default function Item(props) {
       } else {
         setSelectedItem((prev) => prev + 1);
         dispatch({ type: "UpdateCart", payload: data });
+        updateCart(data);
+
         alert("Item Added To Cart");
       }
     }
@@ -122,7 +124,6 @@ export default function Item(props) {
           </div>
           <h5>{props.details.itemName}</h5>
           <span>{props.details.storeName}</span>
-
           <h4>Rs. {props.details.price}</h4>
           {props.details.quantity ? (
             <span>{props.details.quantity} Available</span>
@@ -131,7 +132,6 @@ export default function Item(props) {
               Sold Out
             </span>
           )}
-
           <div>
             {props.details.quantity ? (
               <>

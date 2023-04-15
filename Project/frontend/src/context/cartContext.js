@@ -11,7 +11,7 @@ export const CartContextProvider = (props) => {
   function reducer(state, action) {
     switch (action.type) {
       case "CreateCart":
-        return { info: [action.payload] };
+        return { info: action.payload };
       case "UpdateCart":
         return {
           info: [

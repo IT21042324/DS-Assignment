@@ -17,6 +17,8 @@ export default function Cart() {
   const { user1, dispatch } = UseUserContext();
   const { info } = useCartContext();
   const cartDispatch = useCartContext().dispatch;
+  const clearCartContext = useCartContext().clearCart;
+  const cart = useCartContext().getCart();
 
   // Define a state variable to handle showing the shipping estimate popup
   const [showPopup, setShowPopup] = useState(false);
@@ -51,7 +53,8 @@ export default function Cart() {
   };
 
   const clearCart = () => {
-    cartDispatch({ type: "ClearCart"});
+    cartDispatch({ type: "ClearCart" });
+    clearCartContext();
   };
 
   // Render the Cart component
@@ -70,9 +73,13 @@ export default function Cart() {
           <hr />
           <div>
             {/* Render a button to clear cart */}
-            <button onClick={e => clearCart()} className="btnClear">Clear Cart</button>
+            {cart.length > 0 && (
+              <button onClick={(e) => clearCart()} className="btnClear">
+                Clear Cart
+              </button>
+            )}
           </div>
-        </div>{" "}
+        </div>
         <div className="cart__right">
           <div className="cart__info">
             <p>Subtotal items</p>
