@@ -19,7 +19,7 @@ export const UseItemContext = () => {
       }
     }
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   function hasUserReviewedItem(itemId, userId) {
     const item = items.find((item) => item.id === itemId);

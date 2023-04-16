@@ -15,14 +15,16 @@ export const ItemMapper = () => {
 
   //Here we see if the item has been delivered for the user to review
   function hasItemBeenDelivered(itemID) {
-    const user = getUser();
-    const order = orders.find(
-      (order) =>
-        order.userID === user._id &&
-        order.status === "Delivered" &&
-        order.itemList.some((item) => item.itemID === itemID)
-    );
-    return !!order;
+    if (orders) {
+      const user = getUser();
+      const order = orders.find(
+        (order) =>
+          order.userID === user._id &&
+          order.status === "Delivered" &&
+          order.itemList.some((item) => item.itemID === itemID)
+      );
+      return !!order;
+    }
   }
 
   return (
