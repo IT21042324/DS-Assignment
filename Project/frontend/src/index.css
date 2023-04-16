@@ -769,3 +769,25 @@ h3 {
 .order-tracking .steps .step.completed .step-icon:hover {
   background-color: #046963;
 }
+
+.review-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  font-size: 40px;
+  margin: 10px;
+  color: #FFA500;
+}
+
+.review-box textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  resize: none;
+  border-radius: 5px;
+}

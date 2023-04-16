@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExpand, faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faExpand, faCartPlus, faRankingStar } from "@fortawesome/free-solid-svg-icons";
 import StarRating from "./StarRating";
 import ReviewContainer from "./ReviewContainer";
 import { useCartContext } from "../context/useCartContext";
@@ -160,17 +160,16 @@ export default function Item(props) {
                   {selectedItem}
                   <FontAwesomeIcon icon={faCartPlus} />
                 </button>
-                <br />
                 {userCanReview && (
                   <button
-                    className="btn btn-primary"
+                    title="Review Item"
                     onClick={(e) => {
                       setHandleOpenFrom("Review");
                       setSelectedItemID(props.details._id);
                       handleViewItemClick();
                     }}
                   >
-                    Add Review
+                    <FontAwesomeIcon icon={faRankingStar} />
                   </button>
                 )}
               </>
@@ -208,19 +207,23 @@ export default function Item(props) {
                 <h4 style={{ color: "black" }}>{props.details.itemName}</h4>
                 <h2 style={{ color: "black" }}>{props.details.storename}</h2>
                 <div className="card-body">
-                  <StarRating
-                    maxRating={5}
-                    initialRating={3}
-                    enterRating={getRatingValue}
-                  />
-                  <textarea ref={reviewDesc}></textarea>
-                  <button
-                    onClick={(e) => {
-                      submitProductReview(e);
-                    }}
-                  >
-                    Submit
-                  </button>
+                  <div className="review-box">
+                    <div className="star-rating">
+                      <StarRating
+                        maxRating={5}
+                        initialRating={0}
+                        enterRating={getRatingValue}
+                      />
+                    </div>
+                    <textarea cols={30} placeholder="Describe your experience..." ref={reviewDesc}></textarea>
+                    <button className="btn btn-success"
+                      onClick={(e) => {
+                        submitProductReview(e);
+                      }}
+                    >
+                      Post
+                    </button>
+                  </div>
                 </div>
               </>
             )}
