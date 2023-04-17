@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const itemRouter = require("./routes/item");
-const cartRouter = require("./routes/cart");
+
 //Creating an express app
 const app = express();
 app.use(express.json({ limit: "100mb" }));
@@ -28,4 +28,3 @@ mongoose
   });
 
 app.use("/api/product", itemRouter);
-app.use("/api/cart", cartRouter);
