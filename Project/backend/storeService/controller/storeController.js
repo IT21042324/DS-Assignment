@@ -1,85 +1,109 @@
+// Importing Store model
 let Store = require("../models/Store");
 
+// Creating a new store in the database
 const createStore = async (req, res) => {
   const { storeName, location, merchantID } = req.body;
 
+  // Creating a new Store object with the provided data
   const newStore = new Store({
     storeName,
     merchantID,
     location,
   });
+
+  // Saving the new store to the database
   await newStore
     .save()
     .then(() => {
+      // Sending the newly created store object as response
       res.json(newStore);
     })
     .catch((err) => {
+      // If there is an error, logging the error message and sending it as response
       console.log(err.message);
       res.send(err.message);
     });
 };
 
+// Getting all stores from the database
 const getAllStore = async (req, res) => {
   await Store.find()
     .then((store) => {
+      // Sending all store objects as response
       res.json(store);
     })
     .catch((err) => {
+      // If there is an error, sending the error message as response
       res.send(err.message);
     });
 };
 
-//To update basic store info details
+// Updating basic store info details
 const updateStore = async (req, res) => {
   const { storeName, location, storeID } = req.body;
 
+  // Creating an object with the updated values
   const updateStore = {
     storeName,
     location,
   };
 
   try {
+    // Finding the store by the given ID and updating the store details with the new values
     const updatedStore = await Store.findOneAndUpdate(
       { _id: storeID },
       updateStore,
       { new: true }
-    );
-
+    ); // Sending the updated store object as response
     res.send(updatedStore);
   } catch (err) {
+    // If there is an error, sending the error message as response
     res.send(err.message);
   }
 };
 
+// Deleting a store from the database
 const deleteStore = async (req, res) => {
   try {
+    // Finding the store by the given ID and deleting it from the database
     const data = await Store.findByIdAndDelete(req.params.id);
+    // Sending the deleted store object as response
     res.json(data);
   } catch (err) {
+    // If there is an error, sending the error message as response
     res.send(err.message);
   }
 };
 
+// Getting a store by ID
 const getOneStore = async (req, res) => {
   const id = req.params.id;
 
   try {
+    // Finding the store by the given ID and sending it as response
     const data = await Store.findById(id);
     res.json(data);
   } catch (err) {
+    // If there is an error, sending the error message as response
     res.send(err.message);
   }
 };
 
+// Getting the description of a store by ID
 const getStoreDescription = async (req, res) => {
   try {
+    // Finding the store by the given ID and selecting the 'description' field
     const data = await Store.findById(req.params.id, { description });
+    // Sending the store's description as response
     res.json(data);
   } catch (err) {
+    // If there is an error, sending the error message as response
     res.send(err.message);
   }
 };
 
+//get the itemCount from store
 const getStoreItemCount = async (req, res) => {
   const storeID = req.params.id;
 
@@ -92,6 +116,7 @@ const getStoreItemCount = async (req, res) => {
   }
 };
 
+//add items to store
 const addStoreItem = async (req, res) => {
   const { item, storeID } = req.body;
 
@@ -114,6 +139,7 @@ const addStoreItem = async (req, res) => {
   }
 };
 
+//modify the items in the store
 const modifyStoreItem = async (req, res) => {
   const { item, storeID } = req.body;
 
@@ -144,6 +170,7 @@ const modifyStoreItem = async (req, res) => {
   }
 };
 
+//delete item from store
 const deleteStoreItem = async (req, res) => {
   const { storeID, itemID } = req.body;
 
@@ -166,6 +193,7 @@ const deleteStoreItem = async (req, res) => {
   }
 };
 
+//add store review
 const addReview = async (req, res) => {
   //to this data is just passed through the body (all of them)
   const { review, storeID, userID, userName, rating } = req.body; //_id is userID
@@ -194,6 +222,7 @@ const addReview = async (req, res) => {
   }
 };
 
+//exporting necessary functions to be used in the route file
 module.exports = {
   createStore,
   getAllStore,

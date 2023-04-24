@@ -15,8 +15,6 @@ const {
   setReviewStatus,
 } = require("../controller/orderController");
 
-// router.use(requireAuth);
-
 // Route for creating a new order
 router.post("/add", createOrder);
 
