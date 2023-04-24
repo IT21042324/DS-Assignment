@@ -44,7 +44,7 @@ export function Slider() {
       setActiveSlide((activeSlide + 1) % slides.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, [activeSlide, slides.length]);
+  }, [activeSlide]);
 
   return (
     <section id="slider">

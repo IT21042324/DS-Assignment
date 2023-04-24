@@ -1,0 +1,121 @@
+version: '3.7'
+
+services:
+  user-service:
+    build:
+      context: ./backend/userService
+      dockerfile: Dockerfile
+    image: user-service
+    container_name: user-service-node-server
+    command: /usr/src/app/node_modules/.bin/nodemon server.js
+    volumes:
+      - ./backend/userService/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    env_file: ./backend/userService/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - rbns-network
+
+  product-service:
+    build:
+      context: ./backend/productService
+      dockerfile: Dockerfile
+    image: product-service
+    container_name: product-service-node-server
+    command: /usr/src/app/node_modules/.bin/nodemon server.js
+    volumes:
+      - ./backend/productService/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+    env_file: ./backend/productService/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - rbns-network
+
+  store-service:
+    build:
+      context: ./backend/storeService
+      dockerfile: Dockerfile
+    image: store-service
+    container_name: store-service-node-server
+    command: /usr/src/app/node_modules/.bin/nodemon server.js
+    volumes:
+      - ./backend/storeService/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongo
+    env_file: ./backend/storeService/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - rbns-network
+
+  payment-service:
+    build:
+      context: ./backend/paymentService
+      dockerfile: Dockerfile
+    image: payment-service
+    container_name: payment-service-node-server
+    command: /usr/src/app/node_modules/.bin/nodemon server.js
+    volumes:
+      - ./backend/paymentService/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mongo
+    env_file: ./backend/paymentService/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - rbns-network
+
+  mongo:
+    image: mongo
+    volumes:
+      - data-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - rbns-network
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: rbns-client
+    container_name: rbns-client
+    command: npm start
+    volumes:
+      - ./client/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - user-service
+      - product-service
+      - store-service
+      - payment-service
+    ports:
+      - "3000:3000"
+    networks:
+      - rbns-network
+
+networks:
+    rbns-network:
+        driver: bridge
+
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+      driver: local

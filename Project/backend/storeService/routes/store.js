@@ -20,14 +20,19 @@ router.post("/add", createStore);
 //display
 router.get("/", getAllStore);
 
+//to get the item count in a store
 router.get("/getStoreItemCount/:id", getStoreItemCount);
-//update
+
+//update store info
 router.put("/update/", updateStore);
 
+//add a review for a store item
 router.patch("/addReview", addReview);
 
+//delete a store
 router.delete("/delete/:id", deleteStore);
 
+//get one store
 router.get("/get/:id", getOneStore);
 
 router.patch("/updateItem", addStoreItem); //to add item to store item Array
