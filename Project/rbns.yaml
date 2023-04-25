@@ -45,10 +45,14 @@ spec:
               value: development
           ports:
             - containerPort: 8082
-        - name: frontend
-          image: rbns-client
+        - name: rbns-client
+          image: imreezan/rbns-client
           ports:
             - containerPort: 3000
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_ENV
+              value: development
 ---
 apiVersion: v1
 kind: Service
@@ -57,6 +61,7 @@ metadata:
 spec:
   selector:
     app: rbns
+  type: LoadBalancer
   ports:
     - name: payment-service
       protocol: TCP
