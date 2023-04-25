@@ -122,7 +122,7 @@ function DashWrapper() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Revenue</h6>
-                    <span>${total}</span>
+                    {total && <span>Rs. {total.toFixed(2)}</span>}
                   </div>
                 </article>
               </div>

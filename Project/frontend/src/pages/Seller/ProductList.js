@@ -2,7 +2,14 @@
 import { Link } from "react-router-dom";
 import SideMenu from "../../components/SideMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPenToSquare, faTrash, faDashboard, faUser, faBox,} from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faPenToSquare,
+  faTrash,
+  faDashboard,
+  faUser,
+  faBox,
+} from "@fortawesome/free-solid-svg-icons";
 import { UseStoreContext } from "../../context/useStoreContext";
 import { useBackendAPI } from "../../context/useBackendAPI";
 import { useRef, useState } from "react";
@@ -81,7 +88,6 @@ export default function ProductList() {
         </div>
         <div className="items">
           <SideMenu to="/seller" icon={faDashboard} label="Dashboard" />
-          <SideMenu to="/seller/profile" icon={faUser} label="Profile" />
           <SideMenu to="/seller/product" icon={faBox} label="Products" />
         </div>
       </section>{" "}
