@@ -7,12 +7,11 @@ import {
   faPenToSquare,
   faTrash,
   faDashboard,
-  faUser,
   faBox,
 } from "@fortawesome/free-solid-svg-icons";
 import { UseStoreContext } from "../../context/useStoreContext";
 import { useBackendAPI } from "../../context/useBackendAPI";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Define a function component ProductList
 export default function ProductList() {
@@ -21,7 +20,12 @@ export default function ProductList() {
   const [itemID, setItemID] = useState("");
 
   // Get the items from the StoreContext
-  const { items } = UseStoreContext();
+  const data = UseStoreContext();
+
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    setItems(data.items);
+  }, []);
 
   //Declaring all varibale with ref
   const itemName = useRef(),

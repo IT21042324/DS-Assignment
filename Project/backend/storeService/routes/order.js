@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const requireAuth = require("../middleware/requireAuth");
 
 // Import order controller functions
 const {

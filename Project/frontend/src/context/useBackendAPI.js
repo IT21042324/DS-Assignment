@@ -152,9 +152,8 @@ export function useBackendAPI() {
       }
     },
     createStore: async function (store) {
-      store.merchantID = user1[0]._id;
-
       const user = getUser();
+      store.merchantID = user._id;
 
       try {
         const { data } = await axios.post(
@@ -169,7 +168,7 @@ export function useBackendAPI() {
         );
 
         await axios.patch("http://localhost:8080/api/user/updateUserStore/", {
-          userID: user1[0]._id,
+          userID: user._id,
           storeID: data._id,
         });
 
@@ -233,12 +232,13 @@ export function useBackendAPI() {
         );
       }
     },
+
     getProductsOfStore: async function () {
       const user = getUser();
 
       try {
         const { data } = await axios.get(
-          "http://localhost:8082/api/store/get/" + user1[0].storeID,
+          "http://localhost:8082/api/store/get/" + user.storeID,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -248,7 +248,6 @@ export function useBackendAPI() {
         );
 
         const { storeItem } = data;
-
         return storeItem;
       } catch (err) {
         alert(
