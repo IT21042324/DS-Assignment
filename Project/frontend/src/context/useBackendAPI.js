@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { SendEmail } from "../components/SendEmail";
 import { useCartContext } from "./useCartContext";
 import { UseStoreContext } from "./useStoreContext";
+// import { SmsSender } from "../components/SendSMS";
 
 export function useBackendAPI() {
   const { info } = useCartContext();
   const cartDispatch = useCartContext().dispatch;
   const { dispatch, user1, setStore, getUser } = UseUserContext();
   const storeDispatch = UseStoreContext().dispatch;
+
+  // //import the sms sender
+  // const {sendSMS} = SmsSender();
 
   const navigate = useNavigate();
 
@@ -141,6 +145,9 @@ export function useBackendAPI() {
             orderID: orderDetails.data._id,
             amount: details.total,
           });
+
+          // sendSMS();
+
           alert("Payment Successful");
           cartDispatch({ type: "ClearCart" });
           navigate("/");

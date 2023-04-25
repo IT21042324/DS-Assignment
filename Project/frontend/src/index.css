@@ -86,6 +86,7 @@ header nav div:hover,
 header nav div.active {
   color: #e75308;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 /* header nav button {
@@ -138,6 +139,9 @@ header nav div.active {
 }
 .carousel-caption h1 {
   color: #e6753d;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: orange;
 }
 
 #HomeBanner {
