@@ -2,10 +2,16 @@
 import { Link } from "react-router-dom";
 import SideMenu from "../../components/SideMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPenToSquare, faTrash, faDashboard, faUser, faBox,} from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faPenToSquare,
+  faTrash,
+  faDashboard,
+  faBox,
+} from "@fortawesome/free-solid-svg-icons";
 import { UseStoreContext } from "../../context/useStoreContext";
 import { useBackendAPI } from "../../context/useBackendAPI";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Define a function component ProductList
 export default function ProductList() {
@@ -14,7 +20,12 @@ export default function ProductList() {
   const [itemID, setItemID] = useState("");
 
   // Get the items from the StoreContext
-  const { items } = UseStoreContext();
+  const data = UseStoreContext();
+
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    setItems(data.items);
+  }, []);
 
   //Declaring all varibale with ref
   const itemName = useRef(),
@@ -81,7 +92,6 @@ export default function ProductList() {
         </div>
         <div className="items">
           <SideMenu to="/seller" icon={faDashboard} label="Dashboard" />
-          <SideMenu to="/seller/profile" icon={faUser} label="Profile" />
           <SideMenu to="/seller/product" icon={faBox} label="Products" />
         </div>
       </section>{" "}

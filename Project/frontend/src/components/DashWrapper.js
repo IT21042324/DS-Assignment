@@ -13,12 +13,17 @@ import { useSellerOrderContext } from "../context/useSellerOrderContext";
 
 function DashWrapper() {
   const { order, dispatch } = useSellerOrderContext();
-  const { orders } = order;
+
+  const [orders, setOrders] = useState([]);
   const { dashBoardDetails } = order;
   const { total, orderCount, itemCount } = dashBoardDetails;
 
+  useEffect(() => {
+    setOrders(order.orders);
+  }, []);
+
   // Access necessary functions and variables from custom hooks
-  const { logoutUser, getUser } = UseUserContext();
+  const { logoutUser } = UseUserContext();
   const { updateOrderAndPaymentStatus } = useBackendAPI();
 
   // Define a state variable to track merchant's login status
@@ -48,12 +53,12 @@ function DashWrapper() {
     const data = await updateOrderAndPaymentStatus(orderID, status);
 
     if (data) {
-      alert(`Order status changed to ${status}`);
-
       dispatch({
         type: "DispatchOrder",
         payload: { _id: orderID },
       });
+
+      alert(`Order status changed to ${status}`);
     }
   };
 
@@ -122,7 +127,7 @@ function DashWrapper() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Revenue</h6>
-                    <span>${total}</span>
+                    {total && <span>Rs. {total.toFixed(2)}</span>}
                   </div>
                 </article>
               </div>

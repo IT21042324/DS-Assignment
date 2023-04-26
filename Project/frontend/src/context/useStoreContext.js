@@ -17,6 +17,7 @@ export const UseStoreContext = () => {
           );
 
           const { storeItem } = data;
+
           dispatch({
             type: "SetItems",
             payload: storeItem,
@@ -26,7 +27,7 @@ export const UseStoreContext = () => {
         }
     }
     fetchData();
-  }, [dispatch, user1]);
+  }, []);
 
   return { storeContext, dispatch, items };
 };

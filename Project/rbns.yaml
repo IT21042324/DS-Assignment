@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rbns
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rbns
+  template:
+    metadata:
+      labels:
+        app: rbns
+    spec:
+      containers:
+        - name: payment-service
+          image: imreezan/payment-service
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_ENV
+              value: development
+          ports:
+            - containerPort: 8083
+        - name: user-service
+          image: imreezan/user-service
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_ENV
+              value: development
+          ports:
+            - containerPort: 8080
+        - name: product-service
+          image: imreezan/product-service
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_ENV
+              value: development
+          ports:
+            - containerPort: 8081
+        - name: store-service
+          image: imreezan/store-service
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_ENV
+              value: development
+          ports:
+            - containerPort: 8082
+        - name: rbns-client
+          image: imreezan/rbns-client
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NODE_ENV
+              value: development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rbns
+spec:
+  selector:
+    app: rbns
+  type: LoadBalancer
+  ports:
+    - name: payment-service
+      protocol: TCP
+      port: 8083
+      targetPort: 8083
+    - name: store-service
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+    - name: product-service
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+    - name: user-service
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: rbns-client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
