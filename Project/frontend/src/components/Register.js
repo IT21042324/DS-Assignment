@@ -4,7 +4,7 @@ import Header from "./Header";
 import pic from "../assets/register.png";
 import { useState, useRef } from "react";
 import { useBackendAPI } from "../context/useBackendAPI";
-import avatar from "../assets/profilePic.png";
+import avatar from "../assets/addphoto.png";
 import { EncodedFile } from "../assets/encodedImage";
 import { UseUserContext } from "../context/useUserContext";
 
