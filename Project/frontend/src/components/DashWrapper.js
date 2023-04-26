@@ -20,7 +20,7 @@ function DashWrapper() {
 
   useEffect(() => {
     setOrders(order.orders);
-  }, []);
+  }, [order.orders]);
 
   // Access necessary functions and variables from custom hooks
   const { logoutUser } = UseUserContext();
@@ -53,12 +53,12 @@ function DashWrapper() {
     const data = await updateOrderAndPaymentStatus(orderID, status);
 
     if (data) {
+      alert(`Order status changed to ${status}`);
+
       dispatch({
         type: "DispatchOrder",
         payload: { _id: orderID },
       });
-
-      alert(`Order status changed to ${status}`);
     }
   };
 
