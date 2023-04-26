@@ -57,6 +57,8 @@ export default function Cart() {
     clearCartContext();
   };
 
+  const tabSpaces = '\u00A0'.repeat(35);
+
   // Render the Cart component
   return (
     <div>
@@ -82,8 +84,8 @@ export default function Cart() {
         </div>
         <div className="cart__right">
           <div className="cart__info">
-            <p>Subtotal items</p>
-            <p>${checkoutPrice}</p>
+            <p><center>Order Summary</center></p>
+            <p> Net Salary{tabSpaces} Rs:{checkoutPrice}</p>
           </div>
 
           <div>
