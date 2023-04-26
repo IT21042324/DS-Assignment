@@ -1,10 +1,34 @@
 import { Link } from "react-router-dom";
-import SideList from "../../components/SideList";
+import SideMenu from "../../components/SideMenu";
+import { faDashboard, faGear, faListSquares, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddUser() {
   return (
     <div>
-      <SideList />
+      <section className="sideMenu">
+        <div className="logo">
+        <Link
+            to="/admin"
+            style={{
+            textDecoration: "none",
+            color: "white",
+            fontSize: 50,
+            paddingTop: 20,
+            display: "flex",
+            justifyContent: "center",
+            }}
+        >
+            RB&NS
+        </Link>
+        </div>
+        <div className="items">
+        <SideMenu to="/admin" icon={faDashboard} label="Dashboard" />
+        <SideMenu to="/admin/orders" icon={faListSquares} label="Orders" />
+        <SideMenu to="/admin/adminprofile" icon={faUser} label="Profile" />
+        <SideMenu to="/admin/user" icon={faUsers} label="Users" />
+        <SideMenu to="/admin/add-user" icon={faGear} label="Add-User" />
+        </div>
+      </section>
       <section className="main-wrap">
         <div
           className="content-main"
