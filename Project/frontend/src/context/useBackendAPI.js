@@ -9,6 +9,7 @@ import { UseStoreContext } from "./useStoreContext";
 export function useBackendAPI() {
   const { info } = useCartContext();
   const cartDispatch = useCartContext().dispatch;
+  const clearCartContext = useCartContext().clearCart;
   const { dispatch, user1, setStore, getUser } = UseUserContext();
   const storeDispatch = UseStoreContext().dispatch;
 
@@ -36,6 +37,10 @@ export function useBackendAPI() {
         });
 
         alert("Account Created Successfully");
+
+        //To remove the existing cart for a new account
+        cartDispatch({ type: "ClearCart" });
+        clearCartContext();
 
         if (data.role === "Buyer") navigate("/buyer/product");
         else if (data.role === "Merchant") navigate("/seller/store");
@@ -437,9 +442,9 @@ export function useBackendAPI() {
 
         return {
           userCount: data.userCount,
+          users: data.users,
           orderCount: adminTotalOrders.data.orderCount,
           amountForStore: adminRevenue.data.amountForStore,
-          users: data.users,
         };
       } catch (err) {
         console.log(err);

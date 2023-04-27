@@ -26,7 +26,7 @@ export const useSellerOrderContext = () => {
       });
     }
     getStoreInfo();
-  }, [dispatch]);
+  }, []);
 
   return { sellerOrderContext, dispatch, order };
 };

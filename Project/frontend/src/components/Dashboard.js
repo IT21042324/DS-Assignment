@@ -16,10 +16,15 @@ function Dashboard() {
   const { content, dispatch } = useAdminContext();
 
   //Destructuring necessary commponents from the admin context
-  const { users, dashBoardDetails } = content;
-  const { amount, orderCount, userCount } = dashBoardDetails;
+  const { dashBoardDetails } = content;
+  const [users, setUsers] = useState([]);
+  const { orderCount, userCount, amount } = dashBoardDetails;
 
   const [userRole, setUserRole] = useState("");
+
+  useEffect(() => {
+    setUsers(content.users);
+  }, [content.users]);
 
   // Define a state variable to track admin's login status
   const [adminIsLoggedIn, setAdminIsLoggedIn] = useState(true);
@@ -92,11 +97,12 @@ function Dashboard() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Revenue</h6>
-                    <span>{amount.toFixed(2)}</span>
+                    <span>{amount}</span>
                   </div>
                 </article>
               </div>
             </div>
+
             <div className="col-lg-3">
               <div className="card card-body mb-3">
                 <article className="icontext">
