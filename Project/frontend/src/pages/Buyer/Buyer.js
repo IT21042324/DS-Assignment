@@ -272,7 +272,7 @@ export default function Buyer() {
                     ) : (
                       <div className="card mb-4">
                         <header className="card-header">
-                          <h4>Write a Review</h4>
+                          <h4>Write a Seller Review</h4>
                         </header>
                         <div className="card-body">
                           <div className="review-box">
@@ -283,8 +283,13 @@ export default function Buyer() {
                                 enterRating={getRatingValue}
                               />
                             </div>
-                            <textarea cols={30} placeholder="Describe your experience..." ref={reviewDesc}></textarea>
-                            <button className="btn btn-success"
+                            <textarea
+                              cols={30}
+                              placeholder="Describe your experience..."
+                              ref={reviewDesc}
+                            ></textarea>
+                            <button
+                              className="btn btn-success"
                               onClick={(e) => {
                                 submitStoreReview(e);
                               }}

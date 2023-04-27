@@ -35,7 +35,7 @@ function Header() {
 
   useEffect(() => {
     setProfilePic(user?.image);
-  }, [user1]);
+  }, [user.image]);
 
   useEffect(() => {
     async function setProfilePicture() {
