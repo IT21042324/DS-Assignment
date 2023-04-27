@@ -92,7 +92,7 @@ function Dashboard() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Revenue</h6>
-                    <span>{amount.toFixed(2)}</span>
+                    <span>{amount}</span>
                   </div>
                 </article>
               </div>

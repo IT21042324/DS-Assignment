@@ -128,7 +128,7 @@ export default function Orderlist() {
                             Confirm Order
                           </button>
                         ) : (
-                          "Order Approved"
+                          <span style={{ color: "blue" }}>Order Approved</span>
                         )}
                       </td>
                     </tr>
