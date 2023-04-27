@@ -25,9 +25,25 @@ export default function App() {
     <div className="App">
       <Routes>
         <Route path="/*" element={element} />
-        <Route path="/admin/*" element={<AdminRoutes />} />
+        <Route
+          path="/admin/*"
+          element={
+            user1[0]?.role === "Admin" ? <AdminRoutes /> : <Navigate to="/" />
+          }
+        />
+
         <Route path="/buyer/*" element={<BuyerRoutes />} />
-        <Route path="/seller/*" element={<SellerRoutes />} />
+
+        <Route
+          path="/seller/*"
+          element={
+            user1[0]?.role === "Merchant" ? (
+              <SellerRoutes />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
       </Routes>
     </div>
   );
