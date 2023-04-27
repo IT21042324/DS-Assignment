@@ -9,6 +9,7 @@ export const UseUserContext = () => {
     async function getDataForUserContext() {
       if (localStorage.getItem("user")) {
         const user = JSON.parse(localStorage.getItem("user"));
+
         dispatch({
           type: "SetUser",
           payload: [user],

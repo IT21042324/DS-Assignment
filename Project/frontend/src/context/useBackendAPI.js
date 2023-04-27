@@ -437,9 +437,9 @@ export function useBackendAPI() {
 
         return {
           userCount: data.userCount,
+          users: data.users,
           orderCount: adminTotalOrders.data.orderCount,
           amountForStore: adminRevenue.data.amountForStore,
-          users: data.users,
         };
       } catch (err) {
         console.log(err);
