@@ -9,22 +9,36 @@ import { useBackendAPI } from "../context/useBackendAPI";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAdminContext } from "../context/useAdminContext";
+import { useAdminUserContext } from "../context/useAdminUserContext";
 
 function Dashboard() {
   const { logoutUser } = UseUserContext();
   const { deleteUser } = useBackendAPI();
-  const { content, dispatch } = useAdminContext();
+  const { content } = useAdminContext();
+  const adminUserList = useAdminUserContext().content;
+  const adminUserDispatch = useAdminUserContext().dispatch;
 
   //Destructuring necessary commponents from the admin context
   const { dashBoardDetails } = content;
-  const [users, setUsers] = useState([]);
-  const { orderCount, userCount, amount } = dashBoardDetails;
+  const dashDetails = dashBoardDetails;
 
+  const [users, setUsers] = useState([]);
+  const [orderCount, setOrderCount] = useState(0);
+  const [amount, setAmount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
   const [userRole, setUserRole] = useState("");
 
+  //setting the dashboard details
   useEffect(() => {
-    setUsers(content.users);
-  }, [content.users]);
+    setOrderCount(dashDetails.orderCount);
+    setAmount(dashDetails.amountForStore);
+  }, []);
+
+  //setting the users details
+  useEffect(() => {
+    setUsers(adminUserList.users);
+    setUserCount(users.length);
+  }, [adminUserList.users]);
 
   // Define a state variable to track admin's login status
   const [adminIsLoggedIn, setAdminIsLoggedIn] = useState(true);
@@ -49,7 +63,7 @@ function Dashboard() {
     const data = await deleteUser(userID);
 
     if (data) {
-      dispatch({ type: "DeleteUser", payload: { _id: data._id } });
+      adminUserDispatch({ type: "DeleteUser", payload: { _id: data._id } });
     } else alert("Ooops.. There seems to be an error deleting the user");
   };
 
@@ -97,7 +111,7 @@ function Dashboard() {
                   </span>
                   <div className="text">
                     <h6 className="mb-1 card-title">Revenue</h6>
-                    <span>{amount}</span>
+                    {amount ? <span>{amount.toFixed(2)}</span> : 0.0}
                   </div>
                 </article>
               </div>
@@ -124,7 +138,7 @@ function Dashboard() {
                   </span>
                   <div className="text">
                     <h6 className="mb-2 card-title">Users</h6>{" "}
-                    <span>{userCount}</span>
+                    <span>{userCount} (including admin)</span>
                   </div>
                 </article>
               </div>

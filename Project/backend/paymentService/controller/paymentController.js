@@ -127,11 +127,22 @@ const updatePaymentStatus = async (req, res) => {
 
 const getTotalPaymentForAdmin = async (req, res) => {
   try {
-    const data = await Payment.find();
-    const amountForStore =
-      data.reduce((acc, dat) => acc + dat.amount, 0) * 0.15;
+    const result = await Payment.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalAmount: { $sum: "$amount" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          amountForStore: { $multiply: ["$totalAmount", 0.15] },
+        },
+      },
+    ]);
 
-    res.json({ amountForStore });
+    res.json(result[0]);
   } catch (err) {
     res.send(err.message);
   }

@@ -4,15 +4,14 @@ import { useBackendAPI } from "./useBackendAPI";
 import { UseUserContext } from "./useUserContext";
 
 export const useSellerOrderContext = () => {
+  const sellerOrderContext = useContext(SellerOrderContext);
+  const { dispatch, order } = sellerOrderContext;
+
   const { getUser } = UseUserContext();
+  const user = getUser();
 
   const { getAllItemsFromOneStore, getStoreItemCount, getTotalSalesAmount } =
     useBackendAPI();
-  const sellerOrderContext = useContext(SellerOrderContext);
-
-  const { dispatch, order } = sellerOrderContext;
-
-  const user = getUser();
 
   useEffect(() => {
     async function getStoreInfo() {

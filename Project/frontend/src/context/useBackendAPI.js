@@ -13,6 +13,9 @@ export function useBackendAPI() {
   const { dispatch, user1, setStore, getUser } = UseUserContext();
   const storeDispatch = UseStoreContext().dispatch;
 
+  //To fetch the user in the localstorage
+  const user = getUser();
+
   // //import the sms sender
   // const {sendSMS} = SmsSender();
 
@@ -64,8 +67,6 @@ export function useBackendAPI() {
           }
           await configureUser();
 
-          const user = getUser();
-
           //now once the merchant or user is successfully registered,we try to redirect him to his store page once he is registered
           if (user.role === "Buyer") navigate("/buyer/product");
           else if (user.role === "Merchant")
@@ -113,8 +114,6 @@ export function useBackendAPI() {
             userID: user1[0]._id,
           }
         );
-
-        const user = getUser();
 
         //To create a new Order record
         const orderDetails = await axios.post(
@@ -164,7 +163,6 @@ export function useBackendAPI() {
       }
     },
     createStore: async function (store) {
-      const user = getUser();
       store.merchantID = user._id;
 
       try {
@@ -207,8 +205,6 @@ export function useBackendAPI() {
 
     getStoreItemCount: async function (storeID) {
       try {
-        const user = getUser();
-
         const { data } = await axios.get(
           "http://localhost:8082/api/store/getStoreItemCount/" + storeID,
           {
@@ -226,8 +222,6 @@ export function useBackendAPI() {
 
     getStoreName: async function (storeID) {
       try {
-        const user = getUser();
-
         const { data } = await axios.get(
           "http://localhost:8082/api/store/get/" + storeID,
           {
@@ -246,8 +240,6 @@ export function useBackendAPI() {
     },
 
     getProductsOfStore: async function () {
-      const user = getUser();
-
       try {
         const { data } = await axios.get(
           "http://localhost:8082/api/store/get/" + user.storeID,
@@ -270,8 +262,6 @@ export function useBackendAPI() {
 
     saveProduct: async function (product) {
       try {
-        const user = getUser();
-
         const { data } = await axios.post(
           "http://localhost:8081/api/product/addItem/",
           product
@@ -304,8 +294,6 @@ export function useBackendAPI() {
 
     removeItem: async function (itemID) {
       try {
-        const user = getUser();
-
         await axios.delete(
           "http://localhost:8081/api/product/deleteItem/" + itemID
         );
@@ -336,8 +324,6 @@ export function useBackendAPI() {
 
     updateItem: async function (product) {
       try {
-        const user = getUser();
-
         const { data } = await axios.patch(
           "http://localhost:8081/api/product/updateItem/",
           product
@@ -367,7 +353,6 @@ export function useBackendAPI() {
       }
     },
     getAllItemsFromOneStore: async function (storeID) {
-      const user = getUser();
       try {
         const { data } = await axios.get(
           "http://localhost:8082/api/order/getStoreOrder/" + storeID,
@@ -387,8 +372,6 @@ export function useBackendAPI() {
 
     updateOrderAndPaymentStatus: async function (orderID, status) {
       try {
-        const user = getUser();
-
         const { data } = await axios.patch(
           "http://localhost:8082/api/order/updateOrderStatus/",
           { orderID, status },
@@ -420,15 +403,18 @@ export function useBackendAPI() {
       }
     },
 
+    getUsersForAdminPage: async function () {
+      const { data } = await axios.get("http://localhost:8080/api/user/");
+
+      console.log(data);
+      return data;
+    },
+
     getUserCountForAdmin: async function () {
       try {
-        const { data } = await axios.get("http://localhost:8080/api/user/");
-
         const adminRevenue = await axios.get(
           "http://localhost:8083/api/payment/getAdminTotal"
         );
-
-        const user = getUser();
 
         const adminTotalOrders = await axios.get(
           "http://localhost:8082/api/order/getOrderCountForAdmin/",
@@ -441,8 +427,6 @@ export function useBackendAPI() {
         );
 
         return {
-          userCount: data.userCount,
-          users: data.users,
           orderCount: adminTotalOrders.data.orderCount,
           amountForStore: adminRevenue.data.amountForStore,
         };
@@ -450,7 +434,6 @@ export function useBackendAPI() {
         console.log(err);
       }
     },
-
     deleteUser: async function (userID) {
       try {
         //To delete the user
@@ -459,8 +442,6 @@ export function useBackendAPI() {
         );
 
         if (data.storeID) {
-          const user = getUser();
-
           //To delete his store
           await axios.delete(
             "http://localhost:8082/api/store/delete/" + data.storeID,
@@ -488,8 +469,6 @@ export function useBackendAPI() {
       }
     },
     getAllStoreOrders: async function () {
-      const user = getUser();
-
       try {
         const { data } = await axios.get(
           "http://localhost:8082/api/order/getAllStoreOrders/",
@@ -508,8 +487,6 @@ export function useBackendAPI() {
     },
     getAllUserOrders: async function (userID) {
       try {
-        const user = getUser();
-
         const { data } = await axios.get(
           `http://localhost:8082/api/order/getAllStoreOrders/${userID}`,
           {
@@ -527,7 +504,6 @@ export function useBackendAPI() {
     },
     addReviewProduct: async function (details) {
       try {
-        const user = getUser();
         const { rating, itemID, review } = details;
 
         const { data } = await axios.patch(
@@ -543,7 +519,6 @@ export function useBackendAPI() {
 
     addReviewStore: async function (details) {
       try {
-        const user = getUser();
         const { rating, storeID, review, orderID } = details;
 
         await axios.patch(

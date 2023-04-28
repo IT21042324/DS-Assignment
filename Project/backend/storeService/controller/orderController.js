@@ -62,7 +62,10 @@ const getOneOrder = async (req, res) => {
 // Get all orders for a specific store
 const getAllOrderPerStore = async (req, res) => {
   try {
-    const orders = await Order.find({ storeID: req.params.id }); // Find all orders for the specified store
+    // Find all orders for the specified store, excluding the itemImage field
+    const orders = await Order.find({ storeID: req.params.id }).select(
+      "-itemList.itemImage"
+    );
 
     const result = orders.map((order) => ({
       ...order.toObject(),
@@ -107,7 +110,10 @@ const getOrderCountForAdmin = async (req, res) => {
 // This function retrieves all orders for all stores
 const getAllStoreOrders = async (req, res) => {
   try {
-    const data = await Order.find();
+    // Get all orders from MongoDB database using Mongoose, excluding the itemImage field
+    const data = await Order.find().select("-itemList.itemImage");
+
+    // Send orders in response
     res.json(data);
   } catch (err) {
     res.send(err.message);

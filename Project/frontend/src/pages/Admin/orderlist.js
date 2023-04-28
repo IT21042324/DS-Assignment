@@ -1,20 +1,24 @@
 import { Link } from "react-router-dom";
 import { useBackendAPI } from "../../context/useBackendAPI";
-import { useAdminContext } from "../../context/useAdminContext";
 import { useEffect, useState } from "react";
 import SideMenu from "../../components/SideMenu";
 import { faDashboard, faListSquares } from "@fortawesome/free-solid-svg-icons";
+import { useAdminOrderContext } from "../../context/useAdminOrdersContext";
 
 export default function Orderlist() {
   const { updateOrderAndPaymentStatus } = useBackendAPI();
 
-  const { content, dispatch } = useAdminContext();
+  const orderList = useAdminOrderContext().orders;
+  const dispatch = useAdminOrderContext().dispatch;
 
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    setOrders(content.orders);
-  }, [content.orders]);
+    async function storeOrder() {
+      setOrders(orderList);
+    }
+    storeOrder();
+  }, [orderList]);
 
   //To change the status of the order
   const changeOrderStatus = async (e, orderID, status) => {
@@ -27,7 +31,7 @@ export default function Orderlist() {
 
       dispatch({
         type: "ConfirmOrder",
-        payload: { _id: orderID },
+        payload: data,
       });
     }
   };
