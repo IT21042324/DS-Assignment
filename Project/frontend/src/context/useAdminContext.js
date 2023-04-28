@@ -3,24 +3,19 @@ import { AdminContext } from "./adminContext";
 import { useBackendAPI } from "./useBackendAPI";
 
 export const useAdminContext = () => {
-  const { getAllStoreOrders, getUserCountForAdmin } = useBackendAPI();
+  const { getUserCountForAdmin } = useBackendAPI();
   const adminContext = useContext(AdminContext);
 
   const { dispatch, content } = adminContext;
 
   useEffect(() => {
     async function getStoreInfo() {
-      const { amountForStore, orderCount, userCount, users } =
-        await getUserCountForAdmin();
-
-      const allStoreOrders = await getAllStoreOrders();
+      const dashBoardDetails = await getUserCountForAdmin();
 
       dispatch({
-        type: "AddOrder",
+        type: "SetDashBoardDetails",
         payload: {
-          data: users,
-          dashBoardDetails: { amount: amountForStore, orderCount, userCount },
-          orders: allStoreOrders,
+          dashBoardDetails,
         },
       });
     }
@@ -28,5 +23,5 @@ export const useAdminContext = () => {
     getStoreInfo();
   }, []);
 
-  return { adminContext, dispatch, content };
+  return { dispatch, content };
 };

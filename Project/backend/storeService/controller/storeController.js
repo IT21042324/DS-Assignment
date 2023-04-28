@@ -81,8 +81,8 @@ const getOneStore = async (req, res) => {
   const id = req.params.id;
 
   try {
-    // Finding the store by the given ID and sending it as response
-    const data = await Store.findById(id);
+    // Finding the store by the given ID, excluding the image field
+    const data = await Store.findById(id).select("-storeItem.image");
     res.json(data);
   } catch (err) {
     // If there is an error, sending the error message as response
@@ -108,7 +108,10 @@ const getStoreItemCount = async (req, res) => {
   const storeID = req.params.id;
 
   try {
-    const data = await Store.findOne({ _id: storeID });
+    // Find the store with the specified ID, excluding the itemImage field
+    const data = await Store.findOne({ _id: storeID }).select(
+      "-storeItem.itemImage"
+    );
 
     res.json({ itemCount: data.storeItem.length });
   } catch (err) {
