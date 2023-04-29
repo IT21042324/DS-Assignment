@@ -17,7 +17,6 @@ export const UseStoreContext = () => {
           );
 
           const { storeItem } = data;
-
           dispatch({
             type: "SetItems",
             payload: storeItem,
