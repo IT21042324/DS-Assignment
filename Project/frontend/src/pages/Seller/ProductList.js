@@ -130,7 +130,6 @@ export default function ProductList() {
                   {/* // Add table header rows */}
                   <tr>
                     <th>#</th>
-                    <th>Image</th>
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
@@ -144,13 +143,6 @@ export default function ProductList() {
                     return (
                       <tr key={dat._id}>
                         <td>{dat._id.slice(-4)}</td>
-                        <td>
-                          <img
-                            src={dat.image}
-                            style={{ width: "60px", height: "50px" }}
-                            alt={dat.itemName}
-                          />
-                        </td>
                         <td>{dat.itemName}</td>
                         <td>{dat.quantity}</td>
                         <td>Rs. {dat.price}</td>

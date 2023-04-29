@@ -6,7 +6,7 @@ const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET, { expiresIn: "3d" });
   //1st argument->object for payload
   //2nd argument-> secret string only know for our server (.env file)
-  //3rd argument
+  //3rd argument-> optional. just to say it expires in 3 days
 };
 const userLogin = async (req, res) => {
   try {
@@ -55,8 +55,8 @@ const userSignUp = async function (req, res) {
 
 const getAllUsers = async function (req, res) {
   try {
-    // Get all users from MongoDB database using Mongoose
-    const users = await userModel.find();
+    // Get all users from MongoDB database using Mongoose, excluding the image field
+    const users = await userModel.find().select("-image");
 
     // Send users and user count in response
     res.json({ users, userCount: users.length });

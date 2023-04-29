@@ -14,7 +14,7 @@ const {
   addReview,
 } = require("../controller/storeController");
 
-// router.use(requireAuth);
+router.use(requireAuth);
 //create store
 router.post("/add", createStore);
 //display
