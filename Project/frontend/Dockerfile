@@ -9,7 +9,6 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 ###  Installing dependencies
-
 RUN npm install --verbose
 
 # copy local files to app folder
