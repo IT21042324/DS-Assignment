@@ -23,9 +23,10 @@ export default function ProductList() {
   const data = UseStoreContext();
 
   const [items, setItems] = useState([]);
+
   useEffect(() => {
     setItems(data.items);
-  }, []);
+  }, [data.items]);
 
   //Declaring all varibale with ref
   const itemName = useRef(),
