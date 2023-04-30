@@ -13,7 +13,13 @@ export const UseStoreContext = () => {
       if (user1[0]?.role === "Merchant")
         try {
           const { data } = await axios.get(
-            "http://localhost:8082/api/store/get/" + user1[0].storeID
+            "http://localhost:8082/api/store/get/" + user1[0].storeID,
+            {
+              headers: {
+                Authorization: `Bearer ${user1[0].token}`,
+                role: user1[0].role,
+              },
+            }
           );
 
           const { storeItem } = data;
