@@ -1,4 +1,5 @@
 const router = require("express").Router(); // Importing the Router class from the Express package
+const requireAuth = require("../middleware/requireAuth");
 
 const {
   createPayment,
@@ -9,6 +10,8 @@ const {
   updatePaymentStatus,
   getTotalPaymentForAdmin,
 } = require("../controller/paymentController"); // Importing the controller functions from '../controller/paymentController'
+
+router.use(requireAuth);
 
 //create a new payment
 router.post("/add", createPayment); // Handles POST requests to create a new payment using the createPayment() function
