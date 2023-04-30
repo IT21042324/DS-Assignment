@@ -112,6 +112,12 @@ export function useBackendAPI() {
             amount: details.total,
             itemList: info,
             userID: user1[0]._id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
           }
         );
 
@@ -195,7 +201,13 @@ export function useBackendAPI() {
     getTotalSalesAmount: async function (storeID) {
       try {
         const { data } = await axios.get(
-          "http://localhost:8083/api/payment/getStoreTotal/" + storeID
+          "http://localhost:8083/api/payment/getStoreTotal/" + storeID,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
         );
         return data;
       } catch (err) {
@@ -385,7 +397,13 @@ export function useBackendAPI() {
 
         const response = await axios.patch(
           "http://localhost:8083/api/payment/updatePaymentStatus/",
-          { paymentID: data.paymentID, status }
+          { paymentID: data.paymentID, status },
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
         );
 
         if (response) {
@@ -413,7 +431,13 @@ export function useBackendAPI() {
     getUserCountForAdmin: async function () {
       try {
         const adminRevenue = await axios.get(
-          "http://localhost:8083/api/payment/getAdminTotal"
+          "http://localhost:8083/api/payment/getAdminTotal",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+              role: user.role,
+            },
+          }
         );
 
         const adminTotalOrders = await axios.get(

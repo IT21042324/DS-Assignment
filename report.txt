@@ -1,0 +1,19 @@
+To run the project locally:
+
+1. Open 5 terminals in VS Code.
+2. In the first 4 terminals, navigate to DS-Assingment/Project/backend.
+	In the 1st terminal, navigate to userService and type npm install, after that type npm run dev.
+	In the 2nd terminal, navigate to storeService and type npm install, after that type npm run dev.
+	In the 3rd terminal, navigate to productService and type npm install, after that type npm run dev.
+	In the 4th terminal, navigate to paymentService and type npm install, after that type npm run dev.
+	
+3. In the fifth terminal, navigate to DS-Assingment/Project/frontend.
+	Type npm install, after that type npm start.
+
+
+To run the project using Docker and Kubernetes:
+
+1. Open a terminal in VS Code and navigate to the DS-Assigment/Project folder.
+2. Open Docker Desktop.
+3. Type kubectl apply -f rbns.yaml.
+4. Wait for some time until the entire system starts running and then go to the browser and type   http://localhost:3000.
