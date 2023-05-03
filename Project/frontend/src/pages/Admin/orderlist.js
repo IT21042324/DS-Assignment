@@ -1,15 +1,24 @@
 import { Link } from "react-router-dom";
-import SideList from "../../components/SideList";
 import { useBackendAPI } from "../../context/useBackendAPI";
-import { useAdminContext } from "../../context/useAdminContext";
+import { useEffect, useState } from "react";
+import SideMenu from "../../components/SideMenu";
+import { faDashboard, faListSquares } from "@fortawesome/free-solid-svg-icons";
+import { useAdminOrderContext } from "../../context/useAdminOrdersContext";
 
 export default function Orderlist() {
   const { updateOrderAndPaymentStatus } = useBackendAPI();
 
-  const { content, dispatch } = useAdminContext();
+  const orderList = useAdminOrderContext().orders;
+  const dispatch = useAdminOrderContext().dispatch;
 
-  //Destructuring necessary commponents from the admin context
-  const { orders } = content;
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    async function storeOrder() {
+      setOrders(orderList);
+    }
+    storeOrder();
+  }, [orderList]);
 
   //To change the status of the order
   const changeOrderStatus = async (e, orderID, status) => {
@@ -22,14 +31,34 @@ export default function Orderlist() {
 
       dispatch({
         type: "ConfirmOrder",
-        payload: { _id: orderID },
+        payload: data,
       });
     }
   };
 
   return (
     <div>
-      <SideList />
+      <section className="sideMenu">
+        <div className="logo">
+          <Link
+            to="/admin"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              fontSize: 50,
+              paddingTop: 20,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            RB&NS
+          </Link>
+        </div>
+        <div className="items">
+          <SideMenu to="/admin" icon={faDashboard} label="Dashboard" />
+          <SideMenu to="/admin/orders" icon={faListSquares} label="Orders" />
+        </div>
+      </section>
       <section className="main-wrap">
         <div
           className="content-main"
@@ -54,7 +83,7 @@ export default function Orderlist() {
             <div className="table-responsive">
               <table
                 className="table table-hover"
-                style={{ borderSpacing: "0 50px" }}
+                style={{ borderSpacing: "0 50px", width: "100%" }}
               >
                 <thead>
                   <tr>
@@ -64,7 +93,9 @@ export default function Orderlist() {
                     <th scope="col">Address</th>
                     <th scope="col">Item List</th>
                     <th scope="col">Order Status</th>
-                    <th scope="col" className="text-center">Action</th>
+                    <th scope="col" className="text-center">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 {orders.map((data) => {
@@ -107,7 +138,9 @@ export default function Orderlist() {
                             Confirm Order
                           </button>
                         ) : (
-                          "Order Approved"
+                          <span style={{ color: "blue" }}>
+                            "Order Approved"
+                          </span>
                         )}
                       </td>
                     </tr>

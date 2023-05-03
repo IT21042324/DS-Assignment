@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const requireAuth = require("../middleware/requireAuth");
 
 // Import order controller functions
 const {
@@ -13,6 +14,8 @@ const {
   getAllUserOrders,
   setReviewStatus,
 } = require("../controller/orderController");
+
+router.use(requireAuth);
 
 // Route for creating a new order
 router.post("/add", createOrder);
