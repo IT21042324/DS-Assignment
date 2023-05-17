@@ -1,27 +1,31 @@
-# DS-Assignment
-This is a project developed for the DS module during the 1st semester of our 3rd year.
+# Distributed Systems Assignment
 
-## Group Members 
-1. Reezan S.A - IT21042324
-2. Achchige R.A.N.R - IT21102264
-3. Padmasiri P.G.S.M - IT21078996
-4. Abeygunasekara P.W.A.B.N - IT21104176
+This repository contains the source code for a project developed as part of the Distributed Systems module during the 1st semester of our 3rd year.
 
-## How to run the project
+## Contributors
+- Reezan S.A (IT21042324)
+- Achchige R.A.N.R (IT21102264)
+- Padmasiri P.G.S.M (IT21078996)
+- Abeygunasekara P.W.A.B.N (IT21104176)
 
-You can run the project either locally or using Docker Desktop.
+## Getting Started
 
-### Running the project locally
+This project can be run either locally or using the provided Kubernetes file (rbns.yaml).
+
+### Prerequisites
+Before running the project, ensure that you have Node.js and npm installed on your system. You can check if you have these installed by running `node -v` and `npm -v` in a terminal. If you do not have these installed, you can download them from [here](https://nodejs.org/en/download/).
+
+### Running Locally
 1. Open 5 terminals in VS Code.
-2. In the first 4 terminals, navigate to `DS-Assingment/Project/backend`.
-    - In the 1st terminal, navigate to `userService` and type `npm run dev`.
-    - In the 2nd terminal, navigate to `storeService` and type `npm run dev`.
-    - In the 3rd terminal, navigate to `productService` and type `npm run dev`.
-    - In the 4th terminal, navigate to `paymentService` and type `npm run dev`.
-3. In the fifth terminal, navigate to `DS-Assingment/Project/frontend` and type `npm start`.
+2. In the first 4 terminals, navigate to the `backend` directory within the `Project` directory.
+    - In each terminal, navigate to one of the service directories (`userService`, `storeService`, `productService`, or `paymentService`) and run `npm install` to install the necessary dependencies.
+    - Once the dependencies have been installed, run `npm run dev` to start the service.
+3. In the fifth terminal, navigate to the `frontend` directory within the `Project` directory.
+    - Run `npm install` to install the necessary dependencies.
+    - Once the dependencies have been installed, run `npm start`.
 
-### Running the project using Docker Desktop
-1. Open a terminal in VS Code and navigate to the `DS-Assigment/Project` folder.
-2. Open Docker Desktop.
-3. Run `kubectl apply -f rbns.yaml` in the terminal.
-4. Wait for some time until the entire system starts running, then go to your browser and type `http://localhost:3000`.
+### Running with Kubernetes
+1. Open a terminal in VS Code and navigate to the `Project` directory.
+2. Ensure that Docker Desktop is running.
+3. Run `kubectl apply -f rbns.yaml`.
+4. Wait for some time until all components have started, then open your browser and navigate to `http://localhost:3000`.
