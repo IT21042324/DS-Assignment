@@ -3,12 +3,12 @@
 This repository contains the source code for a project developed as part of the Distributed Systems module during the 1st semester of our 3rd year.
 
 ## Contributors
-| Name                    | IT Number   |
-| ----------------------- | ----------- |
-| Reezan S.A              | IT21042324  |
-| Achchige R.A.N.R        | IT21102264  |
-| Padmasiri P.G.S.M       | IT21078996  |
-| Abeygunasekara P.W.A.B.N| IT21104176  |
+| Name                    | Email                   |
+| ----------------------- | ----------------------- |
+| Reezan S.A              | it21042324@my.sliit.lk  |
+| Achchige R.A.N.R        | it21102264@my.sliit.lk  |
+| Padmasiri P.G.S.M       | it21078996@my.sliit.lk  |
+| Abeygunasekara P.W.A.B.N| it21104176@my.sliit.lk  |
 
 ## Getting Started
 
