@@ -3,10 +3,12 @@
 This repository contains the source code for a project developed as part of the Distributed Systems module during the 1st semester of our 3rd year.
 
 ## Contributors
-- Reezan S.A (IT21042324)
-- Achchige R.A.N.R (IT21102264)
-- Padmasiri P.G.S.M (IT21078996)
-- Abeygunasekara P.W.A.B.N (IT21104176)
+| Name                    | IT Number   |
+| ----------------------- | ----------- |
+| Reezan S.A              | IT21042324  |
+| Achchige R.A.N.R        | IT21102264  |
+| Padmasiri P.G.S.M       | IT21078996  |
+| Abeygunasekara P.W.A.B.N| IT21104176  |
 
 ## Getting Started
 
